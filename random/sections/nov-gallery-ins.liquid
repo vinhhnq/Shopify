@@ -1,0 +1,259 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" data-section-id="{{ section.id }}" data-section-type="nov-slick">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% endif %}
+    {% if section.settings.title != blank %}
+      <div class="{{ section.settings.title_alignment }}">
+        <div class="title_block mb-40">
+          <span><i class="fa fa-instagram" aria-hidden="true"></i>{{ section.settings.title }}</span>
+          {% if section.settings.subheading != blank %}
+            <span class="sub_title mt-0 mb-5">{{ section.settings.subheading }}</span>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    <div class="block_content nov-slick-carousel d-flex d-sm-block"
+    data-autoplay="false" 
+    data-autoplayTimeout="6000" 
+    data-loop="false"
+    data-dots="{{ section.settings.show_dot }}" 
+    data-nav="{{ section.settings.show_nav }}" 
+    data-row="{{ section.settings.number_row }}" 
+    data-row_mobile="{{ section.settings.row_mobile }}"
+    data-items="{{ section.settings.grid_number }}" 
+    data-items_lg="{{ section.settings.grid_number_lg }}" 
+    data-items_md="{{ section.settings.grid_number_md }}" 
+    data-items_sm="{{ section.settings.grid_number_sm }}"
+    data-items_xs="{{ section.settings.grid_number_xs }}"
+    data-unslick="true">
+      {% for block in section.blocks %}
+        <div class="card_gallery hover-image">
+          <a href="{{ block.settings.image | img_url: '1200x' }}" data-fancybox="gallery">
+            {% if block.settings.image != blank %}
+              <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
+                {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                <img class="lazyload"
+                  src="{{ block.settings.image | img_url: '600x' }}"
+                  data-src="{{ img_url }}"
+                  data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                  data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="">
+              </div>
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            {% else %}
+              <img src="https://via.placeholder.com/600x">
+            {% endif %}
+            
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    {% if section.settings.t_bottom != blank %}
+      <div class="text_bottom text-center">{{ section.settings.t_bottom }}</div>
+    {% endif %}
+
+  {% if section.settings.has_fullwidth == false %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Gallery Instagram",
+  "class": "index-section section-gallery-ins wow fadeInUp animated",
+  "settings":[
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Vinova Gallery Instagram"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Sub heading"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title alignment",
+      "default": "text-left",
+      "options": [
+        {
+          "value": "text-left",
+          "label": "Left"
+        },
+        {
+          "value": "text-center",
+          "label": "Center"
+        },
+        {
+          "value": "text-right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type":  "header",
+      "content": "Image item per row"
+    },
+    {
+      "type": "range",
+      "id": "grid_number",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Images per row large desktop",
+      "default": 3,
+      "info": "Breakpoint 1200px ↑"
+    },
+    {
+      "type": "range",
+      "id": "grid_number_lg",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Images per row desktop",
+      "default": 3,
+      "info": "Breakpoint 1199px ↓"
+    },
+    {
+      "type": "range",
+      "id": "grid_number_md",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Images per row tablet",
+      "default": 3,
+      "info": "Breakpoint 991px ↓"
+    },
+    {
+      "type": "range",
+      "id": "grid_number_sm",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Images per row mobile",
+      "default": 2,
+      "info": "Breakpoint 767px ↓"
+    },
+    {
+      "type": "range",
+      "id": "grid_number_xs",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Images per row small mobile",
+      "default": 1,
+      "info": "Breakpoint 575px ↓"
+    },
+    {
+      "type": "header",
+      "content": "Block bottom"
+    },
+    {
+      "type": "text",
+      "id": "t_bottom",
+      "label": "Text bottom",
+      "default": "Join Our Community"
+    },
+    {
+      "type": "color",
+      "id": "color_bt",
+      "label": "Colors text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "background_bt",
+      "label": "Background colors bottom",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Design options"
+    },
+    {
+      "type": "checkbox",
+      "id": "has_fullwidth",
+      "label": "Full width",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colors"
+    },
+    {
+      "type": "text",
+      "id": "class",
+      "label": "Class"
+    },
+    {
+      "type": "text",
+      "id": "distance_top",
+      "label": "Top spacing section",
+      "default": "30px"
+    },
+    {
+      "type": "text",
+      "id": "distance_bottom",
+      "label": "Bottom spacing section",
+      "default": "30px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Gallery Instagram",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .text_bottom {
+    background-color: {{ section.settings.background_bt }};
+    color: {{ section.settings.color_bt }};
+  }
+</style>

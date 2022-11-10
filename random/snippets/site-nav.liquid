@@ -1,0 +1,98 @@
+<ul class="site-nav list--inline {{ nav_alignment }}" id="SiteNav">
+  {% for link in linklists[section.settings.main_linklist].links %}
+    {% assign isMega = false %}
+    {% assign isIcon = false %}
+    {% assign menu_id = forloop.index %}
+    {%- assign three_level_nav = false -%}
+    {%- assign child_list_handle = link.title | handleize -%}
+
+    {% if linklists[child_list_handle].links != blank %}
+      {% for childlink in linklists[child_list_handle].links %}
+        {% assign grand_child_list_handle = childlink.title | handleize %}
+        {% if linklists[grand_child_list_handle].links != blank %}
+          {%- assign three_level_nav = true -%}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if section.settings.novmenu_enable %}
+      {% for block in section.blocks %}
+        {% assign menuItem = link.title %}
+        {% if block.settings.novmenu_item contains menuItem %}
+          {% include 'nov-megamenu', menu_id: menu_id  %}
+          {% assign isMega = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if section.settings.show_icons %}
+      {% for block in section.blocks %}
+        {% assign menuItem = link.title %}
+        {% if block.settings.name_item contains menuItem %}
+          {% include 'nov-iconmenu' %}
+          {% assign isIcon = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if isMega == false and isIcon == false %}
+
+      {% if linklists[child_list_handle].links != blank %}
+        <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-controls="SiteNavLabel-{{ child_list_handle }}">
+          <a href="{{ link.url }}" class="site-nav__link site-nav__link--main" title="{{ link.title }}">
+            <span class="group_title">{{ link.title }}</span>
+            <span class="show_sub d-none d-md-block d-lg-none"><i class="zmdi zmdi-chevron-down"></i></span>
+          </a>
+
+          <div class="site-nav__dropdown" id="SiteNavLabel-{{ child_list_handle }}" aria-expanded="false" role="main">
+            {% if three_level_nav %}
+              {% if linklists[child_list_handle].links != blank %}
+                <ul>
+                  {% for childlink in linklists[child_list_handle].links %}
+                    {% assign grand_child_list_handle = childlink.title | handle %}
+                    <li class="site-nav__childlist-item">
+                      <a href="{{ childlink.url }}" class="site-nav__link site-nav__child-link{% if linklists[grand_child_list_handle].links != blank %} site-nav__child-link--parent{% endif %}">
+                        <span>{{ childlink.title | escape }}</span>
+                        {% if linklists[grand_child_list_handle].links != blank %}
+                        <span class="show_sub d-none d-md-block d-lg-none"><i class="zmdi zmdi-chevron-down"></i></span>
+                        {% endif %}
+                      </a>
+                      {% if linklists[grand_child_list_handle].links != blank %}
+                      <div class="site-nav__dropdown-children">
+                        <ul>
+                          {% for grandchildlink in linklists[grand_child_list_handle].links %}
+                            <li>
+                              <a href="{{ grandchildlink.url }}" class="site-nav__link site-nav__child-link">{{ grandchildlink.title | escape }}</a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            {% else %}
+              <ul>
+                {% for childlink in linklists[child_list_handle].links %}
+                  <li {% if childlink.active %}class="site-nav--active"{% endif %}>
+                    <a href="{{ childlink.url }}" class="site-nav__link site-nav__child-link{% if forloop.last %} site-nav__link--last{% endif %}">{{ childlink.title | escape }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </li>
+      {% else %}
+        <li {% if link.active %}class="site-nav--active"{% endif %}>
+          <a href="{{ link.url }}" class="site-nav__link site-nav__link--main" title="{{ link.title }}">
+            <span class="group_title">{{ link.title }}</span>
+          </a>
+        </li>
+      {% endif %}
+
+    {% endif %}
+  {% endfor %}
+</ul>

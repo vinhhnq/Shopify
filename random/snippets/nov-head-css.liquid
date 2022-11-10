@@ -1,0 +1,24 @@
+{% comment %}
+* 2013-2018 Vinovathemes
+* @author    Vinovathemes <vinovathemes@gmail.com>
+* @copyright 2013-2018 Vinovathemes SA
+{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+{{ 'layout.scss.css' | asset_url | stylesheet_tag }}
+{{ 'common.scss.css' | asset_url | stylesheet_tag }}
+{{ 'responsive.scss.css' | asset_url | stylesheet_tag }}
+{{ 'slick.scss.css' | asset_url | stylesheet_tag }}
+{% if settings.enable_rtl == true %}
+{{ 'theme-rtl.scss.css' | asset_url | stylesheet_tag }}
+{% endif %}
+{% endcomment %}
+
+{{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
+{{ 'font-awesome.min.css' | asset_url | stylesheet_tag }}
+{{ 'animate.min.css' | asset_url | stylesheet_tag }}
+{{ 'owl.carousel.min.css' | asset_url | stylesheet_tag }}
+{{ 'jquery.fancybox.css' | asset_url | stylesheet_tag }}
+{{ 'owl.theme.default.css' | asset_url | stylesheet_tag }}
+{{ 'jquery.mmenu.all.css' | asset_url | stylesheet_tag }}
+{{ 'jquery.ui.min.css' | asset_url | stylesheet_tag }}
+{{ 'magnific-popup.css' | asset_url | stylesheet_tag }}
+{{ 'novstyle.css' | asset_url | stylesheet_tag }}

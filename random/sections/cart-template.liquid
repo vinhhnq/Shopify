@@ -1,0 +1,258 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="cart-template">
+  <div class="container">
+    <div class="templant_cart mt-150 mt-md-80">
+      {% if cart.item_count > 0 %}
+        <form action="/cart" method="post" novalidate class="cart">
+          <div class="row ">
+            <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+              <div class="cart__layout_left">
+                <div class="cart__header d-md-block d-none">
+                  <div class="row spacing-0">
+                    <div class="col-md-1 col-sm-1 col-1 label_remove"></div>
+                    <div class="col-md-5 col-sm-5 col-5 label_product">{{ 'cart.label.product' | t }}</div>
+                    <div class="col-md-2 col-sm-2 col-2 label_price">{{ 'cart.label.price' | t }}</div>
+                    <div class="col-md-2 col-sm-2 col-2 label_quantity">{{ 'cart.label.qty' | t }}</div>
+                    <div class="col-md-2 col-sm-2 col-2 label_total">{{ 'cart.label.total' | t }}</div>
+                  </div>
+                </div>
+                <div class="cart__body">
+                  {% for item in cart.items %}
+                    <div class="row spacing-0 align-items-center line{{ forloop.index }} cart-flex cart_item pl-xs-15 pr-xs-15">
+                      <div class="col-md-1 col-sm-12 col-12 cart__remove-wrapper text-center mb-md-0 mb-sm-20">
+                        <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
+                          <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                      <div class="col-md-5 col-sm-12 col-12 cart__image-wrapper d-sm-flex align-items-center d-block mb-md-0 mb-sm-20">
+                        <a href="{{ item.url | within: collections.all }}">
+                          <img class="cart__image lazyload" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="{{ item | img_url: '150x' }}" alt="{{ item.title | escape }}">
+                        </a>
+                        <div class="cart__meta cart-flex-item mt-xs-20">
+                          <div class="content-left">
+                            <div class="list-view-item__title">
+                              <a href="{{ item.url }}">
+                                {{ item.product.title }}
+                                {% if item.quantity > 1 %}
+                                  <span class="d-md-none"><span class="visually-hidden">{{ 'cart.label.quantity' | t }}</span>(x{{ item.quantity }})</span>
+                                {% endif %}
+                              </a>
+                            </div>
+                            {% unless item.variant.title contains 'Default' %}
+                              <div class="cart__meta-text">
+                                {% for option in item.product.options %}
+                                  <div class="tl_option mb-5">{{ option }}: {{ item.variant.options[forloop.index0] }}</div>
+                                {% endfor %}
+                              </div>
+                            {% endunless %}
+                            {%- assign property_size = item.properties | size -%}
+                            {% if property_size > 0 %}
+                              <div class="cart__meta-text note">
+                                {% for p in item.properties %}
+                                  {% unless p.last == blank %}
+                                    <strong>{{ p.first }}:</strong>
+                                    {% if p.last contains '/uploads/' %}
+                                      <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                                    {% else %}
+                                      {{ p.last }}
+                                    {% endif %}
+                                  {% endunless %}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-sm-12 col-12 cart__price-wrapper mb-md-0 mb-sm-20">
+                        <div class="hidden">{{ 'cart.label.price' | t }}</div>
+                        <div>{{ item.price | money }}</div>
+                        {% for discount in item.discounts %}
+                          <div class="cart-item__discount d-md-none">{{ discount.title }}</div>
+                        {% endfor %}
+                      </div>
+                      <div class="col-md-2 col-sm-12 col-12 cart__update-wrapper mb-md-0 mb-sm-20">
+                        <div class="cart__qty">
+                          <input type="button" class="js-qty__adjust minus js-qty__adjust--minus" value="-" />
+                          <input class="cart__qty-input" data-price="{{ item.price }}" data-line="{{ forloop.index }}" type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" step="1" min="1" max="{{ item.variant.inventory_quantity }}" pattern="[0-9]*">
+                          <input type="button" class="js-qty__adjust plus js-qty__adjust--plus" value="+" /> 
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-sm-12 col-12 total">
+                        <div class="hidden">{{ 'cart.label.total' | t }}</div>
+                        {% if item.original_line_price != item.line_price %}
+                          <div class="cart-item__original-price"><s>{{ item.original_line_price | money }}</s></div>
+                        {% endif %}
+                
+                        <div class="product-subtotal">
+                          {{ item.line_price | money }}
+                        </div>
+                
+                        {% for discount in item.discounts %}
+                          <div class="cart-item__discount">{{ discount.title }}</div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+                <div class="button_cart d-md-flex d-block">
+                  <input type="submit" name="checkout" class="btn btn--small-wide mb-sm-0 mb-xs-10" value="{{ 'cart.general.proceed_to_checkout' | t }}">
+                  <a href="collections/all" class="btn cart__update cart__continue--large" >
+                    <span>{{ 'cart.general.continue_shopping' | t }}</span>
+                  </a>
+                </div>
+              </div>
+              <div class="cart__layout_related">
+                {% if collections['upsell'].products %}
+                  <div class="product-related">
+                      <h3 class="cart__popup-related-title">{{ 'cart.general.you_might_also_like' | t }}</h3>
+                      <div class="product-related-inner row">
+                        {% assign product_handle = '' %}
+                        {% for item in cart.items %}
+                          {% if product_handle == '' %}
+                              {% assign product_handle = item.product.handle | strip %}
+                          {% else %}
+                              {% assign product_handle = product_handle | append: '|' | append: item.product.handle | strip %}
+                          {% endif %}
+                        {% endfor %}
+
+                        {% assign product_handle_array = product_handle | split: "|" %}
+                        {% assign i = 0 %}
+                        {% for product in collections['upsell'].products %}
+                          {% if i < 4 %}
+                            {% unless product_handle_array contains product.handle %}
+                              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6 {{ i }} mb-sm-0 mb-xs-30">
+                                <div class="popup__cart-product mb-sm-20">
+                                  <img class="sp-post-image lazyload" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="{{ product | img_url: '700x700' }}" alt="{{ product.title | escape }}" />
+                                  <a class="related_product-title" href="{{ product.url }}">{{ product.title | escape }}</a>
+                                  <div class="product__price">
+                                    {% include 'product-price' %}
+                                  </div>
+                                  {% assign variantCount = product.variants | size %}
+                                  <form class="formAddToCart" action="/cart/add" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+                                    {% if product.available %}
+                                      {% if variantCount > 1 %}
+                                        <a class="btn btnAddToCart btnChooseVariant" href="javascript:void(0);" data-url="{{ product.handle }}"
+                                          {% if settings.tooltip_enable %} data-toggle="tooltip" data-placement="top" {% endif %} title="" tabindex="0">
+                                          <span>{{ 'products.product.select_options' | t }}</span>
+                                        </a>
+                                      {% else %}
+                                        <button class="btn btnAddToCart" type="submit" value="Submit" data-handle="{{ product.handle }}" data-pid="{{ product.variants.first.id }}"{% if settings.tooltip_enable %} data-toggle="tooltip" data-placement="top"{% endif %} title="" tabindex="0">
+                                          <span>{{ 'products.product.add_to_cart' | t }}</span>
+                                        </button>
+                                      {% endif %}
+                                    {% else %}
+                                      <button class="btn btnAddToCart disabled" type="submit" value="Submit" data-handle="{{ product.handle }}" {% if settings.tooltip_enable %} data-toggle="tooltip" data-placement="top" {% endif %} title="" tabindex="0" disabled >
+                                        <span>{{ "products.product.sold_out" | t }}</span>
+                                      </button>
+                                    {% endif %}
+                                  </form>
+                                </div>
+                              </div>
+                            {% assign i = i | plus: 1 %}
+                            {% endunless %}
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 data-sticky_column mt-md-40">
+              <div class="cart__layout_right">
+                <div class="cart__heading">
+                  <span>{{ 'cart.general.total_cart_page' | t: total_cart: cart.item_count }}</span>
+                </div>
+                <div class="grid">
+                  <div class="grid__item">
+                    <div class="cart__total d-flex align-items-center justify-content-between">
+                      <span class="cart__subtotal-title">{{ 'cart.general.total' | t }}:</span>
+                      <span class="cart__subtotal">{{ cart.total_price | money }}</span>
+                    </div>
+                    {% if cart.total_discounts > 0 %}
+                      <div class="cart__savings">
+                        {{ 'cart.general.savings' | t }}
+                        <span class="cart__savings-amount">{{ cart.total_discounts | money }}</span>
+                      </div>
+                    {% endif %}
+                    <div class="cart__shipping d-flex align-items-xl-center justify-content-between">
+                      <div class="cart__shipping-title">{{ 'cart.general.shipping_label' | t }}</div>
+                      <div class="cart__shipping-sub">{{ 'cart.general.shipping_at_checkout' | t }}</div>
+                    </div>
+
+                    {% assign freeshipping_value = settings.free_shipping | plus: 0 %}
+                    {% assign freeshipping_value_notice = freeshipping_value | times: 100 | money %}
+
+                    {% assign price_without_currency = cart.total_price | money_without_currency | remove: '.00' | remove: ',' %}
+                    {% assign price = price_without_currency | plus: 0 %}
+
+                    {% if settings.freeshipping_enable %}
+                      {% if price < freeshipping_value %}
+                        {% assign spend_value = freeshipping_value | minus: price | times: 100 | money %}
+                        <div id="threshold_bar_popup">
+                          <div class="threshold_it">
+                            <div class="threshold_bar">
+                              <span class="animate" style="width:{{ price | times: 100 | divided_by: freeshipping_value | round }}%!important">
+                                <span>{{ price | times: 100 | divided_by: freeshipping_value | round }}%</span>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="threshold_spend">{{ 'cart.general.spend_html' | t: spend: spend_value }}</div>
+                        </div>
+                      {% else %}
+                        <div id="threshold_bar_popup">
+                          <div class="threshold_bar hide">
+                            <span class="animate" style="width: 100% !important;">100%</span>
+                          </div>
+                          <p class="content_threshold threshold_congrats">{{ 'cart.general.content_threshold' | t }}</p>
+                        </div>
+                      {% endif %}
+                      <div class="cart-notice-total">
+                        {{ 'cart.general.freeshipping_notice_html' | t: freeshipping_value: freeshipping_value_notice }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  {% if section.settings.cart_notes_enable %}
+                    <div class="grid__item cart-note">
+                      <div class="cart-note_label">{{ 'cart.general.cart_note_label' | t }}</div>
+                      <textarea rows="12" name="note" id="CartSpecialInstructions" class="cart-note__input" placeholder="{{ 'cart.general.note_cart_page' | t }}">{{ cart.note }}</textarea>
+                    </div>
+                  {% endif %}
+                </div>
+                {% if additional_checkout_buttons %}
+                  <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </form>
+      {% else %}
+        <div class="empty-page-content">
+          <h1 class="mb-30">{{ 'cart.general.empty' | t }}</h1>
+          <div class="cart--empty-message mb-20">
+            <p>{{ 'cart.general.empty_text_1' | t }}</p>
+            <p>{{ 'cart.general.empty_text_2' | t }}</p>
+          </div>
+          <a href="/" class="btn hover_x">
+            <span>{{ 'cart.general.continue_shopping' | t }}</span>
+            <i class="zmdi zmdi-long-arrow-right"></i>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Cart page",
+    "class": "cart-section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable cart notes",
+        "default": false
+      }
+    ]
+  }
+{% endschema %}

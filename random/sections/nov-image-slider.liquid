@@ -1,0 +1,260 @@
+<div class="section-image-slider distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" data-section-id="{{ section.id }}" data-section-type="nov-owl">
+  {% if section.settings.has_fullwidth == false %}
+  <div class="container">
+  {% endif %}
+    {%- assign manu_limit = section.settings.limit -%}
+    <div class="block_content">
+      {% if section.blocks.size > 0 %}
+        <div class="nov-owl-carousel owl-carousel owl-theme" 
+          data-autoplay="{{ section.settings.auto }}" 
+          data-autoplaytimeout="{{ section.settings.time }}000" 
+          data-loop="true" 
+          data-margin="{{ section.settings.spacing }}" 
+          data-dots="{{ section.settings.s_dot }}" 
+          data-nav="{{ section.settings.s_nav }}" 
+          data-items="{{ section.settings.number_lg }}" 
+          data-items_tablet="{{ section.settings.number_md }}" 
+          data-items_mobile="{{ section.settings.number_sm }}" 
+          data-center="false" 
+          data-start="0">
+          {% for block in section.blocks %}
+            <div class="image-slider__item"> 
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="image-slider__link">
+              {% endif %}
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | img_url: '955x700', scale: 2 | img_tag: block.settings.image.alt, 'image-slider__image' }}
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+              {% if block.settings.title != blank or block.settings.btn_t != blank %}
+                <div class="bl_t">
+                  {% if block.settings.title != blank %}
+                    <div class="title_block mb-0">
+                      <span style="color: {{ block.settings.title_c }};">{{ block.settings.title }}</span>
+                    </div>
+                  {% endif %}
+                  {% if block.settings.btn_t != blank %}
+                    <a href="{{ block.settings.btn }}" class="btn btn-2 mt-10">{{ block.settings.btn_t }}</a>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.blocks.size == 0 %}
+        {% include 'no-blocks' %}
+      {% endif %}
+    </div>
+  {% if section.settings.has_fullwidth == false %}
+  </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Vinova image-slider",
+    "class": "index-section section-slider-image wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Slider options"
+      },
+      {
+        "type": "checkbox",
+        "id": "auto",
+        "label": "Auto play slider"
+      },
+      {
+        "type": "range",
+        "id": "time",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Time auto play (seconds)",
+        "default": 3
+      },
+      {
+        "type": "checkbox",
+        "id": "s_dot",
+        "label": "Show dots"
+      },
+      {
+        "type": "checkbox",
+        "id": "s_nav",
+        "label": "Show navigation"
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing image items",
+        "default": "0",
+        "options": [
+        {
+          "label": "0px",
+          "value": "0"
+        },
+        {
+          "label": "5px",
+          "value": "5"
+        },
+        {
+          "label": "10px",
+          "value": "10"
+        },
+        {
+          "label": "15px",
+          "value": "15"
+        },
+        {
+          "label": "20px",
+          "value": "20"
+        },
+        {
+          "label": "25px",
+          "value": "25"
+        },
+        {
+          "label": "30px",
+          "value": "30"
+        }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Image per row"
+      },
+      {
+        "type": "range",
+        "id": "number_lg",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Image items per row desktop",
+        "default": 3,
+        "info": "Breakpoint 992px ↑"
+      },
+      {
+        "type": "range",
+        "id": "number_md",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Image items per row tablet",
+        "default": 3,
+        "info": "Breakpoint 768px ↑"
+      },
+      {
+        "type": "range",
+        "id": "number_sm",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Image items per row mobile",
+        "default": 3,
+        "info": "Breakpoint 767px ↓"
+      },
+      {
+        "type": "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "color",
+            "id": "title_c",
+            "label": "Title color",
+            "default": "#222222"
+          },
+          {
+            "type": "text",
+            "id": "btn_t",
+            "label": "Button text"
+          },
+          {
+            "type": "url",
+            "id": "btn",
+            "label": "Button link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Image Slider",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+  }
+</style>

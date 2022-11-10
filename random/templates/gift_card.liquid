@@ -1,0 +1,23 @@
+{% layout 'gift_card' %}
+{% section 'gift-cards-template' %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+   new QRCode( document.querySelector('.gift-card__qr-code'), {
+    text: document.querySelector('.gift-card__qr-code').dataset.identifier,
+    width: 120,
+    height: 120
+    });
+  });
+</script>
+<style>
+  .giftcard__wrap {
+    width: 40rem;
+    margin: auto;
+  }
+  .giftcard__code__text {
+    font-size: 24px;
+  }
+  .gift-card__qr-code img {
+    margin: auto;
+  }
+</style>

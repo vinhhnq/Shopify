@@ -1,0 +1,55 @@
+{% assign novCol = 3 %}
+{% assign novLimit = 9 %}
+{% assign currentProduct = article %}
+{% assign bloghandle = blog.handle %}
+{% if blogs[bloghandle].articles_count > 1 %}
+  <div class="BlogRelated">
+    <div class="title_block"><span>{{ 'blogs.related' | t }} {{ blog.title }}</span></div>
+    <div class="block__content">
+      <div class="blog--list blog--grid-view">
+        <div class="owl-carousel owl-theme" data-autoplay="true" data-autoplaytimeout="6000" data-items="{{ novCol }}" data-margin="30" data-nav="false" data-dots="false" data-loop="false" data-items_tablet="2" data-items_mobile="1">
+          {% for article in blogs[bloghandle].articles limit:6 %}
+            {% unless article.handle == currentProduct.handle %}
+              <div class="item">
+                <div class="article--listing">
+                  <div class="article__image">
+                    {% if article.image %}
+                    <a href="{{ article.url }}" class="article__list-image-container">
+                      <img class="article__list-image lazyload" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="{{ article.image | img_url: '330x220', crop: 'center' }}">
+                    </a>
+                    {% endif %}
+                  </div>
+                  <div class="article-body">
+                    <h2 class="article__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                    {% comment %}
+                    <div class="article__info">
+                      <span class="article__date">
+                          {{ article.published_at | time_tag: format: 'month_day_year' }}
+                      </span>
+                      {% if blog.comments_enabled? %}
+                      <span class="article__countcomment text-uppercase">
+                        {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                      </span>
+                      {% endif %}
+                      <span class="article__author">{{ article.author }}</span>
+                    </div>
+                    {% endcomment %}
+
+                    <div class="article__excerpt">
+                      {% if article.excerpt.size > 0 %}
+                        {{ article.excerpt | truncate: 120 }}
+                      {% else %}
+                        {{ article.content | strip_html | truncate: 100 }}
+                         {% comment %}<a href="{{ article.url }}" class="article__readmore">{{ 'blogs.article.readmore' | t }}</a>{% endcomment %}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endunless %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

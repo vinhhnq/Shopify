@@ -1,0 +1,852 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Vinova Random",
+    "theme_author": "Vinovathemes",
+    "theme_version": "2.0",
+    "theme_documentation_url": "http:\/\/vinovathemes.com",
+    "theme_support_email": "vinova.shopify@gmail.com"
+  },
+  {
+    "name": "Vinova Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Main color"
+      },
+      {
+        "type": "color",
+        "id": "theme_color_default",
+        "label": "Theme color default",
+        "default": "#222222"
+      },
+      {
+        "type": "color",
+        "id": "theme_color_primary",
+        "label": "Theme color primary",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "id": "color_body",
+        "label": "Background body",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Heading and text color"
+      },
+      {
+        "type": "color",
+        "id": "heading_text",
+        "label": "Heading color",
+        "default": "#222"
+      },
+      {
+        "type": "color",
+        "id": "second_heading_text",
+        "label": "Second heading color",
+        "default": "#444"
+      },
+      {
+        "type": "color",
+        "id": "sub_heading_text",
+        "label": "Sub heading color",
+        "default": "#747474"
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Body text",
+        "default": "#788188"
+      },
+      {
+        "type": "header",
+        "content": "Menu Color"
+      },
+      {
+        "type": "color",
+        "id": "color_menu",
+        "label": "Color menu",
+        "default": "#222"
+      },
+      {
+        "type": "color",
+        "id": "color_menu_sticky",
+        "label": "Color menu sticky",
+        "default": "#666"
+      },
+      {
+        "type": "color",
+        "id": "color_sub_menu",
+        "label": "Color sub menu",
+        "default": "#666"
+      },
+      {
+        "type": "color",
+        "id": "color_title_megamenu",
+        "label": "Color title mega menu",
+        "default": "#222"
+      },
+      {
+        "type": "header",
+        "content": "Product item color"
+      },
+      {
+        "type": "color",
+        "id": "color_product_item",
+        "label": "Background product item",
+        "default": "#f5f5f5"
+      },
+      {
+        "type": "color",
+        "id": "color_product_name",
+        "label": "Color product name",
+        "default": "#222"
+      },
+      {
+        "type": "color",
+        "id": "color_price",
+        "label": "Color price",
+        "default": "#222"
+      },
+      {
+        "type": "color",
+        "id": "color_reduced_price",
+        "label": "Color reduced price",
+        "default": "#d5d5d5"
+      },
+      {
+        "type": "color",
+        "id": "color_product_icon",
+        "label": "Color icon product item",
+        "default": "#666"
+      },
+      {
+        "type": "color",
+        "id": "color_badge_new",
+        "label": "Background badge new product",
+        "default": "#8dca57"
+      },
+      {
+        "type": "color",
+        "id": "color_badge_sale",
+        "label": "Background badge sale product",
+        "default": "#fe4848"
+      },
+      {
+        "type": "header",
+        "content": "Border line and buttons"
+      },
+      {
+        "type": "color",
+        "id": "color_borders",
+        "label": "Borders and lines",
+        "default": "#e8e9eb"
+      },
+      {
+        "type": "color",
+        "id": "color_button",
+        "label": "Buttons background",
+        "default": "#7796A8"
+      },
+      {
+        "type": "color",
+        "id": "color_button_hover",
+        "label": "Buttons background hover",
+        "default": "#7796A8"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "Button text color",
+        "default": "#fff"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings and buttons"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_header_family",
+        "label": "Font",
+        "default": "helvetica_n7"
+      },
+      {
+        "type": "header",
+        "content": "Body text"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_base_family",
+        "label": "Font",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "range",
+        "id": "type_base_size",
+        "label": "Base size",
+        "default": 13,
+        "min": 11,
+        "max": 20,
+        "step": 1,
+        "unit": "px"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social sharing options"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "label": "Pin on Pinterest",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "info": "https:\/\/twitter.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https:\/\/facebook.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "info": "https:\/\/pinterest.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "http:\/\/instagram.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_dribbble_link",
+        "label": "Dribbble",
+        "info": "http:\/\/dribbble.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_google_link",
+        "label": "Google",
+        "info": "http:\/\/google.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin_link",
+        "label": "Linkedin",
+        "info": "http:\/\/linkedin.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr",
+        "info": "http:\/\/shopify.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat",
+        "info": "https:\/\/www.snapchat.com\/add\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "info": "https:\/\/www.youtube.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo",
+        "info": "https:\/\/vimeo.com\/shopify"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Config General",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sidebar Config"
+      },
+      {
+        "type": "select",
+        "id": "type_sidebar_blog",
+        "label": "Blog Collection Style",
+        "options": [
+          {
+            "value": "sidebar_left",
+            "label": "Left Sidebar"
+          },
+          {
+            "value": "sidebar_right",
+            "label": "Right Sidebar"
+          },
+          {
+            "value": "sidebar_hidden",
+            "label": "Without Sidebar"
+          }
+        ],
+        "default": "sidebar_left"
+      },
+      {
+        "type": "select",
+        "id": "type_sidebar_article",
+        "label": "Blog Detail Page Style",
+        "options": [
+          {
+            "value": "sidebar_left",
+            "label": "Left Sidebar"
+          },
+          {
+            "value": "sidebar_right",
+            "label": "Right Sidebar"
+          },
+          {
+            "value": "sidebar_hidden",
+            "label": "Without Sidebar"
+          }
+        ],
+        "default": "sidebar_left"
+      },
+      {
+        "type": "select",
+        "id": "type_sidebar",
+        "label": "Collection Page Style",
+        "options": [
+          {
+            "value": "sidebar_left",
+            "label": "Left Sidebar"
+          },
+          {
+            "value": "sidebar_right",
+            "label": "Right Sidebar"
+          },
+          {
+            "value": "sidebar_hidden",
+            "label": "Canvas sidebar"
+          },
+          {
+            "value": "full_width",
+            "label": "Full Width"
+          }
+        ],
+        "default": "sidebar_hidden"
+      },
+      {
+        "type": "select",
+        "id": "type_sidebar_product",
+        "label": "Product Detail Page Style",
+        "options": [
+          {
+            "value": "tab_desc",
+            "label": "Product Single 1"
+          },
+          {
+            "value": "thumb_grid",
+            "label": "Product Single 2"
+          },
+          {
+            "value": "thumb_left",
+            "label": "Product Single 3"
+          },
+          {
+            "value": "thumb_all",
+            "label": "Product Single 4"
+          },
+          {
+            "value": "thumb_vertical",
+            "label": "Product Single 5"
+          },
+          {
+            "value": "thumb_none",
+            "label": "Product Single 6"
+          }
+        ],
+        "default": "thumb_left"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Block Currency",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_multiple_currencies",
+        "label": "Show Currency Selector",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "title_currency",
+        "label": "Title",
+        "default": "Currency:"
+      },
+      {
+        "type": "paragraph",
+        "content": "Write ISO 4217 Currency Codes [Click here](http:\/\/www.xe.com\/currency). Your currencies name: icon [Click here](http:\/\/xe.com\/symbols.php), text."
+      },
+      {
+        "type": "textarea",
+        "id": "supported_currencies",
+        "label": "Currencies you wish to support",
+        "default": "USD, ($) US Dollars | EUR, (€) Euro | GBP, (£) British Pounds",
+        "info": "Example: USD, ($) US Dollars | EUR, (€) Euro | GBP, (£) British Pounds"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Config Newsletter",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Newsletter Popup"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_newsletter_popup",
+        "label": "Show Newsletter Popup",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "title_newsletter",
+        "label": "Title Newsletter Popup",
+        "default": "Newsletter"
+      },
+      {
+        "type": "text",
+        "id": "desc_newsletter",
+        "label": "Description Newsletter Popup",
+        "default": "Sign up to our newsletter to get the latest articles, lookbooks, street style & fashion voucher codes direct to your inbox:"
+      },
+      {
+        "type": "text",
+        "id": "button_newsletter",
+        "label": "Button text",
+        "default": "Subscribe"
+      },
+      {
+        "type": "text",
+        "id": "notify_newsletter",
+        "label": "Notify text",
+        "default": "Don't show this popup again"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_newsletter",
+        "label": "Background Newsletter"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Language RTL",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Language RTL"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_rtl",
+        "label": "Enable RTL",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Vinova Block Search",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_key_trend",
+        "label": "Show Key Trend",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "key_trend_1",
+        "label": "Key Trend",
+        "default": "denim"
+      },
+      {
+        "type": "url",
+        "id": "link_1",
+        "label": "Link",
+        "info": "Optional"
+      },
+      {
+        "type": "text",
+        "id": "key_trend_2",
+        "label": "Key Trend",
+        "default": "Jacket"
+      },
+      {
+        "type": "url",
+        "id": "link_2",
+        "label": "Link",
+        "info": "Optional"
+      },
+      {
+        "type": "text",
+        "id": "key_trend_3",
+        "label": "Key Trend",
+        "default": "T-Shirt"
+      },
+      {
+        "type": "url",
+        "id": "link_3",
+        "label": "Link",
+        "info": "Optional"
+      },
+      {
+        "type": "text",
+        "id": "key_trend_4",
+        "label": "Key Trend",
+        "default": "Outerwear"
+      },
+      {
+        "type": "url",
+        "id": "link_4",
+        "label": "Link",
+        "info": "Optional"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Block Breadcrumbs",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "breadcrumbs_enable",
+        "label": "Enable Breadcrumbs",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "checkbox",
+        "id": "overlay_opacity",
+        "label": "Enable Overlay Opacity",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "image_overlay_opacity",
+        "label": "Image Overlay Opacity",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "default": 25
+      },
+      {
+        "type": "color",
+        "id": "color_text_head",
+        "label": "Color Text",
+        "default": "#222"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Title Alignment",
+        "default": "justify-content-center",
+        "options": [
+          {
+            "value": "justify-content-start",
+            "label": "Left"
+          },
+          {
+            "value": "justify-content-center",
+            "label": "Center"
+          },
+          {
+            "value": "justify-content-end",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top Distance",
+        "default": "100px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom Distance",
+        "default": "100px"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Setting Product",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product Item Config"
+      },
+      {
+        "type": "text",
+        "id": "time_newproduct",
+        "label": "Time new product",
+        "info": "Number day",
+        "default": "30"
+      },
+      {
+        "type": "range",
+        "id": "br_pi",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Border radius product image",
+        "default": 0
+      },
+      {
+        "type": "checkbox",
+        "id": "show_rating",
+        "label": "Show rating",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "quickview_enable",
+        "label": "Enable Quick View",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "wishlist_enable",
+        "label": "Enable Wishlist",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_button_enable",
+        "label": "Enable Payment Button",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "img_size",
+        "label": "Product Image Size Default",
+        "info": "Example: 270x360"
+      },
+      {
+        "type": "text",
+        "id": "img_size_large",
+        "label": "Product Image Size Large",
+        "info": "Example: 570x760"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_variant_product",
+        "label": "Show variant product",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "variant_color_image",
+        "label": "Show variant color image",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Free Shipping"
+      },
+      {
+        "type": "checkbox",
+        "id": "freeshipping_enable",
+        "label": "Enable Free Shipping",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping",
+        "label": "Free Shipping",
+        "info": "Set value for got free shipping",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Size Chart"
+      },
+      {
+        "type": "image_picker",
+        "id": "size_women",
+        "label": "Size Women"
+      },
+      {
+        "type": "image_picker",
+        "id": "size_men",
+        "label": "Size Men"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Mini Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "mini_cart_type",
+        "label": "Mini Cart Type",
+        "default": "canvas",
+        "options": [
+          {
+            "value": "dropdown",
+            "label": "Mini Cart Dropdown"
+          },
+          {
+            "value": "canvas",
+            "label": "Mini Cart Canvas"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Link to collection"
+      },
+      {
+        "type": "paragraph",
+        "content": "Used when there are no products in the shopping cart, appear in an empty cart"
+      },
+      {
+        "type": "text",
+        "id": "collec_1_name",
+        "label": "Link 1 name"
+      },
+      {
+        "type": "url",
+        "id": "collec_1",
+        "label": "Link 1"
+      },
+      {
+        "type": "text",
+        "id": "collec_2_name",
+        "label": "Link 2 name"
+      },
+      {
+        "type": "url",
+        "id": "collec_2",
+        "label": "Link 2"
+      },
+      {
+        "type": "text",
+        "id": "collec_3_name",
+        "label": "Link 3 name"
+      },
+      {
+        "type": "url",
+        "id": "collec_3",
+        "label": "Link 3"
+      },
+      {
+        "type": "text",
+        "id": "collec_4_name",
+        "label": "Link 4 name"
+      },
+      {
+        "type": "url",
+        "id": "collec_4",
+        "label": "Link 4"
+      },
+      {
+        "type": "text",
+        "id": "collec_5_name",
+        "label": "Link 5 name"
+      },
+      {
+        "type": "url",
+        "id": "collec_5",
+        "label": "Link 5"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Block Account",
+    "settings": [
+      {
+        "type": "select",
+        "id": "account_type",
+        "label": "Block Account Type",
+        "default": "canvas",
+        "options": [
+          {
+            "value": "dropdown",
+            "label": "Account Dropdown"
+          },
+          {
+            "value": "canvas",
+            "label": "Account Canvas"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "img_canvas_account",
+        "label": "Account Canvas Image"
+      },
+      {
+        "type": "url",
+        "id": "img_canvas_account_link",
+        "label": "Account Canvas Image Link",
+        "info": "Optional"
+      }
+    ]
+  },
+  {
+    "name": "Vinova Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  }
+]

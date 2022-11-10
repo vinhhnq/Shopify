@@ -1,0 +1,55 @@
+<!-- Popup newsletter -->
+{% if settings.show_newsletter_popup == true %}
+  {% form 'customer' %}
+    {{ form.errors | default_errors }}
+    {% if form.posted_successfully? %}
+      <div id="popupAlert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
+          <div class="modal-content">
+              <p class="form--success alert-success text-center mb-0">{{ 'general.newsletter_form.confirmation' | t }}</p>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div id="popup-subscribe" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content row no-gutters">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="zmdi zmdi-hc-fw zmdi-close"></i></button>
+                  </div>
+                  <div class="modal-body col-md-6 text-center d-flex justify-content-center align-items-end">
+                    <div class="subscribe_form">
+                      <div class="inner">
+                          <div class="title_block">{{ settings.title_newsletter }}</div>
+                          <p>{{ settings.desc_newsletter }}</p>
+                          <div class="input-subscribe-wrap">
+                            <input type="hidden" name="contact[tags]" value="newsletter">
+                            <input type="email"
+                              name="contact[email]"
+                              class="inputNew form-control grey newsletter-input"
+                              value=""
+                              placeholder="{{ 'general.newsletter_form.email_newsletter' | t }}">
+                            <span class="input-group-btn mt-10 d-block">
+                              <button id="Subscribe" type="submit" name="commit" class="btn btn-primary">
+                                {{ 'general.newsletter_form.submit' | t }}
+                              </button>
+                            </span>
+                          </div>
+                          <div class="checkbox">
+                            <label id="myCheck" class="d-inline-flex">
+                              <span class="custom-checkbox">
+                                <input name="no-view" class="no-view" type="checkbox">
+                              </span>
+                              <span id="text">{{ settings.notify_newsletter }}</span>
+                            </label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-center"><img class="img-fluid lazyload" data-src="{{ settings.bg_newsletter | img_url: '830x' }}" alt=""></div>
+              </div>
+          </div>
+      </div>
+    {% endif %}
+  {% endform %}
+{% endif %}

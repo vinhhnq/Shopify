@@ -1,0 +1,37 @@
+<div id="popup-Cart" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="jsPopupview modal-dialog modal-sm modal-dialog-centered justify-content-center" role="document"></div>
+</div>
+
+<div id="PopupCartModal" class="hidden hide">
+    <div class="modal-content">
+        <div class="modal-header d-flex align-items-center">
+            <div class="message_title">
+                <i class="zmdi zmdi-notifications-active"></i>
+                {{ 'general.popup_cart.success-message' | t }}
+            </div>
+            <button type="button" class="close popupCartClose" data-dismiss="modal" aria-label="Close">
+                <i class="zmdi zmdi-hc-fw zmdi-close"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="proBoxPrimary d-flex align-items-center">
+                <div class="proBoxImage">
+                    <div class="proFeaturedImage">
+                        <img class="img-fluid proImageProduct" src="{{ 'loading.gif' | asset_url }}" alt="Quickview"/>
+                    </div>
+                </div>
+                <div class="proBoxInfo">
+                    <div class="proName mb-5"><a href="{{ product.url }}"></a></div>
+                    <div class="proPrice mb-10">
+                        <span class="propriceProduct propricePrimary"></span>
+                        <span class="propriceProduct propriceCompare"></span>
+                    </div>
+                    <div class="actions d-flex">
+                        <a href="{{ shop.secure_url }}/cart" class="btn btn_go_to_cart">{{ 'general.popup_cart.go_to_cart' | t }}</a>
+                        <a href="{{ shop.secure_url }}/checkout" class="btn btn_checkout">{{ 'general.popup_cart.checkout' | t }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

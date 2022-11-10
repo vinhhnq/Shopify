@@ -1,0 +1,60 @@
+{
+  "sections": {
+    "main": {
+      "type": "nov-product-template",
+      "blocks": {
+        "edc3b468-fb72-4d9b-9ad0-173dd3453557": {
+          "type": "block_text",
+          "settings": {
+            "custom_title": "Delivery policy",
+            "custom_content": "<p><strong>Lorem ipsum dolor sit amet<\/strong><\/p>\n<p><br><\/p>\n<p>Vivamus a placerat dolor. Proin ut vehicula mauris. Etiam sagittis augue ipsum. Aliquam vestibulum massa nulla, ullamcorper aliquam diam feugiat vel. Fusce porttitor ultrices ante, posuere vehicula lacus tempor eu. Sed et purus et massa mattis aliquet ac vel dolor. Pellentesque eros lectus, placerat nec finibus ac, lobortis eu risus.<\/p>\n<p><\/p>\n<p>Donec fringilla metus ligula, sit amet fermentum ex laoreet non<\/p>\n<p><br><\/p>\n<p>- Ribbed and double stitched collar and armholes<\/p>\n<p>- High-density fabric for vivid print clarity<\/p>\n<p>- Machine-wash safeSingle right rear button flap pocket<\/p>\n<p>- Products are proudly printed in the United States<\/p>\n<p><br><\/p>\n<p>Curabitur egestas suscipit odio. Nam vitae aliquam dui<\/p>\n<p><\/p>\n<p>in laoreet elit. In posuere augue id velit placerat, vitae porttitor leo aliquet. Aenean non ligula sed lorem eleifend aliquam. Morbi posuere faucibus viverra. Proin ullamcorper, lorem lacinia cursus finibus.<\/p>"
+          }
+        },
+        "4e6e0b9f-8c52-473c-8ed2-56be1f2942f6": {
+          "type": "block_text",
+          "settings": {
+            "custom_title": "Returns & Exchanges Policy",
+            "custom_content": "<p><em><strong>Nullam at mi accumsan, fermentum turpis at, hendrerit tortor<\/strong><\/em><\/p>\n<p><br><\/p>\n<p>Vivamus commodo magna rutrum ipsum convallis luctus. Maecenas sollicitudin tincidunt sem at consectetur. Sed ligula elit, sodales feugiat porttitor non, commodo in ipsum. Donec vehicula orci et pharetra laoreet. Donec feugiat, nibh ac ornare hendrerit, dui augue semper felis, a finibus dui felis quis magna. Curabitur a ligula purus. Suspendisse vestibulum lorem non tellus aliquet blandit.<\/p>\n<p>Proin cursus sollicitudin scelerisque. Donec ultrices elit quis magna lobortis porttitor. Quisque et consectetur mauris. Sed facilisis malesuada ante eget blandit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque rutrum mattis ex ac sagittis. Nulla convallis euismod ipsum, a mollis sapien fringilla eget. Nam dignissim ornare nisi, in bibendum nibh auctor id.<\/p>\n<p>Quisque dictum justo id velit dapibus, id mollis diam tincidunt. Donec luctus tincidunt ultrices. Sed condimentum ante accumsan, sagittis lorem quis, dictum enim. Nam et facilisis odio. Ut iaculis dui non interdum accumsan. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lacus sem, molestie non convallis nec, tristique a lacus. Proin eget lacus semper dui imperdiet accumsan. Morbi sagittis erat ac justo congue, a ornare tortor mollis. Aenean eu vulputate diam. Praesent suscipit ex non elit finibus ultricies.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "edc3b468-fb72-4d9b-9ad0-173dd3453557",
+        "4e6e0b9f-8c52-473c-8ed2-56be1f2942f6"
+      ],
+      "settings": {
+        "show_notes": true,
+        "show_quantity_selector": true,
+        "product_swatch_enable": true,
+        "show_share": true,
+        "show_variant_color": true,
+        "show_vendor": true,
+        "show_sku": true,
+        "show_categories": true,
+        "show_tags": true,
+        "show_available": true,
+        "show_des": true,
+        "enable_zoom": true,
+        "show_related": true,
+        "show_description": true,
+        "show_review": true,
+        "show_size_chart": true,
+        "show_payments": true,
+        "title_payments": "Guaranteed safe checkout:",
+        "size_title": "10px",
+        "color_title_payments": "#222222",
+        "payments": "shopify:\/\/shop_images\/payment_detail.png",
+        "time": "Orders ship within 5 to 10 business days.",
+        "size_time": "12px",
+        "color_time": "#494949",
+        "truck": "Hoorey ! This item ships free to the US",
+        "size_truck": "12px",
+        "color_truck": "#494949",
+        "background_color": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

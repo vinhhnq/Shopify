@@ -1,0 +1,181 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}">Home 1<![endif]-->
+<html class="no-js{% if settings.enable_rtl == true %} lang-rtl" lang="{{ shop.locale }}" dir="rtl"{% endif %} lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_button }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- assign header_font = settings.type_header_family -%}
+    {%- assign base_font = settings.type_base_family -%}
+    <link rel="preload" as="font" href="{{ header_font | font_url }}" type="font/woff2" crossorigin>
+    <link rel="preload" as="font" href="{{ base_font | font_url }}" type="font/woff2" crossorigin>
+    <style type="text/css">
+      {%- for variant in base_font.variants -%}
+        {{ variant | font_face }}
+      {%- endfor -%}
+      {%- if header_font.family != base_font.family -%}
+        {%- for variant in header_font.variants -%}
+          {{ variant | font_face }}
+        {%- endfor -%}
+      {%- endif -%}
+    </style>
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {% if settings.favicon != blank %}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {% endif %}
+
+    {% capture seo_title %}
+      {{ page_title }}
+      {% if current_tags %}
+        {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+      {% endif %}
+      {% if current_page != 1 %}
+        &ndash; {{ 'general.meta.page' | t: page: current_page }}
+      {% endif %}
+      {% unless page_title contains shop.name %}
+        &ndash; {{ shop.name }}
+      {% endunless %}
+    {% endcapture %}
+    <title>{{ seo_title }}</title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    {% include 'social-meta-tags' %}
+    {% include 'icon-fonts' %}
+    {% include 'css-variables' %}
+    {% include 'nov-head-css' %}
+    {% include 'nov-head-js' %}
+    <script src="{{ 'shopify_global.js' | asset_url }}" defer="defer"></script>
+  {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ template | split: '.' | first }}">
+    <a class="in-page-link hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+    {% section 'nov-header' %}
+    <main class="main-content" id="MainContent">
+      <section class="page-container" id="PageContainer">
+        {{ content_for_layout }}
+      </section>
+    </main>
+    {% section 'nov-footer' %}
+    
+    <div class="canvas-menu drawer-left">
+      <div class="canvas-header-box d-flex justify-content-center align-items-center">
+        <div class="close-box"><i class="zmdi zmdi-close"></i></div>
+      </div>
+    </div>
+
+    {% if settings.mini_cart_type == 'canvas' %}
+      <div class="block_cart_canvas">
+        <div id="_desktop_cart">
+          <div class="close_cart d-md-flex d-none align-items-center justify-content-center"><i class="zmdi zmdi-close"></i></div>
+          <div id="cart-info"></div>
+        </div>
+      </div>
+    {% endif %}
+    {% if settings.account_type == 'canvas' %}
+      <div class="block_account_canvas d-none d-md-block">
+        <div class="close_account">
+          <i class="zmdi zmdi-close"></i>
+        </div>
+        {% if settings.img_canvas_account != blank %}
+          {% if settings.img_canvas_account_link != blank %}
+            <a href="{{ settings.img_canvas_account_link }}">
+          {% endif %}
+          <img class="lazyload mb-60" data-src="{{ settings.img_canvas_account | img_url: '200x' }}">
+          {% if settings.img_canvas_account_link != blank %}
+            </a>
+          {% endif %}
+        {% endif %}
+        {% include 'nov-block-account' %}
+      </div>
+    {% endif %}
+    <div class="canvas-overlay"></div>
+
+    <div class="sidebar-overlay"></div>
+
+    {% include 'nov-formsearch' %}
+    {% include 'nov-search-autocomplete' %}
+
+    {% include 'nov-stickymenu-mobile' %}
+    
+    {% include 'nov-popup-newsletter' %}
+    {% if settings.wishlist_enable %}
+      {% include 'nov-popup-wishlist' %}
+    {% endif %}
+
+    <div id="_desktop_back_top">
+      <div id="back-top">
+        <span>
+          <i class="zmdi zmdi-chevron-up"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="link_to_collection_cart_empty d-none">
+      <ul class="list-unstyled">
+        {% if settings.collec_1_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_1 }}"><span>{{ settings.collec_1_name }}</span></a></li>
+        {% endif %}
+        {% if settings.collec_2_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_2 }}"><span>{{ settings.collec_2_name }}</span></a></li>
+        {% endif %}
+        {% if settings.collec_3_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_3 }}"><span>{{ settings.collec_3_name }}</span></a></li>
+        {% endif %}
+        {% if settings.collec_4_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_4 }}"><span>{{ settings.collec_4_name }}</span></a></li>
+        {% endif %}
+        {% if settings.collec_5_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_5 }}"><span>{{ settings.collec_5_name }}</span></a></li>
+        {% endif %}
+      </ul>
+    </div>
+    
+    {% include 'nov-product-newsletter' %}
+    
+    {% include 'nov-size-chart' %}
+
+    {% unless customer %}
+      <div id="AlertRequestLogin" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered justify-content-center" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="zmdi zmdi-hc-fw zmdi-close"></i></button>
+            </div>
+            <div class="modal-body text-center">
+              <p>You must be logged in to manage your wishlist.</p>
+              <a href="{{ shop.secure_url }}/account/login" class="btn btn-default">Login in here</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endunless %}
+    
+    {% include 'nov-currency' %}
+
+    <script>
+      jQuery(function() {
+        jQuery('variant-radios :radio').change(function() {
+          var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
+          var optionValue = jQuery(this).val();
+          
+          jQuery(this).parents('fieldset').find('.variant_current').text(optionValue);
+        });
+        
+      });
+    </script>
+    
+    <script src="{{ 'variants.js' | asset_url }}" defer="defer"></script>
+    
+    {{ 'nuranium.js' | asset_url | script_tag }}
+    
+  </body>
+</html>

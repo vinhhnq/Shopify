@@ -1,0 +1,14 @@
+{% layout none %}
+<div class="products-grid">
+  <div class="grid-item">
+    {% for product in collection.products  %}
+    	<div class="block carousel-cell">
+    	  <div>
+    	    <div class="item col">
+    	      {% include 'product-card-grid' %}
+    	    </div>
+    	  </div>
+    	</div>
+    {% endfor %}
+  </div>
+</div>

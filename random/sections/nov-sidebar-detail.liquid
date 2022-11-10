@@ -1,0 +1,372 @@
+{% for block in section.blocks %}
+  {% if block.type == 'block_categories' %}
+    {% assign NovCategories = block.settings.sidebar_categories_menu %}
+    <div class="sidebar-block categories__sidebar sidebar-block__{{ forloop.index }} {{ block.settings.sidebar_categories_class }}">
+        <div class="title-block">{{ block.settings.sidebar_categories_title }}</div>
+          {% if linklists[NovCategories] != empty %}
+            <div class="block__content">
+              {% for link in linklists[NovCategories].links %}
+                {%- assign three_level_nav = false -%}
+                {%- assign child_list_handle = link.title | handleize -%}
+
+                {% if linklists[child_list_handle].links != blank %}
+                  {% for childlink in linklists[child_list_handle].links %}
+                    {% assign grand_child_list_handle = childlink.title | handleize %}
+                    {% if linklists[grand_child_list_handle].links != blank %}
+                    {%- assign three_level_nav = true -%}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+
+                {% if linklists[child_list_handle].links != blank %}
+                  <div class="cateTitle hasSubCategory open level1">
+                    <span class="arrow collapsed" data-toggle="collapse" data-target="#subCategory-{{ child_list_handle }}" aria-expanded="true"></span>
+                    <a class="cateItem {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+                    <div class="subCategory collapse" id="subCategory-{{ child_list_handle }}" aria-expanded="true">
+                        {% for childlink in linklists[child_list_handle].links %}
+                          {% assign grand_child_list_handle = childlink.title | handle %}
+                          {% if linklists[grand_child_list_handle].links != blank %}
+                            <div class="cateTitle hasSubCategory level2">
+                              <span class="arrow collapsed" data-toggle="collapse" data-target="#subCategory-{{ grand_child_list_handle }}"aria-expanded="true"></span>
+                              <a class="cateItem {% if childlink.active %}active{% endif %}" href="{{ childlink.url }}">{{ childlink.title }}</a>
+                              <div class="subCategory collapse" id="subCategory-{{ grand_child_list_handle }}" aria-expanded="true">
+                                  {% for grandchildlink in linklists[grand_child_list_handle].links %}
+                                    <div class="cateTitle">
+                                      <a href="{{ grandchildlink.url }}" class="cateItem{% if grandchildlink.active %} active{% endif %}{% if forloop.last %} cateItem--last{% endif %}">{{ grandchildlink.title | escape }}</a>
+                                    </div>
+                                  {% endfor %}
+                              </div>
+                            </div>
+                          {% else %}
+                            <div class="cateTitle">
+                              <a href="{{ childlink.url }}" class="cateItem{% if childlink.active %} active{% endif %}{% if forloop.last %} cateItem--last{% endif %}">{{ childlink.title | escape }}</a>
+                            </div>
+                          {% endif %}
+
+                        {% endfor %}
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="cateTitle">
+                    <a class="cateItem {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+                  </div>
+                {% endif %}
+
+              {% endfor %}
+            </div>
+          {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.type == 'block_productlist' %}
+    {%- assign collection = collections[block.settings.sidebar_collection] -%}
+    {% if collection.products.size > 0 %}
+    <div class="sidebar-block productlist__sidebar sidebar-block__{{ forloop.index }} {{ block.settings.sidebar_categories_class }}">
+      <div class="title-block">{{ block.settings.sidebar_productlist_title }}</div>
+      {% for product in collection.products limit: block.settings.number_show %}
+        <div class="item-product{% unless product.available %} product-price--sold-out{% endunless %}{% if forloop != true %}{% endif %} d-flex">
+          <div class="thumbnail-container{% if product.images.size > 1 %} has-multiimage{% endif %}">
+            <a href="{{ product.url | within: collection }}">
+              <img class="img-fluid product__thumbnail lazyload" data-src="{{ product.featured_image | product_img_url: '100x' }}" alt="{{ product.featured_image.alt | escape }}">
+              {% for image in product.images %}
+                {% if forloop.first != true %}
+                  <img class="img-fluid product__thumbnail-second lazyload" data-src="{{ image.src | product_img_url: '100x' }}" alt="{{ product.featured_image.alt | escape }}">
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+            </a>
+          </div>
+
+          <div class="product__info">
+            <div class="product__title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+            {% if settings.show_rating %}
+              <div class="group-reviews has-border">
+                <div class="detail-reviews">
+                  <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                </div>
+              </div>
+            {% endif %}
+            <div class="product__price">
+              {% include 'product-price' %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% endif %}
+
+  {% if block.type == 'block_recentpost' %}
+    <div class="sidebar-block recentpost__sidebar sidebar-block__{{ forloop.index }} {{ block.settings.block_class }}">
+        {% if block.settings.block_title != blank %}
+        <div class="title-block">
+          {{ block.settings.block_title }}
+        </div>
+        {% endif %}
+        {% if block.settings.number_show != blank %}
+          {% assign numberLimit = block.settings.number_show %}
+          <div class="block__content">
+            <div>
+            {% for article in blogs.news.articles limit: numberLimit %}
+              <div class="post-item">
+                <div class="post__title">{{ article.title | link_to: article.url }}</div>
+                <div class="post__info">
+                  {% if block.settings.show_comment %}
+                    {% if blog.comments_enabled? %}
+                      <span class="post__countcomment">
+                        <i class="zmdi zmdi-comments"></i>{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                      </span>
+                    {% endif %}
+                  {% endif %}
+                  {% if block.settings.show_date %}
+                    <span class="post__date text-uppercase">
+                      <i class="zmdi zmdi-calendar-note"></i>{{ article.published_at | time_tag: '%d %b, %Y' }}
+                    </span>
+                  {% endif %}
+
+                  {% if block.settings.show_author %}
+                    <span class="article__author"><i class="zmdi zmdi-account"></i>{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+                  {% endif %}
+                </div>
+                <div class="post__excerpt">
+                  {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt }}
+                  {% else %}
+                    {{ article.content | strip_html | truncate: 100 }}
+                  {% endif %}
+                </div>
+                <div class="read_more">{{ 'blogs.article.view_more' | t | link_to: article.url }}</div>
+              </div>
+            {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.type == 'block_producttags' %}
+    <div class="sidebar-block producttags__sidebar sidebar-block__{{ forloop.index }} {{ block.settings.block_class }}">
+        {% if block.settings.block_title != blank %}
+        <div class="title-block">
+          {{ block.settings.block_title }}
+        </div>
+        {% endif %}
+        {% if block.settings.number_show != blank %}
+          {% assign collection = collections.all %}
+          {% paginate collection.products by 1000 %} 
+          <div class="block__content">
+            {% assign numberLimit = block.settings.number_show %}
+            <ul class="listSidebarBlog list-unstyled">
+              {% for tag in collection.tags limit:numberLimit %}
+                <li>{{ tag | link_to_tag: tag }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endpaginate %}
+        {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.type == 'block_banner' %}
+    <div class="sidebar-block sidebar-block__{{ forloop.index }} {{ block.settings.banner_class }}">
+        {% if block.settings.banner_title != blank %}
+        <div class="title-block">
+          {{ block.settings.banner_title }}
+        </div>
+        {% endif %}
+        {% if block.settings.banner_image != blank %}
+          <div class="block__content">
+            <img class="lazyload" data-src="{{ block.settings.banner_image | img_url: 'original' }}" alt="{% if block.settings.banner_title != blank %}{{ block.settings.banner_title }}{% else %}banner sidebar{% endif %}">
+          </div>
+        {% endif %}
+    </div>
+  {% endif %}
+{% endfor %}
+
+{% schema %}
+  {
+    "name": "Sidebar Product",
+    "settings": [
+
+    ],
+    "blocks": [
+      {
+        "type": "block_categories",
+        "name": "Categories Product",
+        "settings": [
+          {
+            "type": "text",
+            "id": "sidebar_categories_title",
+            "label": "Title",
+            "default": "Categories"
+          },
+          {
+            "type": "text",
+            "id": "sidebar_categories_class",
+            "label": "Class"
+          },
+          {
+            "type": "link_list",
+            "id": "sidebar_categories_menu",
+            "label": "Choose Menu",
+            "info": "Choose menu for block. Add new menu: Admin -> Navigation"
+          }
+        ]
+      },
+      {
+        "type": "block_productlist",
+        "name": "Product list",
+        "settings": [
+          {
+            "type": "text",
+            "id": "sidebar_productlist_title",
+            "label": "Title",
+            "default": "Product List"
+          },
+          {
+            "type": "text",
+            "id": "sidebar_productlist_class",
+            "label": "Class"
+          },
+          {
+            "type": "collection",
+            "id": "sidebar_collection",
+            "label": "Choose Collection",
+            "info": "Choose Collection for block. Add new menu: Admin -> Collection"
+          },
+          {
+            "type": "range",
+            "id": "number_show",
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "label": "Number Show",
+            "default": 3,
+            "info": "Select number product show"
+          }
+        ]
+      },
+      {
+        "type": "block_html",
+        "name": "Block Custom HTML",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+             "type": "textarea",
+             "id": "html_content",
+             "label": "Content",
+             "placeholder": "You can input code html for content.",
+             "info": "You can input code html for content."
+          }
+        ]
+      },
+      {
+        "type": "block_recentpost",
+        "name": "Block Recent Post",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title",
+            "default": "Recent post"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "range",
+            "id": "number_show",
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "label": "Number Show",
+            "default": 2,
+            "info": "Select number post show"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_date",
+            "label": "Show date",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show_comment",
+            "label": "Show Comment",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show_author",
+            "label": "Show Author",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "block_producttags",
+        "name": "Block Product Tags",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title",
+            "default": "Product Tags"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "range",
+            "id": "number_show",
+            "min": 10,
+            "max": 20,
+            "step": 1,
+            "label": "Number Show",
+            "default": 10,
+            "info": "Select number tags show"
+          }
+        ]
+      },
+      {
+        "type": "block_banner",
+        "name": "Block Banner",
+        "settings": [
+          {
+            "type": "text",
+            "id": "banner_title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "banner_class",
+            "label": "Class"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_image",
+            "label": "Banner image"
+          },
+          {
+            "id": "banner_link",
+            "type": "url",
+            "label": "Banner button link"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

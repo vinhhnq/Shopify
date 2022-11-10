@@ -1,0 +1,47 @@
+<div id="mobile-blockcart" class="mobile-boxpage d-flex d-md-none">
+    <div class="content-boxpage col">
+      <div class="box-header d-flex justify-content-between align-items-center">
+          <div class="title-box">{{ 'sticky_mobile.cart.title' | t }}</div>
+          <div class="close-box">{{ 'sticky_mobile.close.title' | t }}</div>
+      </div>
+      <div id="_mobile_cart" class="box-content"></div>
+    </div>
+</div>
+
+<div id="mobile-pageaccount" class="mobile-boxpage d-flex d-md-none" data-titlebox-parent="Account">
+  <div class="content-boxpage col">
+    <div class="box-header d-flex justify-content-between align-items-center">
+        <div class="back-box">{{ 'sticky_mobile.back.title' | t }}</div>
+        <div class="title-box">{{ 'sticky_mobile.account.title' | t }}</div>
+        <div class="close-box">{{ 'sticky_mobile.close.title' | t }}</div>
+    </div>
+    <div class="box-content d-flex justify-content-center align-items-center text-center">
+      <div>
+        <div id="_mobile_account_list"></div>
+        {% if settings.show_multiple_currencies == true %}
+        	<div class="links-currency" data-target="#box-currency" data-titlebox="Currency"><span>{{ 'sticky_mobile.currency.title' | t }}</span><i class="zmdi zmdi-arrow-right"></i></div>
+        {% endif %}
+      </div>
+    </div>
+    {% if settings.show_multiple_currencies == true %}
+      <div id="box-currency" class="box-content list-unstyled">
+        <div id="_mobile_currency_selector" class="currency-selector groups-selector"></div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<div id="stickymenu_bottom_mobile" class="d-flex align-items-center justify-content-center d-md-none text-center">
+  <div class="stickymenu-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i><span>{{ 'sticky_mobile.home.title' | t }}</span></a></div>
+  {% if settings.wishlist_enable %}
+  	<div class="stickymenu-item"><a href="/pages/page-wishlist"><i class="fa fa-heart" aria-hidden="true"></i><span>{{ 'sticky_mobile.wishlist.title' | t }}</span></a></div>
+  {% endif %}
+  <div class="stickymenu-item"><a href="#" class="nov-toggle-page" data-target="#mobile-blockcart"><span id="_mobile_cart_count" class="cart-products-count"></span><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>{{ 'sticky_mobile.cart.title' | t }}</span></a></div>
+  <div class="stickymenu-item"><a href="#" class="nov-toggle-page" data-target="#mobile-pageaccount"><i class="fa fa-cog" aria-hidden="true"></i><span>{{ 'sticky_mobile.setting.title' | t }}</span></a></div>
+  <div class="stickymenu-item">
+    <div id="back_top">
+      <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+      <div class="on_top">{{ 'sticky_mobile.on_top.title' | t }}</div>
+    </div>
+  </div>
+</div>

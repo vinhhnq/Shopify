@@ -1,0 +1,75 @@
+{{ "//cdn.shopify.com/s/javascripts/currencies.js" | script_tag }}
+{{ "jquery.currencies.min.js" | asset_url | script_tag }}
+
+<script>
+
+// Pick your format here:
+// money_format or money_with_currency_format
+Currency.format = 'money_format';
+
+var shopCurrency = '{{ shop.currency }}';
+
+/* Sometimes merchants change their shop currency, let's tell our JavaScript file */
+Currency.moneyFormats[shopCurrency].money_with_currency_format = {{ shop.money_with_currency_format | strip_html | json }};
+Currency.moneyFormats[shopCurrency].money_format = {{ shop.money_format | strip_html | json }};
+
+var cookieCurrency = Currency.cookie.read();
+
+// Fix for customer account pages.
+jQuery('span.money span.money').each(function() {
+  jQuery(this).parents('span.money').removeClass('money');
+});
+
+// Saving the current price.
+jQuery('span.money').each(function() {
+  jQuery(this).attr('data-currency-{{ shop.currency }}', jQuery(this).html());
+});
+
+// Select all your currencies buttons.
+var buttons = jQuery('#currencies span');
+var title = jQuery('.currency-selector .current-currency');
+
+
+// If there's no cookie or it's the shop currency.
+if (cookieCurrency == null || cookieCurrency === shopCurrency) {
+  buttons.removeClass('selected');
+  jQuery('#currencies span[data-currency=' + shopCurrency + ']').addClass('selected');
+  Currency.currentCurrency = shopCurrency;
+}
+else {
+  Currency.convertAll(shopCurrency, cookieCurrency);
+  buttons.removeClass('selected');
+  jQuery('#currencies span[data-currency=' + cookieCurrency + ']').addClass('selected');
+}
+
+
+var txt = jQuery('#currencies span.selected').text();
+jQuery('.currency-selector .current-currency').text(txt);
+
+// When customer clicks on a currency button.
+buttons.click(function() {
+  buttons.removeClass('selected');
+  jQuery(this).addClass('selected');
+  var newCurrency =  jQuery(this).attr('data-currency');
+  var txt = jQuery('#currencies span.selected').text();
+  jQuery('.currency-selector .current-currency').text(txt);
+  Currency.convertAll(Currency.currentCurrency, newCurrency);
+});
+
+
+// For options.
+var original_selectCallback = window.selectCallback;
+var selectCallback = function(variant, selector) {
+  original_selectCallback(variant, selector);
+  Currency.convertAll(shopCurrency, jQuery('#currencies span.selected').attr('data-currency'));
+  jQuery('.selected-currency').text(Currency.currentCurrency);
+};
+
+$('body').on('ajaxCart.afterCartLoad', function(cart) {
+  Currency.convertAll(shopCurrency, jQuery('#currencies span.selected').attr('data-currency'));
+  jQuery('.selected-currency').text(Currency.currentCurrency);
+});
+
+jQuery('.selected-currency').text(Currency.currentCurrency);
+
+</script>

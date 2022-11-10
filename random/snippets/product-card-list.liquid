@@ -1,0 +1,51 @@
+<div class="item-product d-flex align-items-center{% unless product.available %} product-price--sold-out{% endunless %}">
+  {% assign variantCount = product.variants | size %}
+  <div class="thumbnail-container{% if product.images.size > 1 %} has-multiimage{% endif %}{% if section.settings.show_variant_color and variantCount > 1 %} has_variants{% endif %}">
+    <a href="{{ product.url | within: collection }}">
+      <img class="img-fluid product__thumbnail lazyload" data-src="{{ product.featured_image | product_img_url: '370x' }}" alt="{{ product.featured_image.alt | escape }}">
+      {% for image in product.images %}
+        {% if forloop.first != true %}
+          <img class="img-fluid product__thumbnail-second lazyload" data-src="{{ image.src | product_img_url: '370x' }}" alt="{{ product.featured_image.alt | escape }}">
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    </a>
+
+    {% if product.compare_at_price > product.price %}
+    <div class="badge_sale">
+      {% if product.compare_at_price > product.price %}
+      <div class="badge badge--sale-rt">{{ 'products.product.new' | t }}</div>
+      {% endif %}
+      {% if product.compare_at_price > product.price %}
+      <span class="badge badge--sale-pt">-{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round: 4 }}%</span>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="product__info">
+    <div class="block_product_info">
+      <div class="product__title">
+        <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+      </div>
+      <div class="product__price{% if settings.show_rating == false %} pb-20{% endif %}">
+        {% include 'product-price' %}
+      </div>
+      {% if template.name != 'index' %}
+        {% if settings.show_rating %}
+          <div class="product__review">
+            <div class="rating"><span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span></div>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="group-buttons d-flex mt-20">
+      {% if settings.quickview_enable %}
+        {% include 'nov-quickview' %}
+      {% endif %}
+      {% include 'group_buttons' %}
+      {% if settings.wishlist_enable %}
+        {% include 'nov-wishlist' %}
+      {% endif %}
+    </div>
+  </div>
+</div>

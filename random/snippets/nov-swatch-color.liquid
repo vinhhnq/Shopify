@@ -1,0 +1,45 @@
+{% assign file_extension = 'png' %}
+{% capture variantsswatch %} {% endcapture %}
+{% capture variantsswatch %}{{ nov-swatch-color }}{% endcapture %}
+{% if nov-swatch-color == blank %}
+    <div class="swatch error">
+        <p>You must include the snippet nov-swatch-color.liquid with the name of a product option.</p> 
+        <p>Use: <code>{% raw %}{% include 'nov-swatch' with 'name of your product option here' %}{% endraw %}</code></p>
+        <p>Example: <code>{% raw %}{% include 'nov-swatch' with 'Color' %}{% endraw %}</code></p>
+    </div>
+{% else %}
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+{% assign indexChild = 0 %}
+
+{% for option in product.options %}
+    {% if option == nov-swatch-color %}
+        {% assign found_option = true %}
+        {% assign option_index = forloop.index0 %}
+        {% assign indexChild = forloop.index %}
+        {% assign downcased_option = nov-swatch-color | downcase %}
+        {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+            {% assign is_color = true %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+{% unless found_option %}
+    
+{% else %}
+<div class="product-swatch-color d-flex justify-content-center" data-option-index="{{ option_index }}">
+    {% assign values = '' %}
+    {% for variant in product.variants %}
+        {% assign value = variant.options[option_index] %}
+        {% unless values contains value %}
+            {% assign values = values | join: ',' %}
+            {% assign values = values | append: ',' | append: value %}
+            {% assign values = values | split: ',' %}
+            <div data-value="{{ value | escape }}" class="swatch-element {% if is_color %}color {% endif %}{{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                <a style="background: {{ value | split: ' ' | last | handle }}" data-image-variant="{{ variant.image.src | product_img_url: '600x' }}" href="#"></a>
+            </div>
+        {% endunless %}
+    {% endfor %}
+</div>
+{% endunless %}
+{% endif %}

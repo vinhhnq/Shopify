@@ -1,0 +1,106 @@
+{% layout none %}
+<form action="/cart" method="post" class="cart ajaxcart">
+  <div class="ajaxcart__inner">
+    {% for item in cart.items %}
+      <div class="ajaxcart__product" data-line="{{ forloop.index }}">
+        <div class="media">
+          <a href="{{ item.url }}">
+            <img class="d-flex product-image" src="{{ item | img_url: '100x100' }}" alt="{{ item.product.title }}" title="{{ item.product.title }}">
+          </a>
+          <div class="media-body">
+            <a class="product-name" href="{{ item.url }}">{{ item.product.title }}
+              {% unless item.variant.title contains 'Default' %} - 
+              {% assign p_option = '' %}
+              {% for option in item.product.options %}
+                {% if p_option == '' %}
+              		{% assign p_option = item.variant.options[forloop.index0] %}
+                {% else %}
+                	{% assign p_option = '/ ' | append: item.variant.options[forloop.index0] %}
+                {% endif %}
+                {{ p_option }}
+              {% endfor %}
+              {% endunless %}
+            </a>
+            <div class="mb-5">
+              {%- assign property_size = item.properties | size -%}
+              {% if property_size > 0 %}
+              <span class="ajaxcart__product-meta">
+                {% for p in item.properties %}
+                  {% unless p.last == blank %}
+                    {{ p.first }}:
+
+                    {% if p.last contains '/uploads/' %}
+                    	<a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                    {% else %}
+                    {{ p.last }}
+                    {% endif %}
+                  {% endunless %}
+                {% endfor %}
+              </span>
+              {% endif %}
+           	</div>
+            
+            <span class="product-price">
+              {% if item.original_line_price != item.line_price %}
+              <small class="ajaxcart-item__price-strikethrough"><s>{{ item.original_line_price | money }}</s></small>
+              <br><span class="money">{{ item.line_price | money }}</span>
+              {% else %}
+              <span class="money">{{ item.line_price | money }}</span>
+              {% endif %}
+            </span>
+            <span class="quantity"> x {{ item.quantity }}</span>
+            
+            <a class="remove-from-cart" rel="nofollow" href="javascript:void(0);" title="remove from cart" data-line="{{ forloop.index }}" data-product-id={{ item.id }}>
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  {% assign price_without_currency = cart.total_price | money_without_currency | remove: '.00' | remove: ',' %}
+  {% assign price = price_without_currency | plus: 0 %}
+  {% assign freeshipping_value = settings.free_shipping | plus: 0 %}
+  {% if price < freeshipping_value %}
+  	{% assign spend_value = freeshipping_value | minus: price | times: 100 | money %}
+  	<div id="threshold_bar_popup_minicart"{% if settings.freeshipping_enable == false %} class="d-none"{% endif %} style="padding: 20px;">
+      <div class="cart_threshold">
+        <div class="threshold_spend">{{ 'cart.general.spend_html' | t: spend: spend_value }}</div>
+        <div class="threshold_bar">
+          <span class="animate" style="width:{{ price | times: 100 | divided_by: freeshipping_value | round: 0 }}%!important">
+            <span>{{ price | times: 100 | divided_by: freeshipping_value | round: 0 }}%</span>
+          </span>
+        </div>
+      </div>
+  </div>
+  {% else %}
+    <div id="threshold_bar_popup_minicart"{% if settings.freeshipping_enable == false %} class="d-none"{% endif %}>
+      <div class="threshold_bar hide">
+        <span class="animate" style="width: 100% !important;"><span>100%</span></span>
+      </div>
+      <p class="content_threshold threshold_congrats">{{ 'cart.general.content_threshold' | t }}</p>
+    </div>
+  {% endif %}
+  
+  <div class="ajaxcart__footer">
+    <div class="subtotal d-flex align-items-center justify-content-between">
+      <label>{{ 'cart.general.total' | t }}&nbsp;:</label>
+      <span class="money">{{ cart.total_price | money }}</span>
+    </div>
+    {% if cart.total_discount > 0 %}
+    <div class="total d-flex align-items-center">
+      <label>{{ 'cart.general.total' | t }}&nbsp;:</label>
+      <span class="money">{{ cart.total_discount | money }}</span>
+    </div>
+    {% endif %}
+    <div class="d-flex justify-content-center flex-column-reverse">
+      <a href="/cart" class="btn btn-success">
+        <span>{{ 'cart.general.view_cart' | t }}</span>
+      </a>
+      <button type="submit" class="btn cart__checkout" name="checkout">
+        <span>{{ 'cart.general.checkout' | t }}</span>
+      </button>
+    </div>
+  </div>
+</form>

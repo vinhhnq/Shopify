@@ -1,0 +1,315 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% else %}
+    <div class="container-fluid">
+  {% endif %}
+  {% if section.settings.title != blank %}
+  <div class="{{ section.settings.title_alignment }}">
+    <div class="title_block">
+      <span>{{ section.settings.title }}</span>
+      {% if section.settings.subheading != blank %}
+      <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+  <div class="DragScroll">
+    <div class="items row spacing-0">
+     {% for block in section.blocks %}
+     {% assign size = section.blocks.size %}
+     {% assign p = forloop.index %}
+     {% assign item = p | times: 10 | divided_by: size %}
+      <div class="item col{% if item > 5 %} ct_r{% else %} ct_l{% endif %} position-relative{% if block.settings.class_block != blank %} {{ block.settings.class_block }}{% endif %}">
+        <div class="bl_img position-relative">
+          <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
+            {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+            <img class="article__list-image lazyload"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+              data-src="{{ img_url }}"
+              data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+              data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+              data-sizes="auto"
+              alt="">
+          </div>
+          {% if block.settings.title != blank %}
+            <div class="title">{{ block.settings.title }}</div>
+          {% endif %}
+        </div>
+        {% if block.settings.s_bl_c == true %}
+          <div class="bl_collection d-flex">
+            {% if block.settings.title != blank %}
+              <div class="bl_title"><span class="title">{{ block.settings.title }}</span><span class="line"></span></div>
+            {% endif %}
+            <ul class="list-unstyled">
+              {% if block.settings.tc1 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc1 }}">{{ block.settings.tc1 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc2 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc2 }}">{{ block.settings.tc2 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc3 != blank %}
+                <li clas3="collec"><a href="{{ block.settings.lc3 }}">{{ block.settings.tc3 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc4 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc4 }}">{{ block.settings.tc4 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc5 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc5 }}">{{ block.settings.tc5 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc6 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc6 }}">{{ block.settings.tc6 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc7 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc7 }}">{{ block.settings.tc7 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc8 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc8 }}">{{ block.settings.tc8 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc9 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc9 }}">{{ block.settings.tc9 }}</a></li>
+              {% endif %}
+              {% if block.settings.tc10 != blank %}
+                <li class="collec"><a href="{{ block.settings.lc10 }}">{{ block.settings.tc10 }}</a></li>
+              {% endif %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Image - List Collection",
+    "class": "index-section section_img_list_collection wow fadeInUp animated",
+    "max_blocks": 5,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Vinova link to collection"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Subtitle from happy customers"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "checkbox",
+            "id": "s_bl_c",
+            "label": "Show block collection list"
+          },
+          {
+            "type": "header",
+            "content": "List collection"
+          },
+          {
+            "type": "text",
+            "id": "tc1",
+            "label": "Collection 1"
+          },
+          {
+            "type": "url",
+            "id": "lc1",
+            "label": "Link collection 1"
+          },
+          {
+            "type": "text",
+            "id": "tc2",
+            "label": "Collection 2"
+          },
+          {
+            "type": "url",
+            "id": "lc2",
+            "label": "Link collection 2"
+          },
+          {
+            "type": "text",
+            "id": "tc3",
+            "label": "Collection 3"
+          },
+          {
+            "type": "url",
+            "id": "lc3",
+            "label": "Link collection 3"
+          },
+          {
+            "type": "text",
+            "id": "tc4",
+            "label": "Collection 4"
+          },
+          {
+            "type": "url",
+            "id": "lc4",
+            "label": "Link collection 4"
+          },
+          {
+            "type": "text",
+            "id": "tc5",
+            "label": "Collection 5"
+          },
+          {
+            "type": "url",
+            "id": "lc5",
+            "label": "Link collection 5"
+          },
+          {
+            "type": "text",
+            "id": "tc6",
+            "label": "Collection 6"
+          },
+          {
+            "type": "url",
+            "id": "lc6",
+            "label": "Link collection 6"
+          },
+          {
+            "type": "text",
+            "id": "tc7",
+            "label": "Collection 7"
+          },
+          {
+            "type": "url",
+            "id": "lc7",
+            "label": "Link collection 7"
+          },
+          {
+            "type": "text",
+            "id": "tc8",
+            "label": "Collection 8"
+          },
+          {
+            "type": "url",
+            "id": "lc8",
+            "label": "Link collection 8"
+          },
+          {
+            "type": "text",
+            "id": "tc9",
+            "label": "Collection 9"
+          },
+          {
+            "type": "url",
+            "id": "lc9",
+            "label": "Link collection 9"
+          },
+          {
+            "type": "text",
+            "id": "tc10",
+            "label": "Collection 10"
+          },
+          {
+            "type": "url",
+            "id": "lc10",
+            "label": "Link collection 10"
+          },
+          {
+            "type": "text",
+            "id": "class_block",
+            "label": "Class"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Image With Group Link",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}
+{%- assign bg_image = section.settings.background_image -%}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    {% endif %}
+  }
+</style>

@@ -1,0 +1,47 @@
+<div id="popup-quickview" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="quickviewModal" class="quickviewProduct hidden hide">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close quickviewClose" data-dismiss="modal" aria-label="Close"><i class="zmdi zmdi-hc-fw zmdi-close"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="proBoxPrimary row spacing-0">
+          <div class="proBoxImage col-pr-xl-6 col-md-6 col-12">
+            <div class="proThumbnails proThumbnailsQuickview">
+                <div class="nov-slick-carousel"></div>
+            </div>
+          </div>
+          <div class="proBoxInfo col-in-xl-6 col-md-6 col-12">
+            <div class="quickviewName"></div>
+            <div class="proPrice product-single__price">
+              <span class="priceProduct pricePrimary"></span>
+              <span class="priceProduct priceCompare"></span>
+            </div>
+            <div class="quickviewAvailability proAttr{% if settings.product_available_enable == false %} hidden{% endif %}"></div>
+            <div class="quickViewVendor proAttr{% if settings.product_vendor_enable == false %} hidden{% endif %}"></div>
+            <div class="quickViewType proAttr{% if settings.product_type_enable == false %} hidden{% endif %}"></div>
+            <div class="proShortDescription rte"></div>
+            <form action="/cart/add" method="post" enctype="multipart/form-data" class="formQuickview form-ajaxtocart">
+              <div class="proVariantsQuickview">
+                <select name='id' id="productSelectQuickview" style="display:none"></select>
+              </div>
+              <div class="quantity_items mt-30">
+                <div class="proQuantity">
+                  <label for="Quantity" class="qtySelector">{{ 'products.product.quantity' | t }}</label>
+                  <input type="number" id="Quantity" name="quantity" value="1" min="1" class="qtySelector">
+                </div>
+              </div>
+              
+              <div class="proButton product-form__item--submit">
+                <button type="submit" name="add" class="btn btnAddToCart product-form__cart-submit" id="qv-btnAddToCart" data-pid="0">
+                  <span>{{ 'products.product.add_to_cart' | t }}</span> 
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

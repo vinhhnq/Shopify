@@ -1,0 +1,564 @@
+<div class="distance{% if section.settings.has_fullwidth == true %} full_width{% endif %}{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% endif %}
+
+  {% if section.settings.title != blank %}
+    <div class="{{ section.settings.title_alignment }} position-relative">
+      <div class="title_block">
+        <span>{{ section.settings.title }}</span>
+        {% if section.settings.subheading != blank %}
+        <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row spacing-{{ section.settings.spacing }}">
+    {% for block in section.blocks %}
+      {% if block.type == 'text' %}
+        <div class="block_text pt-sm-30 {{ block.settings.text-alignment }} {{ block.settings.width_text_lg }} {{ block.settings.width_text_md }} {{ block.settings.width_text_sm }}{% if block.settings.class_text != blank %} {{ block.settings.class_text }}{% endif %}">
+          <div class="block_content text-center h-100 pt-sm-30 pb-sm-30 d-flex align-items-center justify-content-center" style="background-image: url({{ block.settings.bg_img | img_url: '1920x' }});">
+            {% if block.settings.image != blank %}
+            <img class="mb-20" src="{{ block.settings.image | img_url: '120x' }}" alt="image">
+            {% endif %}
+            <div>
+            {% if block.settings.title != blank %}
+              <div class="title_block mb-0">
+                {{ block.settings.title }}
+                {% if block.settings.subtitle != blank %}
+                <div class="sub_title">{{ block.settings.subtitle }}</div>
+                {% endif %}
+              </div>
+              {% if block.settings.btn_t != blank %}
+                <a href="{{ block.settings.btn }}" class="btn mt-40">{{ block.settings.btn_t }}</a>
+              {% endif %}
+            {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      {% if block.type == 'video' %}
+        <div class="block_video {{ block.settings.width_image_lg }} {{ block.settings.width_image_md }} {{ block.settings.width_image_sm }}{% if block.settings.class_image != blank %} {{ block.settings.class_image }}{% endif %}">
+          <div class="block_content">
+            {% if block.settings.img_cover != blank %}
+              <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.img_cover.aspect_ratio | times: 100}}%;">
+                {% assign img_url = block.settings.img_cover | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                <img class="lazyload w-100"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                  data-src="{{ img_url }}"
+                  data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                  data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="">
+              </div>
+            {% endif %}
+            {% if block.settings.img_cover != blank %}
+              <div class="icon_play d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#ModalVideo" data-src="{% if block.settings.video_url.type == "youtube"  %}https://www.youtube.com/embed/{{ block.settings.video_url.id }}?rel=0&showinfo=0&vq=720{% endif %}{% if block.settings.video_url.type == "vimeo" %}//player.vimeo.com/video/{{ block.settings.video_url.id }}?byline=0&portrait=0&badge=0{% endif %}">
+                  <i class="fa fa-play" aria-hidden="true"></i>
+              </div>
+            {% endif %}
+            {% if block.settings.img_cover == blank %}
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="{% if block.settings.video_url.type == "youtube"  %}https://www.youtube.com/embed/{{ block.settings.video_url.id }}?rel=0&showinfo=0&vq=4000{% endif %}{% if block.settings.video_url.type == "vimeo" %}//player.vimeo.com/video/{{ block.settings.video_url.id }}?byline=0&portrait=0&badge=0{% endif %}" allowfullscreen></iframe>
+              </div>
+            {% endif %}
+            {% if block.settings.img_cover != blank %}
+              <div class="modal fade" id="ModalVideo" tabindex="-1" role="dialog" aria-labelledby="ModalVideo" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="zmdi zmdi-close"></i></span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {% if block.settings.video_url.type == "youtube" %}
+                        <div class="embed-responsive embed-responsive-16by9">
+                          <iframe class="embed-responsive-item" src="" id="video" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                      {% endif %}
+                      {% if block.settings.video_url.type == "vimeo" %}
+                        <div class="embed-responsive embed-responsive-16by9">
+                          <iframe class="embed-responsive-item" src="" id="video" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if section.settings.has_fullwidth == false %}
+    </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Vinova Video Width Text",
+    "class": "index-section section_video_text",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Vinova Video With Text"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Subtitle from happy customers"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing items",
+        "default": "10",
+        "options": [
+          {
+            "label": "0px",
+            "value": "0"
+          },
+          {
+            "label": "5px",
+            "value": "5"
+          },
+          {
+            "label": "10px",
+            "value": "10"
+          },
+          {
+            "label": "12px",
+            "value": "12"
+          },
+          {
+            "label": "15px",
+            "value": "15"
+          },
+          {
+            "label": "20px",
+            "value": "20"
+          },
+          {
+            "label": "25px",
+            "value": "25"
+          },
+          {
+            "label": "30px",
+            "value": "30"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Design options"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full Width",
+        "default":   false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "select",
+            "id": "text-alignment",
+            "label": "Text alignment",
+            "default": "text-left",
+            "options": [
+              {
+                "value": "text-left",
+                "label": "Left"
+              },
+              {
+                "value": "text-center",
+                "label": "Center"
+              },
+              {
+                "value": "text-right",
+                "label": "Right"
+              }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "bg_img",
+            "label": "Background image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "subtitle",
+            "label": "Sub Title"
+          },
+           {
+            "type": "text",
+            "id": "btn_t",
+            "label": "Button text"
+          },
+          {
+            "type": "url",
+            "id": "btn",
+            "label": "Button link"
+          },
+          {
+            "type": "select",
+            "id": "width_text",
+            "label": "Width Text",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_text_tablet",
+            "label": "Width Text(Tablet)",
+            "default": "col-md-4",
+            "options": [
+              {
+                "value": "col-md-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-md-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-md-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-md-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-md-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-md-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-md-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-md-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_text_mobile",
+            "label": "Width Text(Mobile)",
+            "default": "col-sm-6",
+            "options": [
+              {
+                "value": "col-sm-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-sm-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-sm-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-sm-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-sm-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-sm-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-sm-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-sm-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "class_text",
+            "label": "Class Text"
+          }
+        ]
+      },
+      {
+        "type": "video",
+        "name": "Video",
+        "settings": [
+          {
+            "type": "select",
+            "id": "width_image",
+            "label": "Width Video",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_tablet",
+            "label": "Width Video(Tablet)",
+            "default": "col-md-4",
+            "options": [
+              {
+                "value": "col-md-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-md-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-md-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-md-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-md-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-md-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-md-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-md-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_mobile",
+            "label": "Width Video(Mobile)",
+            "default": "col-6",
+            "options": [
+              {
+                "value": "col-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "img_cover",
+            "label": "Image cover"
+          },
+          {
+            "type": "video_url",
+            "id": "video_url",
+            "label": "Video link",
+            "accept": ["youtube", "vimeo"],
+            "info": "Only For Youtube And Vimeo"
+          },
+          {
+            "type": "text",
+            "id": "class_image",
+            "label": "Class Video"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Video With Text",
+        "category": "Video",
+        "blocks": [
+          {
+            "type": "video"
+          },
+          {
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  {%- assign bg_image = section.settings.background_image -%}
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");
+      background-repeat: no-repeat;
+      background-position: center top;
+    {% endif %}
+  }
+</style>

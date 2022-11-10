@@ -1,0 +1,73 @@
+<div class="container">
+    {% if section.settings.title != blank %}
+        <div class="block-faq">
+            <div class="title_block">
+                <span>{{ section.settings.title | escape }}</span>
+            </div>
+            {% if section.settings.subheading != blank %}
+                <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="faqPageWrapper">
+        {% if section.blocks.size > 0 %}
+            <div id="Accordion" role="tablist">
+                {% for block in section.blocks %}
+                    <div class="faqs-main d-flex">
+                        <div class="panel-number">{{ forloop.index }}</div>
+                        <div class="panel-group">
+                            <div class="panel-header collapsed" data-toggle="collapse" href="#Item-{{ forloop.index }}" aria-expanded="false" aria-controls="#Item-{{ forloop.index }}">
+                                {{ block.settings.item_title }}
+                            </div>
+                            <div class="panel-body">
+                                <div id="Item-{{ forloop.index }}" data-parent="#Accordion" class="collapse">
+                                    <div class="item-content">
+                                        {{ block.settings.item_content }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% schema %}
+{
+    "name": "vinova page FAQs",
+    "class": "index-section page-faqs",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Sub heading"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "faq",
+            "name": "FAQs Item",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "item_title",
+                    "label": "Item title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "item_content",
+                    "label": "Item content"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

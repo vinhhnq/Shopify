@@ -1,0 +1,222 @@
+{%- assign limit = section.settings.products_per_page -%}
+{% if template == "collection.leftsidebar" %}
+  {% assign viewtype = "leftsidebar" %}
+{% elsif template == "collection.rightsidebar" %}
+  {% assign viewtype = 'rightsidebar' %}
+{% elsif template == "collection.full_width" %}
+  {% assign viewtype = 'full_width' %}
+{% elsif template == "collection.canvas" %}
+  {% assign viewtype = 'canvas' %}
+{% else %}
+  {% if settings.type_sidebar == 'sidebar_left' %}
+    {% assign viewtype = 'leftsidebar' %}
+  {% elsif settings.type_sidebar == 'sidebar_right' %}
+    {% assign viewtype = 'rightsidebar' %} 
+  {% elsif settings.type_sidebar == 'full_width' %}
+    {% assign viewtype = 'full_width' %}
+  {% else %}
+    {% assign viewtype = 'canvas' %}
+  {% endif %}
+{% endif %}
+{% include 'nov-breadcrumb' %}
+{% paginate collection.products by limit %}
+{% if viewtype == 'canvas' %}
+  <div class="sidebar-filter">{% include 'collection-filters' %}</div>
+{% endif %}
+<div class="container{% if viewtype == 'full_width' %}-1800{% endif %}">
+  <div class="row">
+    {% if section.settings.banner != blank %}
+      <div class="col-12 mb-60">
+        <div class="collection_banner">
+          <img class="lazyload" data-src="{{ section.settings.banner | img_url: '1920x' }}" alt="banner">
+        </div>
+      </div>
+    {% endif %}
+    {% if viewtype != 'canvas' %}
+    <div class="col-lg-3 col-md-4 position-static{% if viewtype == 'rightsidebar' %} order-0 order-md-2{% endif %}">
+      {% include 'collection-filters' %}
+    </div>
+    {% endif %}
+    <div class="{% if viewtype == 'canvas' %}col-lg-12 col-md-12{% else %}col-lg-9 col-md-8{% endif %} position-static">
+      <collection-filters-form class="facets">
+        <form class="CollectionFiltersForm facets__form mb-60 d-flex align-items-center">
+          {% if viewtype == 'canvas' %}
+            <div class="filter_button d-none d-md-block">
+             <i class="zmdi zmdi-tune"></i>
+              {{ 'collections.filters.button' | t }}
+            </div>
+            
+            <div class="showing-total d-none d-md-block">
+              {{ 'general.pagination.showing_total' | t: total: paginate.items }}
+            </div>
+          {% endif %}
+          <div class="bl_right d-flex">
+            <div class="gridlist-toggle">
+              {% if viewtype == 'canvas' %}
+                <a href="#" id="grid-4" title="Grid View 4" data-type="grid-4" class="active"><i class="zmdi zmdi-view-comfy"></i></a>
+              {% endif %}
+                
+                <a href="#" id="grid-3" title="Grid View 3" data-type="grid-3"{% if viewtype != 'canvas' %} class="active"{% endif %}><i class="zmdi zmdi-view-week"></i></a>
+                <a href="#" id="grid-2" title="Grid View 2" data-type="grid-2"><i class="zmdi zmdi-pause"></i></a>
+                <a href="#" id="list" title="List View" data-type="list"><i class="zmdi zmdi-view-headline"></i></a>
+            </div>
+            {% if section.settings.sort_enable %}
+              <div class="collection-filters__item sorting d-none d-md-block">
+                <div class="collection-filters__field">
+                  <div class="select">
+                    {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                    <select name="sort_by" class="select__select collection-filters__sort" id="SortBy" aria-describedby="a11y-refresh-page-message">
+                      {%- for option in collection.sort_options -%}
+                        <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name | escape }}</option>
+                      {%- endfor -%}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </form>
+      </collection-filters-form>
+      <script src="{{ 'collection-filters-form.js' | asset_url }}" defer="defer"></script>
+      <div id="CollectionProductGrid">
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          {%- if collection.products.size == 0 -%}
+            <div class="collection collection--empty page-width" id="main-collection-product-grid" data-id="{{ section.id }}">
+              <p class="collection-product-count light">
+                {{ 'collections.filters.product_count' | t: count: collection.products_count, total: collection.all_products_count }}
+              </p>
+              <div class="title-wrapper text-center">
+                <div class="title title--primary">
+                  <p class="">{{ 'collections.filters.empty' | t }}</p>
+                  <p class="">{{ 'collections.filters.use_fewer_filters_html' | t: link: collection.url, class: "underlined-link link font-italic" }}</p>
+                </div>
+              </div>
+            </div>
+          {%- else -%}
+            <div class="collection page-width">
+              <div id="main-collection-product-grid" data-id="{{ section.id }}" class="row grid--view-items" {% if viewtype == 'canvas' %}data-grid="grid-4"{% else %}data-grid="grid-3"{% endif %}>
+                {%- for product in collection.products -%}
+                  <div class="product--item">
+                    <div class="item-product{% unless product.available %} product-price--sold-out{% endunless %}">
+                      {% assign variantCount = product.variants | size %}
+                      {%- assign img_size = settings.img_size_large -%}
+                      <div class="thumbnail-container{% if product.images.size > 1 %} has-multiimage{% endif %}{% if section.settings.show_variant_color and variantCount > 1 %} has_variants{% endif %}">
+                        <a href="{{ product.url | within: collection }}">
+                          <div class="respone_image" style="padding-top:{{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100}}%">
+                            {% assign img_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                            <noscript>
+                              <img class="img-fluid product__thumbnail lazyload" data-src="{{ product.featured_image.src | img_url: '1024x' }}" alt="">
+                            </noscript>
+                            <img class="product__thumbnail lazyload"
+                              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 10'%3E%3C/svg%3E"
+                              data-src="{{ img_url }}"
+                              data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]"
+                              data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+                              data-sizes="auto"
+                              alt="" 
+                              data-image>
+                            {% for image in product.images %}
+                              {% assign img_second = image.src | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                              {% if forloop.first != true %}
+                                <img id="{{ img_id }}"
+                                  class="img-fluid product__thumbnail-second lazyload"
+                                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 10'%3E%3C/svg%3E"
+                                  data-src="{{ img_second }}"
+                                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                  data-aspectratio="{{ image.aspect_ratio }}"
+                                  data-sizes="auto"
+                                  alt=""
+                                  data-image>
+                                  {% break %}
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </a>
+                        {% if product.available and product.variants.size > 1  %}
+                          {% include 'nov-swatch-color' with 'Color' %}
+                        {% endif %}
+                        
+                        <div class="badge_sale">
+                          {% assign date_created = product.created_at | date:'%s' %}
+                          {% assign     date_now = 'now' | date:'%s' %}
+                          {% assign   difference = date_now | minus: date_created %}
+                          {% assign     date_end = settings.time_newproduct | times: 86400 %}
+                          {% if difference < date_end %}
+                            <div class="badge badge--sale-rt">{{ 'products.product.new' | t }}</div>
+                          {% endif %}
+                          {% if product.compare_at_price > product.price %}
+                          <span class="badge badge--sale-pt">-{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round: 4 }}%</span>
+                          {% endif %}
+                        </div>
+
+                        <div class="group-buttons buttons-product-item">
+                          {% if settings.quickview_enable %}
+                            {% include 'nov-quickview' %}
+                          {% endif %}
+                          {% if settings.wishlist_enable %}
+                            {% include 'nov-wishlist' %}
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="product__info">
+                        <div class="product__title">
+                          <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+                        </div>
+                        <div class="product__price{% if settings.show_rating == false %} pb-20{% endif %}">
+                          {% include 'product-price' %}
+                        </div>
+                        <div class="desc mt-15">{{ product.description | strip_html | truncate: 230 }}</div>
+                        {% include 'group_buttons' %}
+                      </div>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+
+              {%- if paginate.pages > 1 -%}
+                {% render 'pagination', paginate: paginate, anchor: '', class: '' %}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Collection pages",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "banner",
+        "label": "Banner"
+      },
+      {
+        "type": "range",
+        "id": "products_per_page",
+        "min": 4,
+        "max": 30,
+        "step": 1,
+        "label": "Products per page",
+        "default": 12,
+        "info": "Select number products per page"
+      },
+      {
+        "type": "checkbox",
+        "id": "sort_enable",
+        "label": "Enable sorting",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_tags",
+        "label": "Show tags",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

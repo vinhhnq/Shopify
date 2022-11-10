@@ -1,0 +1,382 @@
+{% for block in section.blocks %}
+  {% if block.type == 'block_categories' %}
+    {% assign NovCategories = block.settings.sidebar_categories_menu %}
+    <div class="sidebar-block categories__sidebar {{ block.settings.sidebar_categories_class }}">
+      <div class="title-block"><span>{{ block.settings.sidebar_categories_title }}</span></div>
+      {% if linklists[NovCategories] != empty %}
+      <div class="block__content">
+        {% for link in linklists[NovCategories].links %}
+        {%- assign three_level_nav = false -%}
+        {%- assign child_list_handle = link.title | handleize -%}
+
+        {% if linklists[child_list_handle].links != blank %}
+        {% for childlink in linklists[child_list_handle].links %}
+        {% assign grand_child_list_handle = childlink.title | handleize %}
+        {% if linklists[grand_child_list_handle].links != blank %}
+        {%- assign three_level_nav = true -%}
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        {% if linklists[child_list_handle].links != blank %}
+        <div class="cateTitle hasSubCategory open level1">
+          <span class="arrow collapsed" data-toggle="collapse" data-target="#subCategory-{{ child_list_handle }}" aria-expanded="true"></span>
+          <a class="cateItem {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+          <div class="subCategory collapse" id="subCategory-{{ child_list_handle }}" aria-expanded="true">
+            {% for childlink in linklists[child_list_handle].links %}
+            {% assign grand_child_list_handle = childlink.title | handle %}
+            {% if linklists[grand_child_list_handle].links != blank %}
+            <div class="cateTitle hasSubCategory level2">
+              <span class="arrow collapsed" data-toggle="collapse" data-target="#subCategory-{{ grand_child_list_handle }}"aria-expanded="true"></span>
+              <a class="cateItem {% if childlink.active %}active{% endif %}" href="{{ childlink.url }}">{{ childlink.title }}</a>
+              <div class="subCategory collapse" id="subCategory-{{ grand_child_list_handle }}" aria-expanded="true">
+                {% for grandchildlink in linklists[grand_child_list_handle].links %}
+                <div class="cateTitle">
+                  <a href="{{ grandchildlink.url }}" class="cateItem{% if grandchildlink.active %} active{% endif %}{% if forloop.last %} cateItem--last{% endif %}">{{ grandchildlink.title | escape }}</a>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% else %}
+            <div class="cateTitle">
+              <a href="{{ childlink.url }}" class="cateItem{% if childlink.active %} active{% endif %}{% if forloop.last %} cateItem--last{% endif %}">{{ childlink.title | escape }}</a>
+            </div>
+            {% endif %}
+
+            {% endfor %}
+          </div>
+        </div>
+        {% else %}
+        <div class="cateTitle">
+          <a class="cateItem {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+        </div>
+        {% endif %}
+
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.type == 'block_recentpost' %}
+    <div class="sidebar-block recentpost__sidebar {{ block.settings.block_class }}">
+      {% if block.settings.block_title != blank %}
+      <div class="title-block">
+        <span>{{ block.settings.block_title }}</span>
+      </div>
+      {% endif %}
+      {% if block.settings.number_show != blank %}
+      {% assign numberLimit = block.settings.number_show %}
+      <div class="block__content">
+        <div>
+          {%- assign blog_cate = blog.title | handle -%}
+          {% for article in blogs[blog_cate].articles limit: numberLimit %}
+          <div class="post_groups d-xl-flex">
+            <div class="post__image mb-lg-20">
+              {% if article.image %}
+              <a href="{{ article.url }}" class="article__list-image-container">
+                <img class="article__list-image lazyload" data-src="{{ article.image | img_url: '250x170', crop: 'center' }}" alt="{{ article.image.alt | escape }}">
+              </a>
+              {% endif %}
+            </div>
+            <div class="post-item">
+              <div class="post__title">{{ article.title | link_to: article.url }}</div>
+              <div class="post__info">
+                {% if block.settings.show_comment %}
+                {% if blog.comments_enabled? %}
+                <span class="post__countcomment d-block">
+                  <i class="zmdi zmdi-comments"></i>{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                </span>
+                {% endif %}
+                {% endif %}
+
+                {% if block.settings.show_date %}
+                <span class="post__date">
+                  <i class="zmdi zmdi-calendar-note"></i>{{ article.published_at | time_tag: '%d %b, %Y' }}
+                </span>
+                {% endif %}
+
+                {% if block.settings.show_author %}
+                <span class="article__author"><i class="zmdi zmdi-account"></i>{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+                {% endif %}
+              </div>
+
+              {% if block.settings.show_excerpt %}
+              <div class="post__excerpt">
+                {% if article.excerpt.size > 0 %}
+                {{ article.excerpt | truncate: 100 }}
+                {% else %}
+                {{ article.content | strip_html | truncate: 100 }}
+                {% endif %}
+              </div>
+              {% endif %}
+
+              {% if block.settings.show_more %}
+              <div class="read_more">{{ 'blogs.article.readmore' | t | link_to: article.url }}</div>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.type == 'block_producttags' %}
+    <div class="sidebar-block producttags__sidebar {{ block.settings.block_class }}">
+      {% if block.settings.block_title != blank %}
+      <div class="title-block">
+        <span>{{ block.settings.block_title }}</span>
+      </div>
+      {% endif %}
+      {% if block.settings.number_show != blank %}
+      <div class="block__content">
+        {% assign numberLimit = block.settings.number_show %}
+        <ul class="listSidebarBlog list-unstyled">
+          {% for tag in collection.all_tags limit:numberLimit %}
+          {% if current_tags contains tag %}
+          <li>{{ tag }}</li>
+          {% else %}
+          <li>{{ tag | link_to_tag: tag }}</li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.type == 'block_blogtags' %}
+    <div class="sidebar-block blogtags__sidebar {{ block.settings.block_class }}">
+      {% if block.settings.block_title != blank %}
+      <div class="title-block">
+        <span>{{ block.settings.block_title }}</span>
+      </div>
+      {% endif %}
+      {% if block.settings.number_show != blank %}
+      <div class="block__content">
+        {% assign numberLimit = block.settings.number_show %}
+        <ul class="listSidebarBlog list-unstyled">
+          {% for tag in blog.all_tags limit:numberLimit %}
+          {% if current_tags contains tag %}
+          <li>{{ tag }}</li>
+          {% else %}
+          <li>{{ tag | link_to_tag: tag }}</li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.type == 'block_banner' %}
+    <div class="sidebar-block {{ block.settings.banner_class }}">
+      {% if block.settings.banner_title != blank %}
+      <div class="title-block">
+        <span>{{ block.settings.banner_title }}</span>
+      </div>
+      {% endif %}
+      {% if block.settings.banner_image != blank %}
+      <div class="block__content">
+        <img class="lazyload" data-src="{{ block.settings.banner_image | img_url: 'original' }}" alt="{% if block.settings.banner_title != blank %}{{ block.settings.banner_title }}{% else %}banner sidebar{% endif %}">
+      </div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endfor %}
+
+
+{% schema %}
+  {
+    "name": "Sidebar Blog",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "block_categories",
+        "name": "Categories Product",
+        "settings": [
+          {
+            "type": "text",
+            "id": "sidebar_categories_title",
+            "label": "Title",
+            "default": "Categories"
+          },
+          {
+            "type": "text",
+            "id": "sidebar_categories_class",
+            "label": "Class"
+          },
+          {
+            "type": "link_list",
+            "id": "sidebar_categories_menu",
+            "label": "Choose Menu",
+            "info": "Choose menu for block. Add new menu: Admin -> Navigation"
+          }
+        ]
+      },
+      {
+        "type": "block_html",
+        "name": "Block HTML",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+           "type": "textarea",
+           "id": "html_content",
+           "label": "Content",
+           "placeholder": "You can input code html for content.",
+           "info": "You can input code html for content."
+         }
+       ]
+      },
+      {
+        "type": "block_recentpost",
+        "name": "Block Recent Post",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title",
+            "default": "Recent post"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "range",
+            "id": "number_show",
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "label": "Number Show",
+            "default": 2,
+            "info": "Select number post show"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_date",
+            "label": "Show date",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show_comment",
+            "label": "Show Comment",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show_author",
+            "label": "Show Author",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "show_excerpt",
+            "label": "Show Excerpt",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "show_more",
+            "label": "Show More",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "block_producttags",
+        "name": "Block Product Tags",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title",
+            "default": "Product Tags"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "range",
+            "id": "number_show",
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "label": "Number Show",
+            "default": 2,
+            "info": "Select number tags show"
+          }
+        ]
+      },
+      {
+        "type": "block_blogtags",
+        "name": "Block Blog Tags",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title",
+            "default": "Blog Tags"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "range",
+            "id": "number_show",
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "label": "Number Show",
+            "default": 2,
+            "info": "Select number tags show"
+          }
+        ]
+      },
+      {
+        "type": "block_banner",
+        "name": "Block Banner",
+        "settings": [
+          {
+            "type": "text",
+            "id": "banner_title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "banner_class",
+            "label": "Class"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_image",
+            "label": "Banner image"
+          },
+          {
+            "id": "banner_link",
+            "type": "url",
+            "label": "Banner button link"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

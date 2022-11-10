@@ -1,0 +1,54 @@
+{% comment %}
+  This is used to create CSS custom variables with Liquid references
+  The file variables.scss is referring these CSS custom variables as Sass variables
+  to use throughout the stylesheet
+{% endcomment %}
+{% style %}
+    {%- assign header_font = settings.type_header_family -%}
+    {%- assign base_font = settings.type_base_family -%}
+    :root {
+        /*================ Color Variables ================*/
+        --font-size-base: {{ settings.type_base_size }}px;
+        --font-family-default: {{ base_font.family }}, {{ base_font.fallback_families }};
+        --font-family-primary: {{ header_font.family }}, {{ header_font.fallback_families }};
+        --theme-color-default: {{ settings.theme_color_default }};
+        --theme-color-primary: {{ settings.theme_color_primary }};
+        --theme-color-default-rgb: {{ settings.theme_color_default | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+        --theme-color-primary-rgb: {{ settings.theme_color_primary | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+        --color-heading: {{ settings.heading_text }};
+        --color-heading-rgb: {{ settings.heading_text | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+        --color-heading-second: {{ settings.second_heading_text }};
+        --color-heading-second-rgb: {{ settings.second_heading_text | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+        --color-heading-sub: {{ settings.sub_heading_text }};
+        --color-menu: {{ settings.color_menu }};
+        --color-menu-sticky: {{ settings.color_menu_sticky }};
+        --color-sub-menu: {{ settings.color_sub_menu }};
+        --color-title-megamenu: {{ settings.color_title_megamenu }};
+        --color-text: {{ settings.color_text }};
+        --color-body-text: {{ settings.color_body_text }};
+        --color-body-text-rgb: {{ settings.color_body_text | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+        --color_button: {{ settings.color_button }};
+        --color_button_hover: {{ settings.color_button_hover }};
+        --color_button_text: {{ settings.color_button_text }};
+        --color-link: --color-body-text;
+        --opacity-link-hover: 1;
+        --transition-drawer: all 0.45s cubic-bezier(0.29, 0.63, 0.44, 1);
+        --transition-link-hover: 0.1s cubic-bezier(0.44, 0.13, 0.48, 0.87);
+        --color-drawer-background: rgba(0, 0, 0, 0.6);
+        --color-bg-alt: {{ settings.color_body_text | color_modify: 'alpha', 0.05 }};
+        --color-bg-product: {{ settings.color_bg_product }};
+        --color-border: {{ settings.color_borders }};
+        --color-border-rgb: {{ settings.color_borders | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+        --border-radius-product-image: {{ settings.br_pi }}px;
+        --color-product-item: {{ settings.color_product_item }};
+        --color-product-name: {{ settings.color_product_name }};
+        --color-product-name-rgb: {{ settings.color_product_name | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+        --color-price: {{ settings.color_price }};
+        --color-reduced-price: {{ settings.color_reduced_price }};
+        --color-product-add: {{ settings.color_product_addtocart }};
+        --color-product-icon: {{ settings.color_product_icon }};
+        --color-product-icon-rgb: {{ settings.color_product_icon | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+        --color-badge-new: {{ settings.color_badge_new }};
+        --color-badge-sale: {{ settings.color_badge_sale }};
+    }
+{% endstyle %}

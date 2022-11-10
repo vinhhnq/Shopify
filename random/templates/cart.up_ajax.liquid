@@ -1,0 +1,51 @@
+{% if settings.freeshipping_enable %}
+  {% layout none %}
+  <div class="cart_total_price hide">
+    <span class="money">{{ cart.total_price | money }}</span>
+  </div>
+  {% assign price_without_currency = cart.total_price | money_without_currency | remove: '.00' | remove: ',' %}
+  {% assign price = price_without_currency | plus: 0 %}
+  {% assign freeshipping_value = settings.free_shipping | plus: 0 %}
+  {% assign process_percent = price | times: 100 | divided_by: freeshipping_value | round %}
+  {% if process_percent > 0 %}
+    {% if price < freeshipping_value %}
+      {% assign spend_value = freeshipping_value | minus: price | times: 100 | money %}
+      <div class="cart_threshold">
+        <div class="threshold_spend">{{ 'cart.general.spend_html' | t: spend: spend_value }}</div>
+        <div class="threshold_bar">
+          <span class="animate" style="width:{{ price | times: 100 | divided_by: freeshipping_value | round }}%!important">
+            <span>{{ price | times: 100 | divided_by: freeshipping_value | round }}%</span>
+            </span>
+        </div>
+      </div>
+    {% else %}
+      <div class="cart_threshold">
+        <div class="threshold_bar hide">
+          <span class="animate" style="width:100%!important"><span>100%</span></span>
+        </div>
+        <p class="content_threshold threshold_congrats">{{ 'cart.general.content_threshold' | t }}<i class="zmdi zmdi-truck"></i></p>
+      </div>
+    {% endif %}
+  {% elsif process_percent == 0 %}
+    {% if price < freeshipping_value %}
+      {% assign spend_value = freeshipping_value | minus: price | times: 100 | money %}
+      <div class="cart_threshold">
+        <div class="threshold_spend">{{ 'cart.general.spend_html' | t: spend: spend_value }}</div>
+        <div class="threshold_bar d-flex justify-content-center">
+          <span class="animate" style="width:{{ price | times: 100 | divided_by: freeshipping_value | round }}%!important">
+            {{ price | times: 100 | divided_by: freeshipping_value | round }}%
+            </span>
+        </div>
+      </div>
+    {% else %}
+      <div class="cart_threshold">
+        <div class="threshold_bar hide">
+          <span class="animate" style="width:100%!important"><span>100%</span></span>
+        </div>
+        <p class="content_threshold threshold_congrats">{{ 'cart.general.content_threshold' | t }}<i class="zmdi zmdi-truck"></i></p>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="cart_threshold hide"></div>
+  {% endif %}
+{% endif %}

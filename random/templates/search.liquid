@@ -1,0 +1,78 @@
+{%- assign limit = 8 -%}
+{% paginate search.results by limit %}
+  <div class="page-search">
+    {% include 'nov-breadcrumb' %}
+    <div class="page-width">
+      {% if search.results_count == 0 or search.performed == false %}
+        <div class="section-header empty-page-content text-center">
+          <h1 class="h2">{{ 'general.search.title' | t }}</h1>
+      {% else %}
+        <div class="section-header text-center">
+          <h1 class="h2">{{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}</h1>
+      {% endif %}
+        <div class="grid">
+          <div class="grid__item medium-up--two-fifths medium-up--push-three-tenths">
+            <form action="/search" method="get" role="search" class="search">
+              <div class="input-group">
+                <input type="hidden" name="type" value="product">
+                <input type="search"
+                  id="SearchInput"
+                  class="form-control input-group__field search__input"
+                  name="q"
+                  value="{{ search.terms | escape }}"
+                  placeholder="{{ 'general.search.placeholder' | t }}"
+                  aria-label="{{ 'general.search.placeholder' | t }}">
+                <span class="input-group__btn">
+                  <button class="btn search__submit" type="submit"><i class="icon-search"></i>{{ 'general.search.submit' | t }}</button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+    
+        {% if search.performed and search.results_count == 0 %}
+          <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+        {% endif %}
+      </div>
+      <div class="container">
+        {% if search.performed %}
+          <div class="grid--view-items row">
+            {% for item in search.results %}
+                {% if item.object_type == 'product' %}
+                  <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 mg-5">
+                    {% include 'product-card-grid', product: item %}
+                  </div>
+                {% else %}
+                  {% if item.image %}
+                    <div class="list-view-item__image-column w-50 w-xs-100 pr-15 pl-0 pr-xs-0 pl-xs-0">
+                      <div class="list-view-item__image-wrapper mb-xs-25">
+                        <img class="list-view-item__image" src="{{ item.image.src | img_url: '600x600' }}" alt="{{ item.image.alt | escape }}">
+                      </div>
+                    </div>
+                  {% endif %}
+    
+                  <div class="list-view-item__title-column">
+                    <h2 class="list-view-item__title">{{ item.title }}</h2>
+                    <div class="">
+                      {% if item.published_at %}{{ item.published_at | date: "%b %d, %Y" }} &#8212; {% endif %}
+                      {{ item.content | strip_html | truncate: 200 }}
+                    </div>
+                  </div>
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
+    
+          {% if paginate.pages > 1 %}
+            <div class="nov-pagination d-flex align-items-center">
+              {% include 'pagination' %}
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endpaginate %}
+
+
+
