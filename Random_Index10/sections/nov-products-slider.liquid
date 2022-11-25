@@ -1,0 +1,256 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" data-section-id="{{ section.id }}" data-section-type="nov-slick">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% endif %}
+    <div class="block_section">
+      {% comment %} product slider {% endcomment %}
+      {%- assign collection = collections[section.settings.collection] -%}
+      <div class="bl_t row spacing-0 align-items-center justify-content-between mb-50">
+        {% if section.settings.title != blank %}
+          <div class="{{ section.settings.title_alignment }} {% if section.settings.show_view_all == false %}col-12{% else %}col-sm-8 col-12{% endif %}">
+            <div class="title_block mb-0">
+              {% if section.settings.subheading != blank %}
+                <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+              {% endif %}
+              <span>{{ section.settings.title }}</span>
+            </div>
+          </div>
+          {% if section.settings.show_view_all %}
+            <span class="show_all col-sm-4 mt-sm-15">
+              <a href="{{ collection.url }}" class="btn_view_all">
+                {{ 'collections.general.view_all' | t }}
+              </a>
+            </span>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% case section.settings.grid_number %}
+      {% when '2' %}
+        {%- assign img_size = settings.img_size_large -%}
+      {% when '3' %}
+        {%- assign img_size = settings.img_size_large -%}
+      {% when '4' %}
+        {%- assign img_size = settings.img_size_large -%}
+      {% when '5' %}
+        {%- assign img_size = settings.img_size_large -%}
+      {% when '6' %}
+        {%- assign img_size = settings.img_size_large -%}
+      {% endcase %}
+
+      {%- assign product_limit = section.settings.limit -%}
+      <div class="block_scroll grid--view-items position-relative">
+        <div class="main-carousel" data-flickity='{"freeScroll": "true", "groupCells": 4, "pageDots": false, "prevNextButtons": false, "cellAlign": "left", "contain": true}'>
+        {% for product in collection.products limit: product_limit %}
+          <div class="item">
+            <div class="item-product">
+              {% assign variantCount = product.variants | size %}
+              <div class="thumbnail-container{% if product.images.size > 1 %} has-multiimage{% endif %}{% if section.settings.show_variant_color and variantCount > 1 %} has_variants{% endif %}">
+                <div class="respone_image" style="padding-top:{{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100}}%">
+                  {% assign img_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                  <noscript>
+                    <img class="img-fluid product__thumbnail lazyload" data-src="{{ product.featured_image.src | img_url: '1024x' }}" alt="">
+                  </noscript>
+                  <img class="product__thumbnail lazyload"
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                    alt=""
+                    data-src="{{ img_url }}"
+                    data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]"
+                    data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+                    data-sizes="auto"
+                    data-image>
+                  {% for image in product.images %}
+                    {% assign img_second = image.src | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                    {% if forloop.first != true %}
+                      <img id="{{ img_id }}"
+                        class="img-fluid product__thumbnail-second lazyload"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 19'%3E%3C/svg%3E"
+                        data-src="{{ img_second }}"
+                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                        data-aspectratio="{{ image.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt=""
+                        data-image>
+                        {% break %}
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                {% if product.available and product.variants.size > 1  %}
+                  {% include 'nov-swatch-size' with 'Size' %}
+                {% endif %}
+                
+                <div class="badge_sale">
+                  {% assign date_created = product.created_at | date:'%s' %}
+                  {% assign     date_now = 'now' | date:'%s' %}
+                  {% assign   difference = date_now | minus: date_created %}
+                  {% assign     date_end = settings.time_newproduct | times: 86400 %}
+                  {% if difference < date_end %}
+                    <div class="badge badge--sale-rt">{{ 'products.product.new' | t }}</div>
+                  {% endif %}
+                  {% if product.compare_at_price > product.price %}
+                  <span class="badge badge--sale-pt">-{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round: 4 }}%</span>
+                  {% endif %}
+                </div>
+
+                <div class="group-buttons buttons-product-item">
+                  {% if settings.quickview_enable %}
+                    {% include 'nov-quickview' %}
+                  {% endif %}
+                  {% if settings.wishlist_enable %}
+                    {% include 'nov-wishlist' %}
+                  {% endif %}
+                </div>
+              </div>
+              <div class="product__info">
+                <div class="product__title">
+                  <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+                </div>
+                <div class="product__price{% if settings.show_rating == false %} pb-20{% endif %}">
+                  {% include 'product-price' %}
+                </div>
+                {% if template.name != 'index' %}
+                  {% if settings.show_rating %}
+                    <div class="product__review">
+                      <div class="rating"><span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span></div>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              </div>
+              {% include 'group_buttons' %}
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+      {% comment %} end product slider {% endcomment %}
+    </div>
+  {% if section.settings.has_fullwidth == false %}
+  </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Vinova Products Slider",
+    "class": "index-section section-product-slider wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Vinova Products Slider"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Subtitle from happy customers"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Title alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Product"
+      },
+      {
+        "id": "collection",
+        "type": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "limit",
+        "min": 4,
+        "max": 30,
+        "step": 1,
+        "label": "Limit",
+        "default": 30,
+        "info": "Select number limit products"
+      },
+      {
+        "type":  "header",
+        "content": "View all collection"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_view_all",
+        "label": "Show 'View all' button",
+        "default": false
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Products Slider",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}
+{%- assign bg_image = section.settings.background_image -%}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");
+      background-repeat: no-repeat;
+      background-position: center top;
+    {% endif %}
+  }
+</style>

@@ -1,0 +1,269 @@
+{% if template == "blog.list" %}
+  {% assign viewtype = "list" %}
+{% elsif template == "blog.column" %}
+  {% assign viewtype = 'column' %}
+{% else %}
+  {% if section.settings.layout == 'list' %}
+    {% assign viewtype = 'list' %}
+  {% elsif section.settings.layout == 'column' %}
+    {% assign viewtype = 'column' %}
+  {% else %}
+    {% assign viewtype = 'grid' %}
+  {% endif %}
+{% endif %}
+{% if viewtype == "list" %}
+  {% paginate blog.articles by section.settings.page_show_list %}
+    <div class="blog--list blog--list-view">
+      <div class="title_block">{{ blog.title }}</div>
+      {% for article in blog.articles %}
+        <div class="article--listing media">
+          <div class="media-image">
+            {% if article.image %}
+              <a href="{{ article.url }}" class="article__list-image-container">
+                <div class="respone_image" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100}}%;">
+                  {% assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                  <img class="article__list-image lazyload"
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                    data-src="{{ img_url }}"
+                    data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                    data-aspectratio="{{ article.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="">
+                </div>
+              </a>
+            {% endif %}
+          </div>
+          <div class="media-body">
+            <h2 class="article__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+            <div class="article__info">
+              {% if section.settings.blog_show_date %}
+                <span class="article__date">
+                  <i class="zmdi zmdi-calendar-note"></i>{{ article.published_at | time_tag: format: 'month_day_year' }}
+                </span>
+              {% endif %}
+
+              {% if section.settings.blog_show_author %}
+                <span class="article__author"><i class="zmdi zmdi-account"></i>{{ article.author }}</span>
+              {% endif %}
+
+              {% if section.settings.blog_show_comment %}
+                {% if blog.comments_enabled? %}
+                  <span class="article__countcomment">
+                    <i class="zmdi zmdi-comments"></i>{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                  </span>
+                {% endif %}
+              {% endif %}
+            </div>
+
+            <div class="article__excerpt">
+              {% if article.excerpt.size > 0 %}
+                {{ article.excerpt }}
+              {% else %}
+                {{ article.content | strip_html | truncate: 200 }}
+              {% endif %}
+            </div>
+            <a href="{{ article.url }}" class="btn">{{ 'blogs.article.readmore' | t }}</a>
+          </div>
+        </div>
+      {% endfor %}
+      {% if paginate.pages > 1 %}
+      <div class="nov-pagination d-flex align-items-center justify-content-center">
+        {% include 'pagination' %}
+      </div>
+      {% endif %}
+    </div>
+  {% endpaginate %}
+{% elsif viewtype == "column" %}
+  {% paginate blog.articles by section.settings.page_show_column %}
+    <div class="blog--list blog--column-view">
+      <div class="title_block">{{ blog.title }}</div>
+      <div class="row">
+        {% for article in blog.articles %}
+          <div class="article--listing col-xl-6 col-lg-6 mb-30">
+            <div class="block_content">
+              <div class="article__image mb-30">
+                {% if article.image %}
+                  <a href="{{ article.url }}" class="article__list-image-container">
+                    <img class="article__list-image lazyload" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="{{ article.image | img_url: '870x495', crop: 'center' }}">
+                  </a>
+
+                {% endif %}
+              </div>
+              <div class="article-body text-center">
+                <h2 class="article__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                
+                <div class="article__excerpt">
+                  {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt | strip_html | truncate: 180 }}
+                  {% else %}
+                    {{ article.content | strip_html | truncate: 180 }}
+                  {% endif %}
+                </div>
+                <a href="{{ article.url }}" class="btn">{{ 'blogs.article.readmore' | t }}</a>
+
+                <div class="article__info">
+                  {% if section.settings.blog_show_date %}
+                    <span class="article__date">
+                      <i class="zmdi zmdi-calendar-note"></i>{{ article.published_at | time_tag: format: 'month_day_year' }}
+                    </span>
+                  {% endif %}
+
+                  {% if section.settings.blog_show_author %}
+                    <span class="article__author"><i class="zmdi zmdi-account"></i>{{ article.author }}</span>
+                  {% endif %}
+
+                  {% if section.settings.blog_show_comment %}
+                    {% if blog.comments_enabled? %}
+                      <span class="article__countcomment">
+                        <i class="zmdi zmdi-comments"></i>{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                      </span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+      <div class="nov-pagination d-flex align-items-center justify-content-center">
+        {% include 'pagination' %}
+      </div>
+      {% endif %}
+    </div>
+  {% endpaginate %}
+{% else %}
+  {% paginate blog.articles by section.settings.page_show_grid %}
+    <div class="blog--list blog--grid-view">
+      <div class="title_block">{{ blog.title }}</div>
+        <div class="row">
+          {% for article in blog.articles %}
+            <div class="article--listing col-lg-12 mb-100">
+              <div class="article__image">
+                {% if article.image %}
+                  <a href="{{ article.url }}" class="article__list-image-container">
+                    {% if settings.type_sidebar_blog == 'sidebar_hidden' %}
+                      <img class="article__list-image lazyload" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="{{ article.image | img_url: '1396x790', crop: 'center' }}">
+                    {% else %}
+                      <img class="article__list-image lazyload" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="{{ article.image | img_url: '1040x590', crop: 'center' }}">
+                    {% endif %}
+                  </a>
+                {% endif %}
+              </div>
+              <div class="article-body">
+                <h2 class="article__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                <div class="article__info">
+                  {% if section.settings.blog_show_date %}
+                    <span class="article__date">
+                      <i class="zmdi zmdi-calendar-note"></i>{{ article.published_at | time_tag: format: 'month_day_year' }}
+                    </span>
+                  {% endif %}
+
+                  {% if section.settings.blog_show_author %}
+                    <span class="article__author"><i class="zmdi zmdi-account"></i>{{ article.author }}</span>
+                  {% endif %}
+
+                  {% if section.settings.blog_show_comment %}
+                    {% if blog.comments_enabled? %}
+                      <span class="article__countcomment">
+                        <i class="zmdi zmdi-comments"></i>{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                      </span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+
+                <div class="article__excerpt">
+                  {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt }}
+                  {% else %}
+                    {{ article.content | strip_html | truncate: 350 }}
+                  {% endif %}
+                </div>
+                <a href="{{ article.url }}" class="btn">{{ 'blogs.article.readmore' | t }}</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% if paginate.pages > 1 %}
+      <div class="nov-pagination d-flex align-items-center justify-content-center">
+        {% include 'pagination' %}
+      </div>
+      {% endif %}
+    </div>
+  {% endpaginate %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Blog pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "list",
+        "options": [
+          {
+            "value": "grid",
+            "label": "Grid"
+          },
+          {
+            "value": "list",
+            "label": "List"
+          },
+          {
+            "value": "column",
+            "label": "Column"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_comment",
+        "label": "Show Comment",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "page_show_list",
+        "min": 1,
+        "max": 15,
+        "step": 1,
+        "label": "Number of post per page List",
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "page_show_column",
+        "min": 1,
+        "max": 15,
+        "step": 1,
+        "label": "Number of post per page Column",
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "page_show_grid",
+        "min": 1,
+        "max": 15,
+        "step": 1,
+        "label": "Number of post per page Grid",
+        "default": 3
+      }
+    ]
+  }
+{% endschema %}

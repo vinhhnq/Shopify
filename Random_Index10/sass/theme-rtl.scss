@@ -1,0 +1,125 @@
+.lang-rtl {
+  body {
+    text-align: right;
+  }
+  .nav {
+    padding-right: 0;
+  }
+  .account-list.dropdown-menu {
+    left: 0 !important;
+  }
+  .list-unstyled, .list-inline {
+    padding-right: 0;
+  }
+  .prev_custom i:before {
+    content: '\f2f6';
+  }
+  .next_custom i:before {
+    content: '\f2f4';
+  }
+  .account-list.dropdown-menu {
+    right: inherit !important;
+    left: 0 !important;
+  }
+  .canvas-menu {
+    .site-nav>li>.mm-next:after {
+      -webkit-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+    }
+    .site-nav__dropdown {
+      left: 0;
+    }
+  }
+
+  // RTL Page
+  .page-about-us .our_story-groups .block_item .our_story_grid .row_before {
+    .date span:before {
+      border-width: 12.5px 7px 12.5px 0;
+      border-color: transparent #f5f5f5 transparent transparent;
+    }
+    &.flex-row-reverse .date span:before {
+      border-width: 12.5px 0 12.5px 7px;
+      border-color: transparent transparent transparent #f5f5f5;
+    }
+  }
+
+  .text-right {
+    text-align: left !important;
+  }
+  .text-left {
+    text-align: right !important;
+  }
+  @media(min-width: 768px) {
+    .text-md-right {
+      text-align: left !important;
+    }
+    .text-md-left {
+      text-align: right !important;
+    }
+  }
+  @media(min-width: 992px) {
+    .text-lg-right {
+      text-align: left !important;
+    }
+    .text-lg-left {
+      text-align: right !important;
+    }
+  }
+  @media(min-width: 1200px) {
+    .text-xl-right {
+      text-align: left !important;
+    }
+    .text-xl-left {
+      text-align: right !important;
+    }
+  }
+  @media (max-width: 991px) {
+    body {
+      .canvas-overlay, .sidebar-overlay {
+        right: 0;
+        left: 0;
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    .canvas-menu .site-nav>li>.mm-next:after {
+      -webkit-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+    }
+  }
+  .zmdi-caret-right:before {
+    content:"\f2f4";
+  }
+  .zmdi-caret-left:before {
+    content:"\f2f6";
+  }
+  .zmdi-chevron-left:before {
+    content:"\f2fb";
+  }
+  .zmdi-chevron-right:before {
+    content:"\f2fa";
+  }
+  .zmdi-long-arrow-left:before {
+    content:"\f301";
+  }
+  .zmdi-long-arrow-right:before {
+    content:"\f2ff";
+  }
+  .zmdi-arrow-left:before {
+    content:"\f2ee";
+  }
+  .zmdi-arrow-right:before {
+    content:"\f2ea";
+  }
+  .fa-long-arrow-left:before {
+    content:"\f178";
+  }
+  .fa-long-arrow-right:before {
+    content:"\f177";
+  }
+  .bl_nav_cust {
+    .prev_custom, .next_custom {
+      transform: rotate(180deg);
+    }
+  }
+}

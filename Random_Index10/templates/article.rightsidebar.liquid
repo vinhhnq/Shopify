@@ -1,0 +1,138 @@
+{% comment %}
+  Comments will not appear right after they are submitted, either to be checked for spam
+  or to await moderation. When a comment is submitted, the browser is redirected to a page
+  that includes the new comment id in its URL.
+    Example: http://shopname.myshopify.com/blogs/news/2022072-my-post?comment=3721372
+{% endcomment %}
+
+{%- assign new_comment = false -%}
+{% if comment and comment.created_at %}
+  {%- assign new_comment = true -%}
+  {%- assign new_comment_id = comment.id -%}
+{% endif %}
+
+{% if new_comment %}
+  {%- assign duplicate_comment = false %}
+  {% for comment in article.comments %}
+    {% if comment.id == new_comment_id %}
+      {%- assign duplicate_comment = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% if duplicate_comment %}
+    {%- assign number_of_comments = article.comments_count -%}
+  {% else %}
+    {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+  {% endif %}
+{% else %}
+  {%- assign number_of_comments = article.comments_count -%}
+{% endif %}
+
+{% include 'nov-breadcrumb' %}
+
+<article class="page-width" itemscope itemtype="http://schema.org/Article">
+  <div class="container">
+    <div class="row">
+      <div class="sidebar sidebar-article col-lg-3 col-md-4 flex-xs-unordered flex-last">
+      {% section 'nov-sidebar-article' %}
+      </div>
+      <div class="blog_detail col-lg-9 col-md-8 flex-xs-first">
+        {% comment %}
+        <span itemprop="item">
+          <h1 itemprop="name" class="blog__title">{{ article.title }}</h1>
+        </span>
+        {% endcomment %}
+        {% section 'article-template' %}
+
+        {% include 'nov-blog-related' %}
+
+        {% if blog.comments_enabled? %}
+          {% if number_of_comments > 0 %}
+          <div class="article__comments">
+            <div class="title-block uppercase">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</div>
+
+            {% paginate article.comments by 5 %}
+
+              <div id="comments">
+
+                {% if new_comment %}
+                  <p class="note form-success">
+                    {% if blog.moderated? %}
+                      {{ 'blogs.comments.success_moderated' | t }}
+                    {% else %}
+                      {{ 'blogs.comments.success' | t }}
+                    {% endif %}
+                  </p>
+                {% endif %}
+
+                <ul class="comments">
+                  {% comment %}
+                    If a comment was just submitted with no blank field, show it.
+                  {% endcomment %}
+                  {% if new_comment %}
+                    <li id="{{ comment.id }}" class="comment">
+                      {% include 'comment' %}
+                    </li>
+                  {% endif %}
+
+                  {% for comment in article.comments %}
+                    {% unless comment.id == new_comment_id %}
+                      <li id="{{ comment.id }}" class="comment">
+                        {% include 'comment' %}
+                      </li>
+                    {% endunless %}
+                  {% endfor %}
+                </ul>
+
+                {% if paginate.pages > 1 %}
+                  {% include 'pagination' %}
+                {% endif %}
+
+              </div>
+            {% endpaginate %}
+          </div>
+          {% endif %}
+
+          <div>
+            <div class="comment-form form-vertical">
+              {% form 'new_comment', article %}
+
+                <div class="title_block mb-30">{{ 'blogs.comments.title' | t }}</div>
+
+                {{ form.errors | default_errors }}
+
+                <div>
+                  <div class="row">
+                    <div class="col col-xs-12">
+                      <input type="text" name="comment[author]" id="CommentAuthor" placeholder="{{ 'blogs.comments.name' | t }} (*)" class="input-full{% if form.errors contains 'author' %} input--error{% endif %}" value="{{ form.author }}" required>
+                    </div>
+
+                    <div class="col col-xs-12">
+                      <input type="email" name="comment[email]" id="CommentEmail" placeholder="{{ 'blogs.comments.email' | t }} (*)" class="input-full{% if form.errors contains 'email' %} input--error{% endif %}" value="{{ form.email }}" required>
+                    </div>
+
+                    <div class="col col-xs-12">
+                      <input type="tel" name="comment[phone]" id="CommentPhone" placeholder="{{ 'blogs.comments.phone' | t }} (*)" class="input-full{% if form.errors contains 'phone' %} input--error{% endif %}" value="{{ form.phone }}">
+                    </div>
+                  </div>
+
+                  <div>
+                    <textarea rows="10" cols="50" name="comment[body]" id="CommentBody" placeholder="{{ 'blogs.comments.message' | t }}" class="input-full{% if form.errors contains 'body' %} input--error{% endif %}" required>{{ form.body }}</textarea>
+                  </div>
+
+                </div>
+
+                {%comment%}{% if blog.moderated? %}
+                  <p class="fine-print">{{ 'blogs.comments.moderated' | t }}</p>
+                {% endif %}
+                {%endcomment%}
+                <input type="submit" class="btn btn-send" value="{{ 'blogs.comments.post' | t }}">
+              {% endform %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</article>

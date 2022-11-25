@@ -1,0 +1,49 @@
+<div class="account-list dropdown-menu dropdown-menu-right" id="_desktop_account_list">
+  <div class="nov_sideward_content">
+    <div class="account-list-content">
+      {% if shop.customer_accounts_enabled %}
+      {% if customer %}
+      <div>
+        <a class="myaccount" href="{{ shop.secure_url }}/account" rel="nofollow" title="{{ 'layout.customer.account' | t }}">
+          <i class="zmdi zmdi-account"></i><span>{{ 'layout.customer.account' | t }}</span>
+        </a>
+      </div>
+      <div>
+        <a class="logout" href="{{ shop.secure_url }}/account/logout" rel="nofollow" title="{{ 'layout.customer.log_out' | t }}">
+          <i class="zmdi zmdi-mail-reply-all"></i><span>{{ 'layout.customer.log_out' | t }}</span>
+        </a>
+      </div>
+      {% else %}
+      <div>
+        <a class="login" href="{{ shop.secure_url }}/account/login" rel="nofollow" title="{{ 'layout.customer.log_in' | t }}">
+          <i class="zmdi zmdi-key"></i><span>{{ 'layout.customer.log_in' | t }}</span>
+        </a>
+      </div>
+      {% if shop.customer_accounts_optional %}
+      <div>
+        <a class="register" href="{{ shop.secure_url }}/account/register" rel="nofollow" title="{{ 'layout.customer.create_account' | t }}">
+          <i class="zmdi zmdi-lock"></i><span>{{ 'layout.customer.create_account' | t }}</span>
+        </a>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endif %}
+      <div>
+        <a class="check-out" href="{{ shop.secure_url }}/checkout" rel="nofollow" title="{{ 'layout.customer.checkout' | t }}">
+          <i class="zmdi zmdi-check-circle"></i><span>{{ 'layout.customer.checkout' | t }}</span>
+        </a>
+      </div>
+      {% if settings.wishlist_enable %}
+      <div class="link_wishlist">
+        <a class="wishlist" href="/pages/page-wishlist" rel="nofollow" title="{{ 'layout.customer.my_wishlists' | t }}">
+          <i class="zmdi zmdi-favorite"></i>
+          <span>{{ 'layout.customer.my_wishlists' | t }}</span>
+        </a>
+      </div>
+      {% endif %}
+      {% if settings.show_multiple_currencies == true %}
+      {% include "nov-block-currency" %}
+      {% endif %}
+    </div>
+  </div>
+</div>

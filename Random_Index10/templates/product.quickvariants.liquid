@@ -1,0 +1,245 @@
+{% layout none %}
+
+{% assign variantCount = product.variants | size %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<div id="variant_{{ current_variant.id }}">
+  <div class="product-single__info">
+    <div class="product-single__meta">
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form product-form-qv product-form--hide-variant-labels">   
+        <div class="selectorVariants {% if product.variants.size > 0 %} has-border{% endif %}">
+          {% if variantCount > 1 %}
+            {% for option in product.options %}
+              {% include 'nov-swatch' with option %}
+            {% endfor %}
+          {% endif %}
+
+          <select name="id" id="productSelect" class="enable_swatch hide">
+            {% for variant in product.variants %}
+              {% if variant.available %}
+                <option value="{{ variant.id }}" data-qty="{{ variant.inventory_quantity }}"{% if variant == product.selected_or_first_available_variant %} selected="selected"{% endif %}>{{ variant.title }}</option>
+              {% else %}
+                <option value="{{ variant.id }}" data-qty="{{ variant.inventory_quantity }}" disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="group_align d-flex align-items-center mb-30">
+          <div class="has-border group-quantity">
+            <div class="product-form__item product-form__item--quantity">
+              <label for="Quantity" class="quantity-selector">{{ 'cart.label.quantity' | t }}:</label>
+              <div class="js-qty">
+                <a href="javascript:void(0);" class="cart-qty cart-qty-minus">-</a>
+                <input type="number" id="Quantity" name="quantity" value="1" min="1" max="{{ current_variant.inventory_quantity }}" step="1" class="quantity-selector product-form__input" pattern="[0-9]*">
+                <a href="javascript:void(0);" class="cart-qty cart-qty-plus">+</a>
+              </div>
+            </div>
+            <script>
+              jQuery('.cart-qty').on('click', function (e) {
+                e.preventDefault();
+
+                var $this = jQuery(this),
+                    $qty = $this.parents('.js-qty').find('.quantity-selector'),
+                    $qtyinput = parseInt($qty.val()),
+                    $step = parseInt($qty.attr('step')),
+                    $min = parseInt($qty.attr('min')),
+                    $max = parseInt($qty.attr('max'));
+
+                if ($this.hasClass('cart-qty-plus')) {
+                  var $newqty = $qtyinput + $step;
+                  if ($newqty > $max && $max > 0) {
+                    $qty.val($max);
+                    alert('Maximum Quantity: ' + $max);
+                    return;
+                  }
+                  else {
+                    $qty.val($newqty);
+                  }
+                }
+                else if ($this.hasClass('cart-qty-minus')) {
+                  var $newqty = $qtyinput - $step;
+                  if ($newqty === 0) {
+                    $qty.val(1);
+                    return;
+                  } else if ($newqty < $min) {
+                    $qty.val($min);
+                    return;
+                  } else if ($qtyinput < 0) {
+                    $qty.val(1);
+                    return;
+                  }
+                  else {
+                    $qty.val($newqty);
+                  }
+                }
+                updatePrice();
+              });
+            </script>
+          </div>
+          <p class="product-single__price product-single__price-qv{% unless current_variant.available %} product-price--sold-out{% endunless %} d-flex align-items-center">
+            {% if current_variant.compare_at_price > current_variant.price %}
+            <span class="hidden">{{ 'products.product.regular_price' | t }}</span>
+            <span class="product-price__price product-price__price-qv product-price__sale product-price__sale--single">
+              <span id="ProductPrice-qv"
+                    itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}" class="money mr-10">
+                {{ current_variant.price | money }}
+              </span>
+              <span class="money product-price__sale-label product-price__sale-label-qv d-none">{{ 'products.product.on_sale' | t }}</span>
+            </span>
+            <s id="ComparePrice-qv">{{ current_variant.compare_at_price | money }}</s>
+            {% else %}
+            <span class="hidden">{{ 'products.product.regular_price' | t }}</span>
+            <span class="product-price__price product-price__price-qv">
+              <span id="ProductPrice-qv"
+                    itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}" class="money mr-10">
+                {{ current_variant.price | money }}
+              </span>
+              <span class="money product-price__sale-label product-price__sale-label-qv d-none">{{ 'products.product.on_sale' | t }}</span>
+            </span>
+            <s id="ComparePrice-qv">{{ current_variant.compare_at_price | money }}</s>
+            {% endif %}
+          </p>
+        </div>
+        <div class="product-form__item product-form__item--submit mb-10">
+          <button data-handle="{{ product.handle }}" type="submit" name="add" id="AddToCart" {% unless current_variant.available %}disabled="ss"{% endunless %} class="btn product-form__cart-submit w-100{% if product.options.size == 1 and product.variants[0].title == 'Default Title' %} product-form__cart-submit--small{% endif %}">
+            <span id="AddToCartText">
+              {% unless current_variant.available %}
+              {{ 'products.product.sold_out' | t }}
+              {% else %}
+              {% if current_variant.inventory_policy == 'continue' and current_variant.inventory_quantity < 1 %}
+                 <span>{{ 'products.product.pre_order' | t }}</span>
+               {% else %}
+                 <span>{{ 'products.product.add_to_cart' | t }}</span>
+               {% endif %}
+              {% endunless %}
+            </span>
+          </button>
+        </div>
+        {% if settings.payment_button_enable %}
+          <div class="product-form__item product-form__item--checkout">
+            {% form 'product', product, class:form_classes, novalidate: 'novalidate' %}
+            {{ form | payment_button }}
+            {% endform %}
+          </div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</div>
+
+{% unless product == empty %}
+  <script type="application/json" id="ProductJson-{{ current_variant.id }}">
+    {{ product | json }}
+  </script>
+{% endunless %}
+
+<script>
+  {% if product.available %} 
+  function updatePrice() {
+    var regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;
+    var unitPriceTextMatch = jQuery('#ProductPrice-qv').text().match(regex);
+    
+    if (!unitPriceTextMatch) {
+      regex = /([0-9]+[.|,][0-9]+)/g;
+      unitPriceTextMatch = jQuery('#ProductPrice-qv').text().match(regex);
+    }
+    
+    if (unitPriceTextMatch) {
+      var unitPriceText = unitPriceTextMatch[0];     
+      var unitPrice = unitPriceText.replace(/[.|,]/g,'');
+      var quantity = parseInt(jQuery('#Quantity').val());
+      var totalPrice = unitPrice * quantity;
+
+      var totalPriceText = Shopify.formatMoney(totalPrice, theme.money_format);
+      regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;     
+      if (!totalPriceText.match(regex)) {
+        regex = /([0-9]+[.|,][0-9]+)/g;
+      } 
+      totalPriceText = totalPriceText.match(regex)[0];
+
+      var regInput = new RegExp(unitPriceText, "g"); 
+      var totalPriceHtml = jQuery('#ProductPrice-qv').html().replace(regInput , totalPriceText);
+
+      jQuery('.total-price span').html(totalPriceHtml);     
+    }
+  }
+  jQuery('#Quantity').on('change', updatePrice);
+  {% endif %}
+  
+  var selectCallbackProduct = function(variant, selector) {
+    var moneyFormat = theme.moneyFormat,
+        variant = variant,
+        selector = selector;
+    var $addToCart = $('#AddToCart'),
+        $productPrice = $('#ProductPrice-nov-product-template'),
+        $comparePrice = $('#ComparePrice-nov-product-template'),
+        $quantityElements = $('.quantity-selector, label + .js-qty'),
+        $quantity = $('.product-form__item--quantity'),
+        $itemquantity = $('.group-quantity'),
+        $groupalign = $('.group_align'),
+        $productPrice = $('.product-price__price-qv'),
+        $addToCartText = $('#AddToCartText');
+    if (variant) {
+      var form = $('#' + selector.domIdPrefix).closest('form');
+      for (var i = 0, length = variant.options.length; i < length; i++) {
+        var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + variant.options[i] + '"]');
+        if (radioButton.size()) {
+          radioButton.get(0).checked = true;
+        }
+      }
+      if (variant.available) {
+        var d_qty = $('#productSelect :selected').data('qty');
+        if (d_qty < 1) {
+          $addToCartText.html("{{ 'products.product.pre_order' | t }}");
+        } else {
+          $addToCartText.html("{{ 'products.product.add_to_cart' | t }}");
+        }
+        $quantity.show();
+        $addToCart.removeClass('disabled').prop('disabled', false);
+        $groupalign.addClass('justify-content-between');
+        $quantityElements.show();
+      } else {
+        $quantity.hide();
+        $addToCart.addClass('disabled').prop('disabled', true);
+        $addToCartText.html("{{ 'products.product.sold_out' | t }}");
+        $groupalign.removeClass('justify-content-between');
+        $quantityElements.hide();
+      }
+      $productPrice.html(theme.Currency.formatMoney(variant.price, moneyFormat));
+      if (variant.compare_at_price > variant.price) {
+        $comparePrice.html(theme.Currency.formatMoney(variant.compare_at_price, moneyFormat)).show();
+      } else {
+        $comparePrice.hide();
+      }
+      if ($('#currencies').length != 0) {
+        Currency.convertAll(shopCurrency, $('#currencies span.selected').attr('data-currency'));
+      }
+    } else {
+      $quantity.hide();
+      $addToCart.addClass('disabled').prop('disabled', true);
+      $addToCartText.html("{{ 'products.product.unavailable' | t }}");
+      $groupalign.removeClass('justify-content-between');
+      $quantityElements.hide();
+    }
+  };
+
+  $(document).ready(function() {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallbackProduct,
+      enableHistoryState: false
+    });
+
+
+    {% if product.available and product.options.size > 0 %}
+      Shopify.linkOptionSelectors({{ product | json }});
+    {% endif %}
+
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('.selector-wrapper').hide();
+    {% endif %}
+  });
+</script>

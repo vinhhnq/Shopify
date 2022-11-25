@@ -1,0 +1,187 @@
+<div class="distance">
+  <div class="block">
+  {% if section.settings.has_fullwidth == false %}
+  <div class="container">
+  {% endif %}
+
+    {% if section.settings.title != blank %}
+      <div class="{{ section.settings.title_alignment }}">
+        <div class="title_block">
+          <span>{{ section.settings.title }}</span>
+          {% if section.settings.subheading != blank %}
+            <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% case section.settings.grid %}
+      {% when 2 %}
+        {%- assign item_width = 'col-lg-6 col-md-6 col-sm-6 col-6' -%}
+      {% when 3 %}
+        {%- assign item_width = 'col-lg-4 col-md-4 col-sm-4 col-6' -%}
+      {% when 4 %}
+        {%- assign item_width = 'col-lg-3 col-md-3 col-sm-3 col-6' -%}
+    {% endcase %}
+
+    <div class="row">
+      {% for block in section.blocks limit: section.blocks.size %}
+        {%- assign nb = section.settings.grid -%}
+        {% assign mod = forloop.index | modulo: nb %}
+        {% if mod == 0 %}
+          {% assign cl = 'last' %}
+        {% elsif mod == 1 %}
+          {% assign cl = 'first' %}
+        {% else %}
+          {% assign cl = '' %}
+        {% endif %}
+        {%- assign collection = collections[block.settings.collection] -%}
+        <div class="grid__item text-center {{ item_width }}{% if cl != blank %} {{ cl }}{% endif %}" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
+                {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                <img class="article__list-image lazyload"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                  data-src="{{ img_url }}"
+                  data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                  data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="">
+              </div>
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+            <a href="{% if collection.products == empty %}#{% else %}{{ collection.url }}{% endif %}" class="title mt-40 d-block">{{ collection.title }}</span></a>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.blocks.size == 0 %}
+      {% include 'no-blocks' %}
+    {% endif %}
+
+  {% if section.settings.has_fullwidth == false %}
+  </div>
+  {% endif %}
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Vinova Collection List",
+    "class": "index-section section-collection-list wow fadeInUp animated",
+    "max_blocks": 12,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Vinova collection list"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Subtitle from happy customers"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": "Collections per row",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type":  "header",
+        "content": "Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full Width",
+        "default":   false
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "featured_collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image collection"
+          },
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Collection List",
+        "category": "Collection",
+        "blocks": [
+          {
+            "type": "featured_collection"
+          },
+          {
+            "type": "featured_collection"
+          },
+          {
+            "type": "featured_collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+  }
+</style>

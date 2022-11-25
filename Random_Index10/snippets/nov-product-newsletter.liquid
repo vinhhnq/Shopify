@@ -1,0 +1,56 @@
+<div id="Form_newletter" class="form-vertical modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header position-initial">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="zmdi zmdi-hc-fw zmdi-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="block_title text-center">
+          <div class="title">{{ 'general.newsletter_form.title_popup_soldout' | t }}</div>
+          <div class="sub">{{ 'general.newsletter_form.sub_popup_soldout' | t }}</div>
+        </div>
+        {% form 'customer' %}
+          {{ form.errors | default_errors }}
+          {% if form.posted_successfully? %}
+            <p class="form--success text-center" style="color: #fff;">{{ 'general.newsletter_form.confirmation' | t }}</p>
+          {% else %}
+            <div class="input-group d-block">
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="email"
+                name="contact[email]"
+                id="Email_newsletter"
+                class="input-group__field newsletter__input text-center"
+                value="{% if customer %}{{ customer.email }}{% endif %}"
+                placeholder="{{ 'general.newsletter_form.email_placeholder_soldout' | t }}">
+              <button type="submit" class="btn newsletter__submit w-100" name="commit" id="Subscribe_newsletter">
+                <span class="newsletter__submit d-flex align-items-center justify-content-center">
+                  <span>
+                    <i class="zmdi zmdi-email"></i>
+                    <span>{{ 'general.newsletter_form.noitify_me' | t }}</span>
+                  </span>
+                </span>
+              </button>
+            </div>
+            <div class="checkbox">
+              <label id="myCheck" class="d-inline-flex">
+                <span class="custom-checkbox">
+                  <input name="no-view" class="no-view" type="checkbox">
+                  <span class="ps-shown-by-js"><i class="zmdi zmdi-check"></i></span>
+                </span>
+                <span id="text">
+                  {{ 'general.newsletter_form.note' | t }}
+                  <a href="/pages/term-and-services">Terms of Service</a>
+                  and
+                  <a href="/pages/privacy-policy">Privacy Policy</a>
+                </span>
+              </label>
+            </div>
+            
+          {% endif %}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>

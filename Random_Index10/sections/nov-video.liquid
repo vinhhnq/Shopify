@@ -1,0 +1,135 @@
+<div data-section-id="{{ section.id }}">
+  <div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" style="padding-top: {{ section.settings.distance_top }}; padding-bottom: {{ section.settings.distance_bottom }}">
+    <div class="container_1320">
+      <div class="block position-relative">
+        <div class="block_title position-absolute">
+            <div class="title_block mb-0">
+            {% if section.settings.title_video != blank %}
+              <span>{{ section.settings.title_video }}</span>
+              {% if section.settings.subheading_1 != blank %}
+                <div class="sub_title">{{ section.settings.subheading_1 }}</div>
+              {% endif %}
+            {% endif %}
+            </div>
+            {% if section.settings.sn != blank %}
+              <a href="{{ section.settings.l_sn }}" class="btn btn-3 mt-15"><span>{{ section.settings.sn }}</span></a>
+            {% endif %}
+        </div>
+        <div class="item youtube position-relative d-flex">
+          <video playsinline autoplay loop muted style="width: 100%;max-width: 100%; height: auto;">
+            <source src="{{ section.settings.video_url }}" type="video/mp4" />
+          </video>
+          {% if section.settings.button_enable == true %}
+            <div class="cap_link">
+              <a href="{{ section.settings.cap_link }}">
+                <span>{{ section.settings.title_link }}</span>
+                <i class="zmdi zmdi-long-arrow-right"></i>
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Vinova Video",
+    "class": "index-section section-video wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "url",
+        "id": "video_url",
+        "label": "Video link",
+        "info": "Upload video in Admin > Settings > Files"
+      },
+      {
+        "type": "text",
+        "id": "title_video",
+        "label": "Title video",
+        "default": "Autumn is Coming"
+      },
+      {
+        "type": "richtext",
+        "id": "subheading_1",
+        "label": "SubHeading video"
+      },
+      {
+        "type": "text",
+        "id": "sn",
+        "label": "Text button"
+      },
+      {
+        "type": "url",
+        "id": "l_sn",
+        "label": "Link button"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "image_overlay_opacity",
+        "label": "Image overlay opacity",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "default": 25
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Video",
+        "category": "Video"
+      }
+    ]
+  }
+{% endschema %}
+{%- assign bg_image = section.settings.background_image -%}
+<style>
+  #shopify-section-{{ section.id }} .youtube::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, {{ section.settings.image_overlay_opacity }}%);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+</style>

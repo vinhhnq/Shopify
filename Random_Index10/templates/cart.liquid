@@ -1,0 +1,9 @@
+{% comment %}
+  The contents of the cart.liquid template can be found in /sections/cart-template.liquid
+{% endcomment %}
+
+{% assign name = 'cart.general.title' | t %}
+
+{% include 'nov-breadcrumb', custom_pagetitle : name %}
+
+{% section 'cart-template' %}

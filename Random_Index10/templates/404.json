@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "nov-page404",
+      "settings": {
+        "title": "Vinova Page 404",
+        "subheading": "Subtitle from happy customers",
+        "desc": "Description",
+        "background_color": "#00426f",
+        "image": "shopify:\/\/shop_images\/404-1.png"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

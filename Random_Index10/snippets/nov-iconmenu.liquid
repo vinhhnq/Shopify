@@ -1,0 +1,55 @@
+{% if linklists[child_list_handle].links != blank %}
+  <li class="site-nav--has-dropdown icon_menu{% if link.active %} site-nav--active{% endif %}{{ class_hidden }}" aria-controls="SiteNavLabel-{{ child_list_handle }}">
+    <a href="{{ link.url }}" class="site-nav__link site-nav__link--main" title="{{ link.title }}">
+      {% if block.settings.icon_menus != blank %}
+        <div class="icon_nav">
+          <img class="img-fluid lazyload" data-src="{{ block.settings.icon_menus | img_url: '50x' }}" alt="" />
+        </div>
+      {% endif %}
+      <span class="show_sub d-none d-md-block d-lg-none"><i class="zmdi zmdi-chevron-down"></i></span>
+      <div class="group_title">{{ link.title }}</div>
+    </a>
+    <div class="site-nav__dropdown" id="SiteNavLabel-{{ child_list_handle }}" aria-expanded="false" role="main">
+      {% if three_level_nav %}
+        <div class="site-nav__childlist">
+          <div class="site-nav__childlist-grid">
+            {% if linklists[child_list_handle].links != blank %}
+              {% for childlink in linklists[child_list_handle].links %}
+                {% assign grand_child_list_handle = childlink.title | handle %}
+                <div class="site-nav__childlist-item">
+                  <a href="{{ childlink.url }}" class="site-nav__link site-nav__child-link site-nav__child-link--parent">{{ childlink.title | escape }}</a>
+                  {% for grandchildlink in linklists[grand_child_list_handle].links %}
+                    <ul>
+                      <li>
+                        <a href="{{ grandchildlink.url }}" class="site-nav__link site-nav__child-link">{{ grandchildlink.title | escape }}</a>
+                      </li>
+                    </ul>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <ul>
+          {% for childlink in linklists[child_list_handle].links %}
+            <li {% if childlink.active %}class="site-nav--active"{% endif %}>
+              <a href="{{ childlink.url }}" class="site-nav__link site-nav__child-link{% if forloop.last %} site-nav__link--last{% endif %}">{{ childlink.title | escape }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </li>
+{% else %}
+  <li class="icon_menu{% if link.active %} site-nav--active {% endif %}" {{ class_hidden }}>
+    <a href="{{ link.url }}" class="site-nav__link site-nav__link--main" title="{{ link.title }}">
+      {% if block.settings.icon_menus != blank %}
+        <div class="icon_nav">
+          <img class="img-fluid lazyload" data-src="{{ block.settings.icon_menus | img_url: '50x' }}" alt="" />
+        </div>
+      {% endif %}
+      <div class="group_title">{{ link.title }}</div>
+    </a>
+  </li>
+{% endif %}

@@ -1,0 +1,89 @@
+<div class="post">
+  {% if section.settings.blog_show_image_feature %}
+  <div class="article__thumnail">
+    <div class="respone_image" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100}}%;">
+      {% assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+      <img class="article__list-image lazyload"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+        data-src="{{ img_url }}"
+        data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+        data-aspectratio="{{ article.image.aspect_ratio }}"
+        data-sizes="auto"
+        alt="">
+    </div>
+  </div>
+  {% endif %}
+  <div class="article__title">{{ article.title }}</div>
+</div>
+
+<div class="rte" itemprop="articleBody">
+  {{ article.content }}
+</div>
+
+<div class="article__info d-flex align-items-center">
+  <div class="blog_cs">
+    {% if section.settings.blog_show_date %}
+      <span class="article__date">
+        <i class="zmdi zmdi-calendar-note"></i>{{ article.published_at | time_tag: format: 'month_day_year' }}
+      </span>
+    {% endif %}
+    
+    {% if blog.comments_enabled? %}
+        <span class="article__countcomment"><i class="zmdi zmdi-comment-alt"></i>{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}</span>
+    {% endif %}
+    
+    
+    {% if section.settings.blog_show_author %}
+      <span class="article__author"><i class="zmdi zmdi-account"></i>{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+    {% endif %}
+  </div>
+
+  <div class="blog_share">
+    {% if section.settings.show_share_buttons %}
+      <div class="article__share btn-group">
+        <a class="dropdown-toggle" href="#" id="dropdownsharebutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="zmdi zmdi-share"></i><span>{{ 'blogs.article.share' | t }}</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownsharebutton">
+          {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+        </div>
+      </div>
+    {% endif %}
+    <div class="article__print">
+      <a href="javascript:window.print()"><i class="zmdi zmdi-print"></i><span>{{ 'blogs.article.print' | t }}</span></a>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Posts",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "blog_show_image_feature",
+        "label": "Show Image Feature",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "Show social sharing buttons",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

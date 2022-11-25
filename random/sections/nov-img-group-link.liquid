@@ -20,7 +20,7 @@
      {% assign size = section.blocks.size %}
      {% assign p = forloop.index %}
      {% assign item = p | times: 10 | divided_by: size %}
-      <div class="item col{% if item > 5 %} ct_r{% else %} ct_l{% endif %} position-relative{% if block.settings.class_block != blank %} {{ block.settings.class_block }}{% endif %}">
+      <div class="item col{% if item > 5 %} ct_r{% else %} ct_l{% endif %}position-relative{% if block.settings.class_block != blank %} {{ block.settings.class_block }}{% endif %}">
         <div class="bl_img position-relative">
           <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
             {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}

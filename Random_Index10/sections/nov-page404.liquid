@@ -1,0 +1,86 @@
+<section id="content" class="page-content page-not-found">
+  <div class="content-404 text-center">
+    {% if section.settings.image != blank %}
+      <div class="image">
+        <img class="img-fluid lazyload" data-src="{{ section.settings.image | img_url: '1920x' }}" alt="Image 404">
+      </div>
+    {% endif %}
+    <div class="content text-center">
+      {% if section.settings.title != blank %}
+        <div class="title_block">
+          <span>{{ section.settings.title }}</span>
+        </div>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <div class="sub_title">
+          <span>{{ section.settings.subheading | escape }}</span>
+        </div>
+      {% endif %}
+      {% if section.settings.desc != blank %}
+        <div class="decs_title">
+          <span>{{ section.settings.desc | escape }}</span>
+        </div>
+      {% endif %}
+      <a class="btn btn-default" href="/">
+        <i class="fa-home" aria-hidden="true"></i>
+        <span>{{ 'general.404.link' | t }}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Vinova Page 404",
+    "class": "index-section page-404",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Vinova Page 404"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Subtitle from happy customers"
+      },
+      {
+        "type": "text",
+        "id": "desc",
+        "label": "Description",
+        "default": "Description"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      }
+    ]
+  }
+{% endschema %}
+{%- assign bg_image = section.settings.background_image -%}
+{% if section.settings.background_color != blank or bg_image.src != blank %}
+  <style>
+    .page-404 {
+      {% if section.settings.background_color != blank %}
+        background-color: {{ section.settings.background_color }};
+      {% endif %}
+      {% if bg_image.src != blank %}
+        background-image: url("{{ bg_image | img_url: '1920x' }}");
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  </style>
+{% endif %}

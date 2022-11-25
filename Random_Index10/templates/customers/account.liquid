@@ -1,0 +1,92 @@
+{% assign name = 'customer.account.title' | t %}
+{% include 'nov-breadcrumb', custom_pagetitle : name %}
+<div class="page-width account_customers">
+  <div class="container">
+    <div class="section-header text-center">
+      <h1 class="title_block text-left"><span class="text-bold">{{ 'customer.account.title' | t }}</span></h1>
+    </div>
+
+    <div class="row">
+      
+      <div class="col-12 mt-40">
+        <ul class="list-unstyled list_address mb-40">
+          <li class="d-flex">
+            <span class="title_info">{{ 'customer.addresses.my_name' | t }}:</span>
+            <span class="text_info">{{ customer.default_address.name }}</span>
+          </li>
+          <li class="d-flex">
+            <span class="title_info">{{ 'customer.addresses.company' | t }}:</span>
+            <span class="text_info">{{ customer.default_address.company }}</span>
+          </li>
+          <li class="d-flex">
+            <span class="title_info">{{ 'customer.addresses.address1' | t }}:</span>
+            <span class="text_info">{{ customer.default_address.address1 }}</span>
+          </li>
+          <li class="d-flex">
+            <span class="title_info">{{ 'customer.addresses.address2' | t }}:</span>
+            <span class="text_info">{{ customer.default_address.address2 }}</span>
+          </li>
+          <li class="d-flex">
+            <span class="title_info">{{ 'customer.addresses.city' | t }}:</span>
+            <span class="text_info">{{ customer.default_address.city }}</span>
+          </li>
+          <li class="d-flex">
+            <span class="title_info">{{ 'customer.addresses.zip' | t }}:</span>
+            <span class="text_info">{{ customer.default_address.zip }}</span>
+          </li>
+          <li class="d-flex">
+            <span class="title_info">{{ 'customer.addresses.phone' | t }}:</span>
+            <span class="text_info">{{ customer.default_address.phone }}</span>
+          </li>
+          <li class="d-flex">
+            <span class="title_info">{{ 'customer.addresses.country' | t }}:</span>
+            <span class="text_info">{{ customer.default_address.country }}</span>
+          </li>
+        </ul>
+                
+        <a href="/account/addresses" class="btn">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+        {{ 'layout.customer.log_out' | t | customer_logout_link | replace: 'id=', 'class="btn" id=' }}
+        <div class="mt-40">
+          <h2 class="title_block text-left"><span class="text-bold">{{ 'customer.orders.title' | t }}</span></h2>
+        {% paginate customer.orders by 20 %}
+          {% if customer.orders.size != 0 %}
+			
+            <table class="responsive-table">
+              <thead>
+                <tr>
+                  <th>{{ 'customer.orders.order_number' | t }}</th>
+                  <th>{{ 'customer.orders.date' | t }}</th>
+                  <th>{{ 'customer.orders.payment_status' | t }}</th>
+                  <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                  <th>{{ 'customer.orders.total' | t }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in customer.orders %}
+                  <tr>
+                    <td data-label="{{ 'customer.orders.order_number' | t }}">
+                      <a href="{{ order.customer_url }}" class="btn">{{ order.name }}</a>
+                    </td>
+                    <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | date: format: 'month_day_year' }}</td>
+                    <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+                    <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+                    <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          {% else %}
+
+            <p>{{ 'customer.orders.none' | t }}</p>
+
+          {% endif %}
+          {% if paginate.pages > 1 %}
+            {% include 'pagination' %}
+          {% endif %}
+        {% endpaginate %}
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

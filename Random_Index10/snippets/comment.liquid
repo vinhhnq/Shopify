@@ -1,0 +1,11 @@
+<!-- /snippets/comment.liquid -->
+<div class="media">
+  <img class="lazyload" data-src="{{ 'user-anonymous.png' | asset_img_url: '70x' }}" class="img-fluid d-flex mr-20" alt="user anonymous" />
+  <div class="media-body">
+    <h5 class="mt-0 d-flex align-items-center">
+        <span class="comment__meta-item text-uppercase">{{ comment.author }}&nbsp;/&nbsp;</span>
+        <span class="comment__meta-item date">{{ comment.created_at | time_tag: format: 'month_day_year' }}</span>
+    </h5>
+    <div class="comment__content">{{ comment.content }}</div>
+  </div>
+</div>

@@ -1,0 +1,1073 @@
+<div data-section-id="{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="nov-slick">
+  <header class="site-header{% if section.settings.stickymenu == true %} sticky-menu{% endif %}">
+    <div class="header-mobile d-md-none">
+      <div class="d-flex align-items-center">
+        <div class="mobile_logo text-center">
+          {% if section.settings.logo_mb %}
+            <a href="/" itemprop="url" class="site-header__logo-image">
+              {%- assign image_size = section.settings.logo_width | append: 'x' -%}
+              <img srcset="{{ section.settings.logo_mb | img_url: image_size }} 1x, {{ section.settings.logo_mb | img_url: image_size, scale: 2 }} 2x"
+                src="{{ section.settings.logo_mb | img_url: image_size }}"
+                loading="lazy"
+                class="header__heading-logo logo_mb"
+                alt="{{ section.settings.logo_mb.alt | default: shop.name | escape }}"
+              >
+          	</a>
+          {% else %}
+          <a class="site-header__logo-link" href="/" itemprop="url">{{ shop.name }}</a>
+          {% endif %}
+        </div>
+        <div id="mobile_search">
+          {% include 'nov-formsearch-inline' %}
+        </div>
+        <div class="d-flex justify-content-end">
+          <div id="show-megamenu" class="item-mobile-top"><i class="zmdi zmdi-view-headline"></i></div>
+        </div>
+      </div> 
+    </div>
+    <div class="header-top d-none d-md-block">
+      <div class="bl_t">
+        <div class="row align-items-center">
+          <div class="col-lg-3 col-md-3 d-flex align-items-center position-static">
+            <div class="btn_toggle_nav d-lg-none d-md-block">
+              <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+            
+            <div class="contentsticky_logo">
+              <h1 class="h2 site-header__logo mb-0" itemscope itemtype="http://schema.org/Organization">
+                {% if section.settings.logo_pc %}
+                  <a href="/" itemprop="url" class="site-header__logo-image">
+                    {%- assign image_size = section.settings.logo_width | append: 'x' -%}
+                    <img srcset="{{ section.settings.logo_pc | img_url: image_size }} 1x, {{ section.settings.logo_pc | img_url: image_size, scale: 2 }} 2x"
+                      src="{{ section.settings.logo_pc | img_url: image_size }}"
+                      loading="lazy"
+                      class="header__heading-logo logo_pc"
+                      width="{{ section.settings.logo_pc.width }}"
+                      height="{{ section.settings.logo_pc.height }}"
+                      alt="{{ section.settings.logo_pc.alt | default: shop.name | escape }}"
+                    >
+                  </a>
+                {% else %}
+                  <a class="site-header__logo-link" href="/" itemprop="url">{{ shop.name }}</a>
+                {% endif %}
+              </h1>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="contentsticky_menu">
+              <nav id="AccessibleNav">{% include 'site-nav' %}</nav>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-3 d-flex justify-content-end align-items-center">
+            <div class="contentsticky_cart">
+              <div class="{% if settings.mini_cart_type == 'canvas' %}cart_canvas{% else %}cart_dropdown{% endif %}">
+                <div id="cart_block">
+                  <div class="header-cart text-center">
+                    <div class="site-header__cart">
+                      <span class="site-header__cart-icon">{% include 'cart-ico' %}</span>
+                      <span id="_desktop_cart_count" class="site-header__cart-count">
+                        <span id="CartCount">{{ cart.item_count }}</span>
+                      </span>
+                    </div>
+                  </div>
+                  {% if settings.mini_cart_type != 'canvas' %}<div id="_desktop_cart"><div id="cart-info"></div></div>{% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="contentsticky_search">
+              <div class="site_search">
+                <div class="search-toggle">{% include 'search-ico' %}</div>
+              </div>
+            </div>
+            <div class="contentsticky_account">
+              {% if settings.account_type == 'dropdown' %}
+                <div class="site-header_myaccount dropdown">
+                  <div class="myaccount-title dropdown-toggle text-center d-flex" data-toggle="dropdown">
+                    <a class="myaccount" href="{{ shop.secure_url }}/account" rel="nofollow" title="{{ 'layout.customer.account' | t }}">
+                      {% include 'setting-ico' %}
+                    </a>
+                  </div>
+                  {% include 'nov-block-account' %}
+                </div>
+              {% else %}
+                <div class="site-header_myaccount account_canvas">
+                  <div class="myaccount" title="{{ 'layout.customer.account' | t }}">
+                    {% include 'setting-ico' %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {% if section.settings.stickymenu == true %}
+    <div id="header-sticky" class="d-none d-md-block"{% if section.settings.background_color != blank %} style="background-color: {{ section.settings.background_color_sticky }};"{% endif %}>
+      <div class="bl_c h-100">
+        <div class="row align-items-center h-100">
+          <div class="col-md-9 d-flex align-items-center position-static">
+          <div class="contentstickynew_logo"></div>
+          <div class="contentstickynew_menu"></div>
+          </div>
+          <div class="col-md-3 d-flex align-items-center justify-content-end">
+            <div class="contentstickynew_cart"></div>
+            <div class="contentstickynew_search"></div>
+            <div class="contentstickynew_account"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "color",
+        "id": "background_color_sticky",
+        "label": "Background colors sticky"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_pc",
+        "label": "Logo image"
+      },
+      {
+        "type": "paragraph",
+        "content": "Please enter your logo size ↓."
+      },
+      {
+        "type": "number",
+        "id": "logo_width",
+        "label": "Width Logo mobile image",
+        "default": 100
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_mb",
+        "label": "Logo Mobile Image"
+      },
+      {
+        "type": "header",
+        "content": "Vinova Menu"
+      },
+      {
+        "type": "checkbox",
+        "id": "stickymenu",
+        "label": "Enable sticky"
+      },
+      {
+        "type": "checkbox",
+        "id": "novmenu_enable",
+        "label": "Enable megamenu",
+        "info": "Acitve Vinova Menu",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_icons",
+        "label": "Enable icon",
+        "info": "Acitve Icon Menu",
+        "default": true
+      },
+      {
+        "type": "link_list",
+        "id": "main_linklist",
+        "label": "Menu",
+        "default": "main-menu"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Megamenu Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "novmenu_item",
+            "label": "Menu item name",
+            "info": "Menu item of main-menu. Menu item has dropdown megamenu."
+          },
+          {
+            "type": "text",
+            "id": "submenu_width",
+            "label": "Submenu width (px)"
+          },
+          {
+            "type": "checkbox",
+            "id": "submenu_full_width",
+            "label": "Submenu full width"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon_menu",
+            "label": "Icon menu"
+          },
+          {
+            "type": "image_picker",
+            "id": "img_bg",
+            "label": "background image for block"
+          },
+          {
+            "type": "header",
+            "content": "Block navigation",
+            "info": "Admin -> Navigation -> Menu."
+          },
+          {
+            "type": "checkbox",
+            "id": "novmenu_menu_enable",
+            "label": "Enable navigation"
+          },
+          {
+            "type": "select",
+            "id": "novmenu_xl",
+            "label": "Width on megamenu large desktop 1200px ↑",
+            "default": "col-xl-3",
+            "options": [
+              {
+                "value": "col-xl-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-xl-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-xl-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-xl-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-xl-7",
+                "label": "7/12"
+              },
+              {
+                "value": "col-xl-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-xl-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-xl-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-xl-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "novmenu_lg",
+            "label": "Width on megamenu desktop 992px ↑",
+            "default": "col-lg-3",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-7",
+                "label": "7/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "submenu_xl",
+            "label": "Width fisrt children menu on megamenu large desktop 1200px ↑",
+            "default": "col-xl-3",
+            "options": [
+              {
+                "value": "col-xl-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-xl-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-xl-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-xl-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-xl-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-xl-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-xl-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-xl-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "submenu_lg",
+            "label": "Width fisrt children menu on megamenu desktop 992px ↑",
+            "default": "col-lg-3",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Block Banner"
+          },
+          {
+            "type": "header",
+            "content": "Block Banner 1"
+          },
+          {
+            "type": "checkbox",
+            "id": "novmenu_banner_enable1",
+            "label": "Enable Banner 1"
+          },
+          {
+            "type": "select",
+            "id": "banner_1_xl",
+            "label": "Width on megamenu large desktop 1200px ↑",
+            "default": "col-xl-4",
+            "options": [
+              {
+                "value": "col-xl-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-xl-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-xl-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-xl-5",
+                "label": "5/12"
+              },
+              {
+                "value": "col-xl-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-xl-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-xl-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-xl-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-xl-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "banner_1_lg",
+            "label": "Width on megamenu desktop 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-5",
+                "label": "5/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "image_size1",
+            "label": "Image Size Banner 1",
+            "default": "255x300",
+            "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+          },
+          {
+            "type": "image_picker",
+            "id": "novmenu_banner1",
+            "label": "Banner image"
+          },
+          {
+            "type": "text",
+            "id": "novmenu_banner_link1",
+            "label": "Banner Link"
+          },
+          {
+            "type": "text",
+            "id": "class_bn1",
+            "label": "Banner class"
+          },
+          {
+            "type": "header",
+            "content": "Block Banner 2"
+          },
+          {
+            "type": "checkbox",
+            "id": "novmenu_banner_enable2",
+            "label": "Enable Banner 2"
+          },
+          {
+            "type": "select",
+            "id": "banner_2_xl",
+            "label": "Width on megamenu large desktop 1200px ↑",
+            "default": "col-xl-4",
+            "options": [
+              {
+                "value": "col-xl-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-xl-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-xl-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-xl-5",
+                "label": "5/12"
+              },
+              {
+                "value": "col-xl-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-xl-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-xl-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-xl-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-xl-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "banner_2_lg",
+            "label": "Width on megamenu desktop 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-5",
+                "label": "5/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "image_size2",
+            "label": "Image size banner 2",
+            "default": "255x300",
+            "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+          },
+          {
+            "type": "image_picker",
+            "id": "novmenu_banner2",
+            "label": "Banner image"
+          },
+          {
+            "type": "text",
+            "id": "novmenu_banner_link2",
+            "label": "Banner link"
+          },
+          {
+            "type": "text",
+            "id": "class_bn2",
+            "label": "Banner class"
+          },
+          {
+            "type": "header",
+            "content": "Block Banner 3"
+          },
+          {
+            "type": "checkbox",
+            "id": "novmenu_banner_enable3",
+            "label": "Enable banner 3"
+          },
+          {
+            "type": "select",
+            "id": "banner_3_xl",
+            "label": "Width on megamenu large desktop 1200px ↑",
+            "default": "col-xl-4",
+            "options": [
+              {
+                "value": "col-xl-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-xl-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-xl-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-xl-5",
+                "label": "5/12"
+              },
+              {
+                "value": "col-xl-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-xl-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-xl-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-xl-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-xl-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "banner_3_lg",
+            "label": "Width on megamenu desktop 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-5",
+                "label": "5/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "image_size3",
+            "label": "Image size banner 3",
+            "default": "255x300",
+            "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+          },
+          {
+            "type": "image_picker",
+            "id": "novmenu_banner3",
+            "label": "Banner image"
+          },
+          {
+            "type": "text",
+            "id": "novmenu_banner_link3",
+            "label": "Banner link"
+          },
+          {
+            "type": "text",
+            "id": "class_bn3",
+            "label": "Banner class"
+          },
+          {
+            "type": "header",
+            "content": "Block Collection List"
+          },
+          {
+            "type": "checkbox",
+            "id": "collection_enable",
+            "label": "Enable block collection"
+          },
+          {
+            "type": "select",
+            "id": "collection_xl",
+            "label": "Width on megamenu large desktop 1200px ↑",
+            "default": "col-xl-3",
+            "options": [
+              {
+                "value": "col-xl-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-xl-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-xl-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-xl-5",
+                "label": "5/12"
+              },
+              {
+                "value": "col-xl-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-xl-7",
+                "label": "7/12"
+              },
+              {
+                "value": "col-xl-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-xl-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-xl-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-xl-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "collection_lg",
+            "label": "Width on megamenu desktop 992px ↑",
+            "default": "col-lg-3",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-5",
+                "label": "5/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-7",
+                "label": "7/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "name_collec_1",
+            "label": "Title collection 1",
+            "default": "Best Sellers"
+          },
+          {
+            "type": "url",
+            "id": "link_1",
+            "label": "Link collection 1"
+          },
+          {
+            "type": "text",
+            "id": "name_collec_2",
+            "label": "Title collection 2",
+            "default": "New Arrival"
+          },
+          {
+            "type": "url",
+            "id": "link_2",
+            "label": "Link collection 2"
+          },
+          {
+            "type": "text",
+            "id": "name_collec_3",
+            "label": "Title collection 3",
+            "default": "Top Trending"
+          },
+          {
+            "type": "url",
+            "id": "link_3",
+            "label": "Link collection 3"
+          },
+          {
+            "type": "text",
+            "id": "name_collec_4",
+            "label": "Title collection 4",
+            "default": "Top Trending"
+          },
+          {
+            "type": "url",
+            "id": "link_4",
+            "label": "Link collection 4"
+          },
+          {
+            "type": "text",
+            "id": "name_collec_5",
+            "label": "Title collection 5",
+            "default": "Denim Collection"
+          },
+          {
+            "type": "url",
+            "id": "link_5",
+            "label": "Link collection 5"
+          },
+          {
+            "type": "header",
+            "content": "Block Product Slider"
+          },
+          {
+            "type": "checkbox",
+            "id": "product_enable",
+            "label": "Enable product"
+          },
+          {
+            "type": "select",
+            "id": "product_xl",
+            "label": "Width on megamenu large desktop 1200px ↑",
+            "default": "col-xl-4",
+            "options": [
+              {
+                "value": "col-xl-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-xl-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-xl-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-xl-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-xl-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-xl-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-xl-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-xl-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "product_lg",
+            "label": "Width on megamenu desktop 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "title_product",
+            "label": "Title product",
+            "default": "Featured Product"
+          },
+          {
+            "type": "product",
+            "id": "product_1",
+            "label": "Product 1"
+          },
+          {
+            "type": "product",
+            "id": "product_2",
+            "label": "Product 2"
+          },
+          {
+            "type": "product",
+            "id": "product_3",
+            "label": "Product 3"
+          },
+          {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto play",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show_dots",
+            "label": "Enable dots",
+            "default": true
+          }
+        ]
+      },
+      {
+        "type": "icon_menu",
+        "name": "Icon Menu",
+        "settings": [
+          {
+            "type": "text",
+            "id": "name_item",
+            "label": "Menu item name",
+            "info": "Menu item of main-menu. Menu item has dropdown megamenu."
+          },
+          {
+            "type": "image_picker",
+            "id": "icon_menus",
+            "label": "Icon Menu"
+          },
+          {
+            "type": "text",
+            "id": "sub_title_menu_2",
+            "label": "Sub title menu"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  .site-header {
+    background-color: {{ section.settings.background_color }};
+  }
+</style>

@@ -1,0 +1,19 @@
+{% comment %}
+  The contents of the blog.liquid template can be found in /sections/blog-template.liquid
+{% endcomment %}
+
+{% include 'nov-breadcrumb' %}
+<div class="page-width">
+  <div class="container">
+    <div class="row">
+      {% if settings.type_sidebar_blog != 'sidebar_hidden' %}
+      <div class="sidebar sidebar-article col-lg-3 col-md-4 flex-xs-unordered{% if settings.type_sidebar_blog == 'sidebar_right' %} flex-last{% endif %}">
+        {% section 'nov-sidebar-article' %}
+      </div>
+      {% endif %}
+      <div class="{% if settings.type_sidebar_blog != 'sidebar_hidden' %}blog_groups col-lg-9 col-md-8 flex-xs-first{% else %}col-lg-12 col-md-12{% endif %}">
+        {% section 'blog-template' %}
+      </div>
+    </div>
+  </div>
+</div>

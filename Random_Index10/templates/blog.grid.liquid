@@ -1,0 +1,15 @@
+{% comment %}
+  The contents of the blog.liquid template can be found in /sections/blog-template.liquid
+{% endcomment %}
+
+{% include 'nov-breadcrumb' %}
+<div class="container">
+  <div class="row">
+    <div class="sidebar sidebar-article col-lg-3 col-md-4 flex-xs-unordered{% if settings.type_sidebar_article == 'sidebar_right' %} flex-last{% endif %}">
+      {% section 'nov-sidebar-article' %}
+    </div>
+    <div class="blog_groups col-lg-9 col-md-8 flex-xs-first">
+      {% section 'blog-template' %}
+    </div>
+  </div>
+</div>

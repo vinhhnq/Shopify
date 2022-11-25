@@ -1,0 +1,52 @@
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/nov-product-template.liquid
+{% endcomment %}
+
+{% include 'nov-breadcrumb' %}
+
+<div class="page-width">
+  <div class="container">
+    {% section 'nov-product-template' %}
+  </div>
+</div>
+
+<script>
+  // Override default values of shop.strings for each template.
+  // Alternate product templates can change values of
+  // add to cart button, sold out, and unavailable states here.
+  theme.productStrings = {
+    addToCart: {{ 'products.product.add_to_cart' | t | json }},
+    soldOut: {{ 'products.product.sold_out' | t | json }},
+    unavailable: {{ 'products.product.unavailable' | t | json }}
+  }
+
+  var selectCallbackProduct = function(variant, selector) {
+    novtheme.productPage({
+      money_format: theme.moneyFormat,
+      variant: variant,
+      selector: selector
+    })
+  };
+
+  $(document).ready(function() {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallbackProduct,
+      enableHistoryState: true
+    });
+
+    {% if section.settings.product_swatch_enable and product.available and product.options.size > 1 %}
+      Shopify.linkOptionSelectors({{ product | json }});
+    {% endif %}
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('.selector-wrapper').hide();
+    {% endif %}
+  });
+</script>

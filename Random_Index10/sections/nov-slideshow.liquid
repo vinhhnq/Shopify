@@ -1,0 +1,749 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" data-section-id="{{ section.id }}" data-section-type="slideshow-section">
+  {% if section.settings.has_fullwidth == false %}
+  <div class="container">
+  {% endif %} 
+  {% comment %} Slideshow {% endcomment %}
+  <div class="slideshow position-relative">
+    {% if section.blocks.size > 0 %}
+      <div class="main-slider" data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.autoplay_speed }}" data-arrows="{{ section.settings.arrows }}" data-dots="{{ section.settings.dots }}">
+        {% for block in section.blocks %}
+          {% if block.settings.image != blank %}
+           <div class="item image">
+              <figure>
+                <div class="slide-image slide-media slide-image-{{ forloop.index }}">
+                  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 1.5'%3E%3C/svg%3E" data-src="{{ block.settings.image | img_url: '1920x' }}" class="image-entity lazyload" alt="slidershow" />
+                </div>
+                <figcaption class="caption">
+                  <div class="content-caption content-captiont-{{ forloop.index }} {% if block.settings.text_align == 'left' %}rtl-left{% elsif block.settings.text_align == 'right' %}rtl-right{% else %}rtl-center{% endif %}">
+                    <div class="position-relative">
+                      <div class="content position-absolute content-{{ forloop.index }}">
+                        {% unless block.settings.caption_1 == blank %}
+                          <div class="caption-animate caption-1" data-animate="{{ block.settings.cap_animate_1 }} animated" style="color: {{ block.settings.color_cap1 }};">{{ block.settings.caption_1 | nofilter }}</div>
+                        {% endunless %}
+                        {% unless block.settings.caption_2 == blank %}
+                          <div class="caption-animate caption-2 mt-25" data-animate="{{ block.settings.cap_animate_2 }} animated" style="color: {{ block.settings.color_cap2 }};">{{ block.settings.caption_2 | nofilter }}</div>
+                        {% endunless %}
+                        {% unless block.settings.caption_btn == blank %}
+                        <a class="caption-animate btn_1 btn mt-40 mt-lg-30" href="{{ block.settings.slider_link }}">
+                          <span>{{ block.settings.caption_btn | nofilter }}</span>
+                        </a>
+                        {% endunless %}
+                      </div>
+                    </div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div> 
+          {% endif %}
+          {% if block.settings.image == blank %}
+          <div class="item image blank">
+              <figure>
+                {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                <figcaption class="caption-animate caption {% if block.settings.type_caption == '1' %}type_1{else}type_2{% endif %}">
+                    {% unless block.settings.caption_1 == blank %}
+                      <div class="caption-animate caption-1">{{ block.settings.caption_1 }}</div>
+                    {% endunless %}
+                    {% unless block.settings.caption_2 == blank %}
+                      <div class="caption-animate caption-2" data-animate="bounceInRight">{{ block.settings.caption_2 | nofilter }}</div>
+                    {% endunless %}
+                    {% unless block.settings.caption_3 == blank %}
+                      <div class="caption-animate caption-3" data-animate="bounceInLeft">{{ block.settings.caption_3 | nofilter }}</div>
+                    {% endunless %}
+                </figcaption>
+              </figure>
+            </div>  
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if section.settings.arrows %}
+        <div class="bl_nav_cust d-md-flex align-items-center position-absolute">
+          <div class="d-flex position-relative">
+          <div class="prev_custom">{% include 'arrow-left' %}</div>
+          <div class="num_nav"><span class="current_nav"></span> - <span class="total_nav"></span></div>
+          <div class="next_custom">{% include 'arrow-right' %}</div>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+    {% if section.blocks.size == 0 %}
+      <div class="placeholder-noblocks">
+        {{ 'homepage.onboarding.no_content' | t }}
+      </div>
+    {% endif %}
+  </div>
+  {% comment %} End Slideshow {% endcomment %}
+
+  {% if section.settings.has_fullwidth == false %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Vinova Slideshow",
+    "class": "index-section section-slideshow",
+    "settings": [
+      {
+        "type":  "header",
+        "content": "Slider option"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate slides",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "autoplay_speed",
+        "label": "Change slides every",
+        "options": [
+          { "value": "4000", "label": "4 seconds" },
+          { "value": "5000", "label": "5 seconds" },
+          { "value": "6000", "label": "6 seconds" },
+          { "value": "7000", "label": "7 seconds" },
+          { "value": "8000", "label": "8 seconds" },
+          { "value": "9000", "label": "9 seconds" },
+          { "value": "10000", "label": "10 seconds" }
+        ],
+        "default": "4000"
+      },
+      {
+        "type": "checkbox",
+        "id": "arrows",
+        "label": "Enable arrows",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "dots",
+        "label": "Enable dots",
+        "default": true
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image slideshow"
+          },
+          {
+            "type": "header",
+            "content": "Caption"
+          },
+          {
+            "type": "header",
+            "content": "Caption 1"
+          },
+          {
+            "type": "text",
+            "id": "caption_1",
+            "label": "Caption 1"
+          },
+
+          {
+            "type": "color",
+            "id": "color_cap1",
+            "label": "Color",
+            "default": "#000"
+          },
+          {
+            "type": "text",
+            "id": "fz_cap1_lg",
+            "label": "Font size desktop 992px ↑"
+          },
+          {
+            "type": "text",
+            "id": "fz_cap1_md",
+            "label": "Font size tablet 991px ↓"
+          },
+          {
+            "type": "text",
+            "id": "fz_cap1_sm",
+            "label": "Font size mobile 767px ↓"
+          },
+          {
+            "type": "text",
+            "id": "fz_cap1_xs",
+            "label": "Font size small mobile 575px ↓"
+          },
+          {
+            "type": "select",
+            "id": "cap_animate_1",
+            "label": "Text animate",
+            "options": [
+              {
+                "value": "bounce",
+                "label": "bounce"
+              },
+              {
+                "value": "swing",
+                "label": "swing"
+              },
+              {
+                "value": "wobble",
+                "label": "wobble"
+              },
+              {
+                "value": "bounceIn",
+                "label": "bounceIn"
+              },
+              {
+                "value": "bounceInDown",
+                "label": "bounceInDown"
+              },
+              {
+                "value": "bounceInLeft",
+                "label": "bounceInLeft"
+              },
+              {
+                "value": "bounceInRight",
+                "label": "founceInRight"
+              },
+              {
+                "value": "bounceInUp",
+                "label": "founceInUp"
+              },
+              {
+                "value": "fadeIn",
+                "label": "fadeIn"
+              },
+              {
+                "value": "fadeInDown",
+                "label": "fadeInDown"
+              },
+              {
+                "value": "fadeInDownBig",
+                "label": "fadeInDownBig"
+              },
+              {
+                "value": "fadeInLeft",
+                "label": "fadeInLeft"
+              },
+              {
+                "value": "fadeInLeftBig",
+                "label": "fadeInLeftBig"
+              },
+              {
+                "value": "fadeInRight",
+                "label": "fadeInRight"
+              },
+              {
+                "value": "fadeInRightBig",
+                "label": "fadeInRightBig"
+              },
+              {
+                "value": "fadeInUp",
+                "label": "fadeInUp"
+              },
+              {
+                "value": "fadeInUpBig",
+                "label": "fadeInUpBig"
+              },
+              {
+                "value": "flipInX",
+                "label": "flipInX"
+              },
+              {
+                "value": "lightSpeedIn",
+                "label": "lightSpeedIn"
+              },
+              {
+                "value": "slideInUp",
+                "label": "slideInUp"
+              },
+              {
+                "value": "slideInDown",
+                "label": "slideInDown"
+              },
+              {
+                "value": "slideInLeft",
+                "label": "slideInLeft"
+              },
+              {
+                "value": "slideInRight",
+                "label": "slideInRight"
+              },
+              {
+                "value": "zoomIn",
+                "label": "zoomIn"
+              },
+              {
+                "value": "zoomInDown",
+                "label": "zoomInDown"
+              },
+              {
+                "value": "zoomInLeft",
+                "label": "zoomInLeft"
+              },
+              {
+                "value": "zoomInRight",
+                "label": "zoomInRight"
+              },
+              {
+                "value": "zoomInUp",
+                "label": "zoomInUp"
+              },
+              {
+                "value": "jackInTheBox",
+                "label": "jackInTheBox"
+              },
+              {
+                "value": "rollIn",
+                "label": "rollIn"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Caption 2"
+          },
+          {
+            "type": "text",
+            "id": "caption_2",
+            "label": "Caption 2"
+          },
+          {
+             "type": "color",
+             "id": "color_cap2",
+             "label": "Color",
+             "default": "#000"
+          },
+          {
+            "type": "text",
+            "id": "fz_cap2_lg",
+            "label": "Font size desktop 992px ↑"
+          },
+          {
+            "type": "text",
+            "id": "fz_cap2_md",
+            "label": "Font size tablet 991px ↓"
+          },
+          {
+            "type": "text",
+            "id": "fz_cap2_sm",
+            "label": "Font size mobile 767px ↓"
+          },
+          {
+            "type": "text",
+            "id": "fz_cap2_xs",
+            "label": "Font size small mobile 575px ↓"
+          },
+          {
+            "type": "select",
+            "id": "cap_animate_2",
+            "label": "Text animate",
+            "options": [
+              {
+                "value": "bounce",
+                "label": "bounce"
+              },
+              {
+                "value": "swing",
+                "label": "swing"
+              },
+              {
+                "value": "wobble",
+                "label": "wobble"
+              },
+              {
+                "value": "bounceIn",
+                "label": "bounceIn"
+              },
+              {
+                "value": "bounceInDown",
+                "label": "bounceInDown"
+              },
+              {
+                "value": "bounceInLeft",
+                "label": "bounceInLeft"
+              },
+              {
+                "value": "bounceInRight",
+                "label": "founceInRight"
+              },
+              {
+                "value": "bounceInUp",
+                "label": "founceInUp"
+              },
+              {
+                "value": "fadeIn",
+                "label": "fadeIn"
+              },
+              {
+                "value": "fadeInDown",
+                "label": "fadeInDown"
+              },
+              {
+                "value": "fadeInDownBig",
+                "label": "fadeInDownBig"
+              },
+              {
+                "value": "fadeInLeft",
+                "label": "fadeInLeft"
+              },
+              {
+                "value": "fadeInLeftBig",
+                "label": "fadeInLeftBig"
+              },
+              {
+                "value": "fadeInRight",
+                "label": "fadeInRight"
+              },
+              {
+                "value": "fadeInRightBig",
+                "label": "fadeInRightBig"
+              },
+              {
+                "value": "fadeInUp",
+                "label": "fadeInUp"
+              },
+              {
+                "value": "fadeInUpBig",
+                "label": "fadeInUpBig"
+              },
+              {
+                "value": "flipInX",
+                "label": "flipInX"
+              },
+              {
+                "value": "lightSpeedIn",
+                "label": "lightSpeedIn"
+              },
+              {
+                "value": "slideInUp",
+                "label": "slideInUp"
+              },
+              {
+                "value": "slideInDown",
+                "label": "slideInDown"
+              },
+              {
+                "value": "slideInLeft",
+                "label": "slideInLeft"
+              },
+              {
+                "value": "slideInRight",
+                "label": "slideInRight"
+              },
+              {
+                "value": "zoomIn",
+                "label": "zoomIn"
+              },
+              {
+                "value": "zoomInDown",
+                "label": "zoomInDown"
+              },
+              {
+                "value": "zoomInLeft",
+                "label": "zoomInLeft"
+              },
+              {
+                "value": "zoomInRight",
+                "label": "zoomInRight"
+              },
+              {
+                "value": "zoomInUp",
+                "label": "zoomInUp"
+              },
+              {
+                "value": "jackInTheBox",
+                "label": "jackInTheBox"
+              },
+              {
+                "value": "rollIn",
+                "label": "rollIn"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Button"
+          },
+          {
+            "type": "text",
+            "id": "caption_btn",
+            "label": "Button text 1"
+          },
+          {
+            "type": "url",
+            "id": "slider_link",
+            "label": "Button link 1"
+          },
+          {
+            "type": "header",
+            "content": "Caption Position"
+          },
+          {
+            "type": "select",
+            "id": "text_align",
+            "label": "Text align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Width"
+          },
+          {
+            "type": "text",
+            "id": "width_position_xl",
+            "label": "Width large desktop (%)",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "width_position_lg",
+            "label": "Width desktop (%)",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "width_position_md",
+            "label": "Width tablet (%)",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "width_position_sm",
+            "label": "Width mobile (%)",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "width_position_xs",
+            "label": "Width small mobile (%)",
+            "default": "50"
+          },
+          {
+            "type": "header",
+            "content": "Left"
+          },
+          {
+            "type": "text",
+            "id": "left_position_xl",
+            "label": "Left large desktop (%)",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "left_position_lg",
+            "label": "Left desktop (%)",
+            "default": "20"
+          },
+          {
+            "type": "text",
+            "id": "left_position_md",
+            "label": "Left tablet (%)",
+            "default": "20"
+          },
+          {
+            "type": "text",
+            "id": "left_position_sm",
+            "label": "Left mobile (%)",
+            "default": "0"
+          },
+          {
+            "type": "text",
+            "id": "left_position_xs",
+            "label": "Left small mobile (%)",
+            "default": "0"
+          },
+          {
+            "type": "header",
+            "content": "Top"
+          },
+          {
+            "type": "text",
+            "id": "top_position_xl",
+            "label": "Top large desktop (%)",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "top_position_lg",
+            "label": "Top desktop (%)",
+            "default": "20"
+          },
+          {
+            "type": "text",
+            "id": "top_position_md",
+            "label": "Top tablet (%)",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "top_position_sm",
+            "label": "Top mobile (%)",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "top_position_xs",
+            "label": "Top small mobile (%)",
+            "default": "50"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Vinova Slideshow",
+      "category": "Image",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": "5000"
+      },
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }]
+  }
+{% endschema %}
+
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+  }
+  {% for block in section.blocks %}
+    #shopify-section-{{ section.id }} .content-{{ forloop.index }} {
+      left: {{ block.settings.left_position_xl }}%;
+      width: {{ block.settings.width_position_xl }}%;
+    }
+    #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-1 {
+      font-size: {{ block.settings.fz_cap1_lg }}
+    }
+    #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-2 {
+      font-size: {{ block.settings.fz_cap2_lg }}
+    }
+    #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-3 {
+      font-size: {{ block.settings.fz_cap3_lg }}
+    }
+    #shopify-section-{{ section.id }} .content-captiont-{{ forloop.index }} {
+      top: {{ block.settings.top_position_xl }}%;
+      text-align: {{ block.settings.text_align }};
+    }
+    @media(max-width: 1199px) {
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} {
+        left: {{ block.settings.left_position_lg }}%;
+        width: {{ block.settings.width_position_lg }}%;
+      }
+      #shopify-section-{{ section.id }} .content-captiont-{{ forloop.index }} {
+        top: {{ block.settings.top_position_lg }}%;
+        transform: translateY(-{{ block.settings.top_position_lg }}%);
+      }
+    }
+    @media(max-width: 991px) {
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} {
+        left: {{ block.settings.left_position_md }}%;
+        width: {{ block.settings.width_position_md }}%;
+      }
+      #shopify-section-{{ section.id }} .content-captiont-{{ forloop.index }} {
+        top: {{ block.settings.top_position_md }}%;
+        transform: translateY(-{{ block.settings.top_position_md }}%);
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-1 {
+        font-size: {{ block.settings.fz_cap1_md }};
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-2 {
+        font-size: {{ block.settings.fz_cap2_md }};
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-3 {
+        font-size: {{ block.settings.fz_cap3_md }};
+      }
+    }
+    @media(max-width: 767px) {
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} {
+        left: {{ block.settings.left_position_sm }}%;
+        width: {{ block.settings.width_position_sm }}%;
+      }
+      #shopify-section-{{ section.id }} .content-captiont-{{ forloop.index }} {
+        top: {{ block.settings.top_position_sm }}%;
+        transform: translateY(-{{ block.settings.top_position_sm }}%);
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-1 {
+        font-size: {{ block.settings.fz_cap1_sm }};
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-2 {
+        font-size: {{ block.settings.fz_cap2_sm }};
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-3 {
+        font-size: {{ block.settings.fz_cap3_sm }};
+      }
+      #shopify-section-{{ section.id }} .slide-image-{{ forloop.index }} {
+        background-image: url({{ block.settings.image | img_url: '1920x' }});
+      }
+    }
+    @media(max-width: 575px) {
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} {
+        left: {{ block.settings.left_position_xs }}%;
+        width: {{ block.settings.width_position_xs }}%;
+      }
+      #shopify-section-{{ section.id }} .content-captiont-{{ forloop.index }} {
+        top: {{ block.settings.top_position_xs }}%;
+        transform: translateY(-{{ block.settings.top_position_xs }}%);
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-1 {
+        font-size: {{ block.settings.fz_cap1_xs }};
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-2 {
+        font-size: {{ block.settings.fz_cap2_xs }};
+      }
+      #shopify-section-{{ section.id }} .content-{{ forloop.index }} .caption-3 {
+        font-size: {{ block.settings.fz_cap3_xs }};
+      }
+    }
+  {% endfor %}
+</style>
