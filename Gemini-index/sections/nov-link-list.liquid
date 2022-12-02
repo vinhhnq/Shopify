@@ -1,0 +1,341 @@
+<div class="page-width distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" data-section-id="{{ section.id }}" data-section-type="nov-slick">
+  {% if section.settings.has_fullwidth == false %}
+  <div class="container">
+  {% endif %}
+    {% if section.settings.title != blank %}
+      <div class="{{ section.settings.title_alignment }}">
+        {% if section.settings.icon !=blank %}
+          <img class="d-inline-block mb-25" src="{{ section.settings.icon | img_url: '50x' }}">
+        {% endif %}
+        <div class="title_block">
+          <span>{{ section.settings.title }}</span>
+          {% if section.settings.subheading != blank %}
+            <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    <div class="row nov-slick-carousel"
+      data-autoplay="false" 
+      data-autoplayTimeout="6000" 
+      data-loop="false"
+      data-nav="false"
+      data-items="{{ section.settings.grid_number }}" 
+      data-items_lg="{{ section.settings.grid_number_lg }}" 
+      data-items_md="{{ section.settings.grid_number_md }}" 
+      data-items_sm="{{ section.settings.grid_number_sm }}"
+      data-items_xs="{{ section.settings.grid_number_xs }}"
+      data-unslick="true">
+      {% for block in section.blocks %}
+        <div class="col">
+          <div class="block_content text-center">
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="d-block">
+          {% endif %}
+          <div class="b_img position-relative{% if block.settings.image_h != blank %} h_img_h{% else %} n_img_h{% endif %}">
+            {% if block.settings.image != blank %}
+              <img class="img d-inline-block" src="{{ block.settings.image | img_url: '200x'}}">
+            {% endif %}
+            {% if block.settings.image_h != blank %}
+              <img class="img_h" src="{{ block.settings.image_h | img_url: '200x'}}">
+            {% endif %}
+            {% if section.settings.icon_h != blank %}
+              <img class="icon_h" src="{{ section.settings.icon_h | img_url: '50x' }}">
+            {% endif %}
+          </div>
+          {% if block.settings.text != blank %}
+            <div class="name_link">{{ block.settings.text }}</div>
+          {% endif %}
+          {% if block.settings.s_text != blank %}
+            <div class="sub_text">{{ block.settings.s_text }}</div>
+          {% endif %}
+          {% if block.settings.link != blank %}
+            </a>
+          {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% if section.settings.has_fullwidth == false %}
+    </div>
+    {% endif %}  
+    
+
+    {% if section.blocks.size == 0 %}
+      {% include 'no-blocks' %}
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Vinova Link List",
+    "class": "index-section section-link-list wow fadeInUp animated",
+    "max_blocks": 12,
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon heading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Vinova link list"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Subtitle from happy customers"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Title alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type":  "header",
+        "content": "Item style"
+      },
+      {
+        "type": "range",
+        "id": "border_radius",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Border radius image",
+        "default": 0
+      },
+      {
+        "type": "color",
+        "id": "color_link",
+        "label": "Link text colors",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "id": "color_link_h",
+        "label": "Link text colors hover",
+        "default": "#222222"
+      },
+      {
+        "type": "color",
+        "id": "text_c",
+        "label": "Color text",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "id": "background_i",
+        "label": "Background item",
+        "default": "#f3f3f3"
+      },
+      {
+        "type": "color",
+        "id": "background_i_h",
+        "label": "Background item hover",
+        "default": "#f3f3f3"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_h",
+        "label": "Icon when hover image"
+      },
+      {
+        "type":  "header",
+        "content": "Item per row"
+      },
+      {
+        "type": "range",
+        "id": "grid_number",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Item per row large desktop",
+        "default": 3,
+        "info": "Breakpoint 1200px ↑"
+      },
+      {
+        "type": "range",
+        "id": "grid_number_lg",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Item per row desktop",
+        "default": 3,
+        "info": "Breakpoint 1199px ↓"
+      },
+      {
+        "type": "range",
+        "id": "grid_number_md",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Item per row tablet",
+        "default": 3,
+        "info": "Breakpoint 991px ↓"
+      },
+      {
+        "type": "range",
+        "id": "grid_number_sm",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Item per row mobile",
+        "default": 2,
+        "info": "Breakpoint 767px ↓"
+      },
+      {
+        "type": "range",
+        "id": "grid_number_xs",
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "label": "Item per row small mobile",
+        "default": 1,
+        "info": "Breakpoint 575px ↓"
+      },
+      {
+        "type":  "header",
+        "content": "Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors",
+        "default": "#ffffff"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "featured_collection",
+        "name": "Link",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_h",
+            "label": "Image hover"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Name link"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "s_text",
+            "label": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Link List",
+        "category": "Collection",
+        "blocks": [
+          {
+            "type": "featured_collection"
+          },
+          {
+            "type": "featured_collection"
+          },
+          {
+            "type": "featured_collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  {%- assign bg_image = section.settings.background_image -%}
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");
+      background-repeat: no-repeat;
+      background-position: center top;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .block_content {
+    background: {{ section.settings.background_i }};
+  }
+  #shopify-section-{{ section.id }} .block_content:hover {
+    background: {{ section.settings.background_i_h }};
+  }
+  #shopify-section-{{ section.id }} .name_link {
+    color: {{ section.settings.color_link }};
+  }
+  #shopify-section-{{ section.id }} .name_link:hover {
+    color: {{ section.settings.color_link_h }};
+  }
+  #shopify-section-{{ section.id }} .sub_text {
+    color: {{ section.settings.text_c }};
+  }
+  #shopify-section-{{ section.id }} .b_img, #shopify-section-{{ section.id }} .n_img_h:before {
+    border-radius: {{ section.settings.border_radius }}%;
+    overflow: hidden;
+  }
+</style>

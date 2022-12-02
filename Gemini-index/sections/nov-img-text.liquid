@@ -1,0 +1,203 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% else %}
+    <div class="container-fluid">
+  {% endif %}
+
+  {% if section.settings.heading != blank %}
+  <div class="{{ section.settings.title_alignment }}">
+    <div class="title_block">
+      <span>{{ section.settings.heading }}</span>
+      {% if section.settings.subheading != blank %}
+      <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row block_row{% if section.settings.img_alignment == 'right' %} img_right{% endif %}">
+    <div class="block_img col-md-6{% if section.settings.img_alignment == 'right' %} order-0 order-md-2{% endif %}">
+      <div class="nov-sh-image-2">
+        <div class="respone_image" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%;">
+          {% assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+          <img class="article__list-image lazyload"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+            data-src="{{ img_url }}"
+            data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+            data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+            data-sizes="auto"
+            alt="">
+        </div>
+      </div>
+    </div>
+    <div class="block_text col-md-6 pt-40 pb-40 d-flex align-items-center justify-content-center">
+      <div class="block_content">
+        {% if section.settings.title != blank %}
+          <div class="title_block mb-0">
+            {% if section.settings.subtitle != blank %}
+            <div class="sub_title mb-15">{{ section.settings.subtitle }}</div>
+            {% endif %}
+            <span>{{ section.settings.title }}</span>
+          </div>
+          {% if section.settings.btn_t != blank %}
+            <a href="{{ section.settings.btn }}" class="btn mt-25">{{ section.settings.btn_t }}</a>
+          {% endif %}
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.has_fullwidth == false %}
+    </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Vinova Image Width Text",
+    "class": "index-section section_img_text wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Vinova Image With Text"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Subtitle from happy customers"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type":  "header",
+        "content": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "img_alignment",
+        "label": "Image alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type":  "header",
+        "content": "Text"
+      },
+      {
+        "type": "richtext",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle",
+        "label": "Sub title"
+      },
+      {
+        "type": "text",
+        "id": "btn_t",
+        "label": "Button text"
+      },
+      {
+        "type": "url",
+        "id": "btn",
+        "label": "Button link"
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Images With Text",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}
+{%- assign bg_image = section.settings.background_image -%}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    {% endif %}
+  }
+</style>

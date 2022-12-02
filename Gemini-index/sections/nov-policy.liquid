@@ -1,0 +1,342 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% endif %}
+    {% if section.settings.title != blank %}
+      <div class="{{ section.settings.title_alignment }}">
+        <div class="title_block">
+          <span>{{ section.settings.title }}</span>
+          {% if section.settings.sub_title != blank %}
+          <span class="sub_title">{{ section.settings.sub_title | escape }}</span>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="nov-policy">
+        <div class="row">
+          {% for block in section.blocks %}
+            <div class="nov-policy-item d-flex align-items-center {{ section.settings.width_xl }} {{ section.settings.width_lg }} {{ section.settings.width_md }} {{ section.settings.width_sm }} {{ section.settings.width_xs }}{% if block.settings.class != blank %} {{ block.settings.class }}{% endif %}">
+              <div class="bl_img"><img class="lazyload" data-src="{{ block.settings.policy_icon | img_url: '120x' }}" alt="icon_policy"></div>
+              <div class="bl_content">
+                <div class="title-policy">{{ block.settings.title_policy }}</div>
+                <div class="desc-policy">{{ block.settings.desc_policy }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% if section.settings.has_fullwidth == false %}
+    </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Vinova Policy",
+    "class": "index-section section-policy wow fadeInUp animated",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Vinova Policy"
+      },
+      {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub heading",
+        "default": "Policy subtitle from happy customers"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "width_xl",
+        "label": "Width policy large desktop",
+        "info": "Breakpoint 1200px ↑",
+        "options": [
+          {
+            "value": "col-xl-2",
+            "label": "2/12"
+          },
+          {
+            "value": "col-xl-3",
+            "label": "3/12"
+          },
+          {
+            "value": "col-xl-4",
+            "label": "4/12"
+          },
+          {
+            "value": "col-xl-6",
+            "label": "6/12"
+          },
+          {
+            "value": "col-xl-8",
+            "label": "8/12"
+          },
+          {
+            "value": "col-xl-9",
+            "label": "9/12"
+          },
+          {
+            "value": "col-xl-10",
+            "label": "10/12"
+          },                  
+          {
+            "value": "col-xl-12",
+            "label": "12/12"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "width_lg",
+        "label": "Width policy desktop",
+        "info": "Breakpoint 992px ↑",
+        "options": [
+          {
+            "value": "col-lg-2",
+            "label": "2/12"
+          },
+          {
+            "value": "col-lg-3",
+            "label": "3/12"
+          },
+          {
+            "value": "col-lg-4",
+            "label": "4/12"
+          },
+          {
+            "value": "col-lg-6",
+            "label": "6/12"
+          },
+          {
+            "value": "col-lg-8",
+            "label": "8/12"
+          },
+          {
+            "value": "col-lg-9",
+            "label": "9/12"
+          },
+          {
+            "value": "col-lg-10",
+            "label": "10/12"
+          },                  
+          {
+            "value": "col-lg-12",
+            "label": "12/12"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "width_md",
+        "label": "Width policy tablet",
+        "info": "Breakpoint 768px ↑",
+        "options": [
+          {
+            "value": "col-md-2",
+            "label": "2/12"
+          },
+          {
+            "value": "col-md-3",
+            "label": "3/12"
+          },
+          {
+            "value": "col-md-4",
+            "label": "4/12"
+          },
+          {
+            "value": "col-md-6",
+            "label": "6/12"
+          },
+          {
+            "value": "col-md-8",
+            "label": "8/12"
+          },
+          {
+            "value": "col-md-9",
+            "label": "9/12"
+          },
+          {
+            "value": "col-md-10",
+            "label": "10/12"
+          },                  
+          {
+            "value": "col-md-12",
+            "label": "12/12"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "width_sm",
+        "label": "Width policy mobile",
+        "info": "Breakpoint 767px ↓",
+        "options": [
+          {
+            "value": "col-sm-3",
+            "label": "3/12"
+          },
+          {
+            "value": "col-sm-4",
+            "label": "4/12"
+          },
+          {
+            "value": "col-sm-6",
+            "label": "6/12"
+          },                
+          {
+            "value": "col-sm-12",
+            "label": "12/12"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "width_xs",
+        "label": "Width policy small mobile",
+        "info": "Breakpoint 575px ↓",
+        "options": [
+          {
+            "value": "col-3",
+            "label": "3/12"
+          },
+          {
+            "value": "col-4",
+            "label": "4/12"
+          },
+          {
+            "value": "col-6",
+            "label": "6/12"
+          },                
+          {
+            "value": "col-12",
+            "label": "12/12"
+          }
+        ]
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item_policy",
+        "name": "Policy Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "policy_icon",
+            "label": "Policy icon"
+          },
+          {
+            "type": "text",
+            "id": "title_policy",
+            "label": "Title policy",
+            "default": "Free Delivery From $ 250"
+          },
+          {
+            "type": "text",
+            "id": "desc_policy",
+            "label": "Description policy",
+            "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit eiusmod tempor"
+          },
+          {
+            "type": "text",
+            "id": "class",
+            "label": "Class"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Policy",
+        "category": "Text",
+        "blocks": [
+          {
+            "type": "item_policy"
+          },
+          {
+            "type": "item_policy"
+          },
+          {
+            "type": "item_policy"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+  {%- assign bg_image = section.settings.background_image -%}
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");
+      background-repeat: no-repeat;
+    {% endif %}
+  }
+</style>

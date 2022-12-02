@@ -1,0 +1,1110 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% endif %}
+  {% if section.settings.title != blank %}
+  <div class="{{ section.settings.title_alignment }}">
+    <div class="title_block">
+      <span>{{ section.settings.title }}</span>
+      {% if section.settings.subheading != blank %}
+      <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row spacing-{{ section.settings.spacing }}">
+    {% for block in section.blocks %}
+      <div class="{{ block.settings.width_group_image_lg }} {{ block.settings.width_group_image_md }} {{ block.settings.width_group_image_sm }}{% if block.settings.class_group_image != blank %} {{ block.settings.class_group_image }}{% endif %}">
+        <div class="row spacing-{{ section.settings.spacing }} spacing-sm-10">
+          {% if block.settings.image_1 != blank %}
+            <div class="{{ block.settings.width_image_1 }} {{ block.settings.width_image_1_md }} {{ block.settings.width_image_1_sm }} {{ block.settings.width_image_1_xs }}{% if block.settings.class_1 != blank %} {{ block.settings.class_1 }}{% endif %}">
+              <div class="gallery-image__item{% if section.settings.style_img_1 == true %} nov-sh-image-1{% endif %}{% if section.settings.style_img_2 == true %} nov-sh-image-2{% endif %}">
+                {% if block.settings.link_1 != blank %}
+                  <a class="w-100" href="{{ block.settings.link_1 }}">
+                {% endif %}
+                <img class="w-100 lazyload" data-src="{{ block.settings.image_1 | img_url: '1920x' }}" alt="img">
+                {% if block.settings.link_1 != blank %}
+                  </a>
+                {% endif %}
+                {% if block.settings.title_1 != blank %}
+                  <div class="title-block text-uppercase">
+                    <a href="{{ block.settings.link_1 }}">{{ block.settings.title_1 }}</a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% if block.settings.image_2 != blank %}
+            <div class="{{ block.settings.width_image_2 }} {{ block.settings.width_image_2_md }} {{ block.settings.width_image_2_sm }} {{ block.settings.width_image_2_xs }}{% if block.settings.class_2 != blank %} {{ block.settings.class_2 }}{% endif %}">
+              <div class="gallery-image__item{% if section.settings.style_img_1 == true %} nov-sh-image-1{% endif %}{% if section.settings.style_img_2 == true %} nov-sh-image-2{% endif %}">
+                {% if block.settings.link_2 != blank %}
+                  <a class="w-100" href="{{ block.settings.link_2 }}">
+                {% endif %}
+                <img class="w-100 lazyload" data-src="{{ block.settings.image_2 | img_url: '1920x' }}" alt="img">
+                {% if block.settings.link_2 != blank %}
+                  </a>
+                {% endif %}
+                {% if block.settings.title_2 != blank %}
+                  <div class="title-block text-uppercase">
+                    <a href="{{ block.settings.link_2 }}">{{ block.settings.title_2 }}</a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% if block.settings.image_3 != blank %}
+            <div class="{{ block.settings.width_image_3 }} {{ block.settings.width_image_3_md }} {{ block.settings.width_image_3_sm }} {{ block.settings.width_image_3_xs }}{% if block.settings.class_3 != blank %} {{ block.settings.class_3 }}{% endif %}">
+              <div class="gallery-image__item{% if section.settings.style_img_1 == true %} nov-sh-image-1{% endif %}{% if section.settings.style_img_2 == true %} nov-sh-image-2{% endif %}">
+                {% if block.settings.link_3 != blank %}
+                  <a class="w-100" href="{{ block.settings.link_3 }}">
+                {% endif %}
+                  <img class="w-100 img-fluid lazyload" data-src="{{ block.settings.image_3 | img_url: '1920x' }}" alt="image">
+                {% if block.settings.link_3 != blank %}
+                  </a>
+                {% endif %}
+                {% if block.settings.title_3 != blank %}
+                  <div class="title-block text-uppercase">
+                    <a href="{{ block.settings.link_3 }}">{{ block.settings.title_3 }}</a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% if block.settings.image_4 != blank %}
+            <div class="{{ block.settings.width_image_4 }} {{ block.settings.width_image_4_md }} {{ block.settings.width_image_4_sm }} {{ block.settings.width_image_4_xs }}{% if block.settings.class_4 != blank %} {{ block.settings.class_4 }}{% endif %}">
+              <div class="gallery-image__item{% if section.settings.style_img_1 == true %} nov-sh-image-1{% endif %}{% if section.settings.style_img_2 == true %} nov-sh-image-2{% endif %}">
+                {% if block.settings.link_4 != blank %}
+                  <a class="w-100" href="{{ block.settings.link_4 }}">
+                {% endif %}
+                  <img class="w-100 img-fluid lazyload" data-src="{{ block.settings.image_4 | img_url: '1920x' }}" alt="">
+                {% if block.settings.link_4 != blank %}
+                  </a>
+                {% endif %}
+                {% if block.settings.title_4 != blank %}
+                  <div class="title-block text-uppercase">
+                    <a href="{{ block.settings.link_4 }}">{{ block.settings.title_4 }}</a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if section.settings.has_fullwidth == false %}
+    </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Gallery Image Custom",
+    "class": "index-section section_img_group wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Vinova Group Image"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Subtitle from happy customers"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing image items",
+        "default": "10",
+        "options": [
+          {
+            "label": "0px",
+            "value": "0"
+          },
+          {
+            "label": "5px",
+            "value": "5"
+          },
+          {
+            "label": "10px",
+            "value": "10"
+          },
+          {
+            "label": "12px",
+            "value": "12"
+          },
+          {
+            "label": "15px",
+            "value": "15"
+          },
+          {
+            "label": "20px",
+            "value": "20"
+          },
+          {
+            "label": "25px",
+            "value": "25"
+          },
+          {
+            "label": "30px",
+            "value": "30"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Style hover image"
+      },
+      {
+        "type": "checkbox",
+        "id": "style_img_1",
+        "label": "Style hover image 1"
+      },
+      {
+        "type": "checkbox",
+        "id": "style_img_2",
+        "label": "Style hover image 2"
+      },
+      {
+        "type": "header",
+        "content": "Design options"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "select",
+            "id": "width_group_image_lg",
+            "label": "Width group image desktop 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_group_image_md",
+            "label": "Width group image tablet 991px ↓",
+            "default": "col-md-4",
+            "options": [
+              {
+                "value": "col-md-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-md-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-md-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-md-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-md-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-md-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-md-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-md-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_group_image_sm",
+            "label": "Width group image mobile 767px ↓",
+            "default": "col-sm-6",
+            "options": [
+              {
+                "value": "col-sm-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-sm-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-sm-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-sm-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-sm-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-sm-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-sm-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-sm-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "class_group_image",
+            "label": "Class Group"
+          },
+          {
+            "type": "header",
+            "content": "Image 1"
+          },
+          {
+            "type": "select",
+            "id": "width_image_1",
+            "label": "Width image 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_1_md",
+            "label": "Width image tablet 991px ↓",
+            "default": "col-md-4",
+            "options": [
+              {
+                "value": "col-md-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-md-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-md-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-md-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-md-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-md-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-md-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-md-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_1_sm",
+            "label": "Width image mobile 767px ↓",
+            "default": "col-sm-12",
+            "options": [
+              {
+                "value": "col-sm-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-sm-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-sm-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-sm-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-sm-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-sm-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-sm-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-sm-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_1_xs",
+            "label": "Width image small mobile 575px ↓",
+            "default": "col-12",
+            "options": [
+              {
+                "value": "col-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image 1"
+          },
+          {
+            "type": "text",
+            "id": "title_1",
+            "label": "Title 1"
+          },
+          {
+            "type": "url",
+            "id": "link_1",
+            "label": "Link image 1"
+          },
+          {
+            "type": "text",
+            "id": "class_1",
+            "label": "Class"
+          },
+          {
+            "type": "header",
+            "content": "Image 2"
+          },
+          {
+            "type": "select",
+            "id": "width_image_2",
+            "label": "Width image 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_2_md",
+            "label": "Width image tablet 991px ↓",
+            "default": "col-md-4",
+            "options": [
+              {
+                "value": "col-md-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-md-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-md-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-md-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-md-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-md-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-md-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-md-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_2_sm",
+            "label": "Width image mobile 767px ↓",
+            "default": "col-sm-12",
+            "options": [
+              {
+                "value": "col-sm-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-sm-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-sm-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-sm-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-sm-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-sm-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-sm-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-sm-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_2_xs",
+            "label": "Width image small mobile 575px ↓",
+            "default": "col-12",
+            "options": [
+              {
+                "value": "col-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image 2"
+          },
+          {
+            "type": "text",
+            "id": "title_2",
+            "label": "Title 2"
+          },
+          {
+            "type": "url",
+            "id": "link_2",
+            "label": "Link image 2"
+          },
+          {
+            "type": "text",
+            "id": "class_2",
+            "label": "Class"
+          },
+          {
+            "type": "header",
+            "content": "Image 3"
+          },
+          {
+            "type": "select",
+            "id": "width_image_3",
+            "label": "Width image 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_3_md",
+            "label": "Width image tablet 991px ↓",
+            "default": "col-md-4",
+            "options": [
+              {
+                "value": "col-md-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-md-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-md-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-md-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-md-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-md-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-md-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-md-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_3_sm",
+            "label": "Width image mobile 767px ↓",
+            "default": "col-sm-12",
+            "options": [
+              {
+                "value": "col-sm-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-sm-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-sm-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-sm-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-sm-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-sm-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-sm-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-sm-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_3_xs",
+            "label": "Width image small mobile 575px ↓",
+            "default": "col-12",
+            "options": [
+              {
+                "value": "col-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image 3"
+          },
+          {
+            "type": "text",
+            "id": "title_3",
+            "label": "Title 3"
+          },
+          {
+            "type": "url",
+            "id": "link_3",
+            "label": "Link image 3"
+          },
+          {
+            "type": "text",
+            "id": "class_3",
+            "label": "Class"
+          },
+          {
+            "type": "header",
+            "content": "Image 4"
+          },
+          {
+            "type": "select",
+            "id": "width_image_4",
+            "label": "Width image 992px ↑",
+            "default": "col-lg-4",
+            "options": [
+              {
+                "value": "col-lg-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-lg-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-lg-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-lg-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-lg-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-lg-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-lg-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-lg-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_4_md",
+            "label": "Width image tablet 991px ↓",
+            "default": "col-md-4",
+            "options": [
+              {
+                "value": "col-md-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-md-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-md-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-md-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-md-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-md-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-md-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-md-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_4_sm",
+            "label": "Width image mobile 767px ↓",
+            "default": "col-sm-12",
+            "options": [
+              {
+                "value": "col-sm-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-sm-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-sm-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-sm-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-sm-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-sm-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-sm-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-sm-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width_image_4_xs",
+            "label": "Width image small mobile 575px ↓",
+            "default": "col-12",
+            "options": [
+              {
+                "value": "col-2",
+                "label": "2/12"
+              },
+              {
+                "value": "col-3",
+                "label": "3/12"
+              },
+              {
+                "value": "col-4",
+                "label": "4/12"
+              },
+              {
+                "value": "col-6",
+                "label": "6/12"
+              },
+              {
+                "value": "col-8",
+                "label": "8/12"
+              },
+              {
+                "value": "col-9",
+                "label": "9/12"
+              },
+              {
+                "value": "col-10",
+                "label": "10/12"
+              },                  
+              {
+                "value": "col-12",
+                "label": "12/12"
+              }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "image_4",
+            "label": "Image 4"
+          },
+          {
+            "type": "text",
+            "id": "title_4",
+            "label": "Title 4"
+          },
+          {
+            "type": "url",
+            "id": "link_4",
+            "label": "Link image 4"
+          },
+          {
+            "type": "text",
+            "id": "class_4",
+            "label": "Class"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Images Group",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+  }
+</style>

@@ -1,0 +1,81 @@
+<div class="container">
+    {% if section.settings.title != blank %}
+        <div class="block-testimonial">
+            <div class="title_block">
+                <span>{{ section.settings.title | escape }}</span>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="testimonial_grid mb-60">
+        {% for block in section.blocks %}
+            <div class="testimonial_grid_column{% if forloop.last != true %} mb-30{% endif %}">
+                <div class="testimonial__item">
+                    {% if block.settings.avatar != blank %}
+                        <div class="testimonial-author">
+                            <img class="testimonial-avatar" src="{{ block.settings.avatar | img_url: '270x' }}" alt="{% if block.settings.author != blank %}{{ block.settings.author }}{% else %}Avatar image{% endif %}">
+                        </div>
+                    {% endif %}
+                    <div class="content-info">
+                        <div class="testimonial_you">
+                            {% if block.settings.author != blank %}
+                                <div class="testimonial-item__name">{{ block.settings.author }}</div>
+                            {% endif %}
+                            {% if block.settings.job != blank %}
+                                <div class="testimonial-item__info">{{ block.settings.job }}</div>
+                            {% endif %}
+                        </div>
+                        {% if block.settings.decs != blank %}
+                          <div class="testimonial-item__text">{{ block.settings.decs }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "vinova page testimonial",
+        "class": "index-section page-testimonial",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "quote",
+                "name": "testimonial",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "avatar",
+                        "label": "Avatar"
+                    },
+                    {
+                        "type": "text",
+                        "id": "author",
+                        "label": "Author",
+                        "default": "Author's name"
+                    },
+                    {
+                        "type": "text",
+                        "id": "job",
+                        "label": "Info Job",
+                        "default": "CEO - Vinova"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "decs",
+                        "label": "Text",
+                        "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris augue mi, interdum ut purus id, blandit suscipit mauris. Sed tortor lorem, eleifend non urna non, congue bibendum libero. Duis sodales pellentesque sagittis. Fusce venenatis sagittis pellentesque. Nunc eu eros in ipsum semper condimentum in a risus.</p>"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

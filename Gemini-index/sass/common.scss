@@ -1,0 +1,619 @@
+/*============================================================================
+* 2013-2018 Vinovathemes
+* @author    Vinovathemes <vinovathemes@gmail.com>
+* @copyright 2013-2018 Vinovathemes SA
+==============================================================================*/
+/*============================================================================
+  #Normalize
+  Based on normalize.css v3.0.2 | MIT License | git.io/normalize
+==============================================================================*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+body,
+input,
+textarea,
+button,
+select {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+input:focus {
+  outline: none !important;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+img {
+  max-width: 100%;
+  border: 0;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+button,
+html input {
+  &[disabled] {
+    cursor: default;
+  }
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+input {
+  &[type="search"],
+  &[type="number"],
+  &[type="email"],
+  &[type="password"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+  }
+}
+dl, ol, ul {
+  margin-bottom: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+textarea {
+  overflow: auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+// hide outline on focus for elements which are given focus by JS
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+.visibility-hidden {
+  visibility: hidden;
+}
+
+.focus-hidden:focus {
+  outline: none;
+}
+.form-control:focus {
+  color: #495057;
+  background-color: white;
+  border-color: #ced4da;
+  outline: 0;
+  box-shadow: none;
+}
+
+.close {
+  @include opacity(1);
+}
+*{
+  outline: none;
+}
+html {
+  font-size:62.5%;
+}
+@media (max-width: 767px) {
+  html {
+    font-size:50%;
+  }
+}
+/*============================================================================
+  Skip to content button
+    - Overrides .visually-hidden when focused
+    ==============================================================================*/
+    .skip-link:focus {
+      clip: auto;
+      @include square(auto);
+      margin: 0;
+      color: var(--color-body-text);
+      background-color: white;
+      padding: 10px;
+      @include opacity(1);
+      z-index: 1;
+      transition: none;
+    }
+
+    /*=============== Lazy loading ===================*/
+    .process-loading {
+      height: 0;
+      @include display(none);
+      &:before {
+        content: "";
+        background: rgba(#fff,0.6);
+        top: 70px;
+        @include rtl-left(0);
+        @include rtl-right(0);
+        bottom: 0;
+        position: absolute;
+        z-index: 1;
+      }
+      .loader {
+        position: absolute;
+        @include rtl-left(50%);
+        @include translateX(-50%);
+        z-index: 2;
+        .dot {
+          @include square(20px);
+          background: var(--theme-color-primary);
+          border-radius: 100%;
+          @include display(inline-block);
+          animation: nov-slide 1s infinite;
+          &:nth-child(1) {
+            animation-delay: 0.1s;
+            background: rgba(var(--theme-color-primary-rgb), 0.2);
+          }
+          &:nth-child(2) {
+            animation-delay: 0.2s;
+            background: rgba(var(--theme-color-primary-rgb), 0.4);
+          }
+          &:nth-child(3) {
+            animation-delay: 0.3s;
+            background: rgba(var(--theme-color-primary-rgb), 0.6);
+          }
+          &:nth-child(4) {
+            animation-delay: 0.4s;
+            background: rgba(var(--theme-color-primary-rgb), 0.8);
+          }
+          &:nth-child(5) {
+            animation-delay: 0.5s;
+            background: var(--theme-color-primary);
+          }
+        }
+      }
+      &.active {
+        height: 60px;
+        @include display(block);
+      }
+    }
+
+    .box {
+      background: no-repeat;
+      background-color: #f7f7f7;
+      background-size: contain;
+    }
+    .ratio-container {
+      position: relative;
+    }
+    .ratio-container:after {
+      content:'';
+      @include display(block);
+      height: 0;
+      width: 100%;
+      padding-bottom: 50%;
+      content:"";
+    }
+    .ratio-container > * {
+      position: absolute;
+      top: 0;
+      @include rtl-left(0);
+      @include square(100%);
+    }
+
+.modal-dialog {
+  .modal-content {
+    @include border-radius(7px);
+    border: none;
+  }
+  .modal-body {
+    padding: 10px;
+  }
+  &.modal-lg {
+    .modal-content {
+        min-width: 830px;
+      .swatch .swatch-element:not(.color) label {
+      }
+    }
+  }
+}
+
+input, select, textarea {
+  @include display(block);
+  width: 100%;
+  border: 1px solid #e3e0d3;
+  background-color: white;
+  color: #162950;
+  max-width: 100%;
+  line-height: 1.2;
+  @include border-radius(0);
+  padding: 13px 15px;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #f2f2f2 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-vertical {
+  .title_block {
+    font-family: var(--font-family-primary);
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--color-heading);
+    text-transform: none;
+    text-transform: uppercase;
+  }
+  input, select, textarea {
+    @include display(inline-block);
+    margin-bottom: 30px;
+  }
+}
+
+
+/*================ RTE headings ================*/
+.rte {
+  color: var(--color-body-text);
+  margin-bottom: 10px;
+  // If an .rte div is the last element in its parent,
+  // make it flush with the bottom of the container
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  li {
+    margin-bottom: 4px;
+    list-style: inherit;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// rte setting type to act like a <p> tag
+.rte-setting {
+  margin-bottom: 10px; // same as p
+  &:last-child {
+    margin-bottom: 0;
+  }
+  p {
+    font-size: 1.4rem;
+    font-family: var(--font-family-primary);
+    font-weight: 400;
+    color: #6c6c6c;
+  }
+}
+
+/*================ #Icons ================*/
+.icon {
+  @include display(inline-block);
+  @include square(20px);
+  vertical-align: middle;
+  fill: currentColor;
+
+  .no-svg & {
+    @include display(none);
+  }
+}
+
+svg,
+symbol {
+  &.icon:not(.icon--full-color) {
+    circle,
+    ellipse,
+    g,
+    line,
+    path,
+    polygon,
+    polyline,
+    rect {
+      fill: inherit;
+      stroke: inherit;
+    }
+  }
+}
+
+/*============================================================================
+  Fast Tap
+  enables no-delay taps (FastClick-esque) on supporting browsers
+==============================================================================*/
+a,
+button,
+[role="button"],
+input,
+label,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+@for $i from 0 through 25 {
+  $value: 5 * $i;
+  $value2: 5 * $i;
+  .mt-#{$value} {
+    margin-top: #{$value}px !important;
+  }
+  .mb-#{$value} {
+    margin-bottom: #{$value}px !important;
+  }
+  .pt-#{$value} {
+    padding-top: #{$value}px !important;
+  }
+  .pb-#{$value} {
+    padding-bottom: #{$value}px !important;
+  }
+}
+@media (max-width: 1199px) {
+  @for $i from 0 through 20 {
+    $value: 5 * $i;
+    .mt-lg-#{$value} {
+      margin-top: #{$value}px !important;
+    }
+    .mb-lg-#{$value} {
+      margin-bottom: #{$value}px !important;
+    }
+    .pt-lg-#{$value} {
+      padding-top: #{$value}px !important;
+    }
+    .pb-lg-#{$value} {
+      padding-bottom: #{$value}px !important;
+    }
+  }
+}
+@media (max-width: 991px) {
+  @for $i from 0 through 30 {
+    $value: 5 * $i;
+    .mt-md-#{$value} {
+      margin-top: #{$value}px !important;
+    }
+    .mb-md-#{$value} {
+      margin-bottom: #{$value}px !important;
+    }
+    .pt-md-#{$value} {
+      padding-top: #{$value}px !important;
+    }
+    .pb-md-#{$value} {
+      padding-bottom: #{$value}px !important;
+    }
+  }
+}
+@media (max-width: 767px) {
+  @for $i from 0 through 20 {
+    $value: 5 * $i;
+    .mt-sm-#{$value} {
+      margin-top: #{$value}px !important;
+    }
+    .mb-sm-#{$value} {
+      margin-bottom: #{$value}px !important;
+    }
+    .pt-sm-#{$value} {
+      padding-top: #{$value}px !important;
+    }
+    .pb-sm-#{$value} {
+      padding-bottom: #{$value}px !important;
+    }
+  }
+}
+@media (max-width: 575px) {
+  @for $i from 0 through 20 {
+    $value: 5 * $i;
+    .mt-xs-#{$value} {
+      margin-top: #{$value}px !important;
+    }
+    .mb-xs-#{$value} {
+      margin-bottom: #{$value}px !important;
+    }
+    .pt-xs-#{$value} {
+      padding-top: #{$value}px !important;
+    }
+    .pb-xs-#{$value} {
+      padding-bottom: #{$value}px !important;
+    }
+  }
+}
+@for $i from 0 through 30 {
+  $value: 5px * $i;
+  .row.spacing-#{$value}{
+    margin-right: math.div(-$value,2);
+    margin-left:  math.div(-$value,2);
+    >[class*="col-"], > [class*=" col-"] {
+      padding-left: math.div($value,2);
+      padding-right: math.div($value,2);
+    }
+  }
+}
+@media (max-width: 1200px) {
+  @for $i from 0 through 30 {
+    $value: 5px * $i;
+    .row.spacing-lg-#{$value}{
+      margin-right: math.div(-$value,2);
+      margin-left:  math.div(-$value,2);
+      >[class*="col-"], > [class*=" col-"] {
+        padding-left: math.div($value,2);
+        padding-right: math.div($value,2);
+      }
+    }
+  }
+}
+@media (max-width: 991px) {
+  @for $i from 0 through 30 {
+    $value: 5px * $i;
+    .row.spacing-md-#{$value}{
+      margin-right: math.div(-$value,2);
+      margin-left:  math.div(-$value,2);
+      >[class*="col-"], > [class*=" col-"] {
+        padding-left: math.div($value,2);
+        padding-right: math.div($value,2);
+      }
+    }
+  }
+}
+@media (max-width: 767px) {
+  @for $i from 0 through 30 {
+    $value: 5px * $i;
+    .row.spacing-sm-#{$value}{
+      margin-right: math.div(-$value,2);
+      margin-left:  math.div(-$value,2);
+      >[class*="col-"], > [class*=" col-"] {
+        padding-left: math.div($value,2);
+        padding-right: math.div($value,2);
+      }
+    }
+  }
+} 
+.flex-last {
+  -webkit-box-ordinal-group: 2;
+  -webkit-order: 1;
+  -ms-flex-order: 1;
+  order: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+.lds-facebook {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 6px;
+  background: #c7c7c7;
+  animation: lds-facebook 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 0px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 10px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 20px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 2px;
+    height: 10px;
+  }
+  50%, 100% {
+    top: 6px;
+    height: 20px;
+  }
+}
+img.lazyload {
+  background-color: #f5f5f5;
+  background-image: url(#{"{{ 'pulse.svg' | asset_url }}"});
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.respone_image {
+  position: relative;
+  img {
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+}

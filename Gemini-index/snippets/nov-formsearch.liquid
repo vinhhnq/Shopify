@@ -1,0 +1,27 @@
+<div class="site-header__search">
+  <form action="/search" method="get" class="search-header-inline d-flex" role="search">
+    <div class="search-container-inner position-relative">
+      <input type="hidden" name="type" value="product">
+      <input class="search-header__input"
+        type="search"
+        name="q"
+        placeholder="{{ 'general.search.placeholder' | t }}"
+        aria-label="{{ 'general.search.title' | t }}">
+      <button class="search-header__submit text-center btn--link d-flex align-items-center" type="submit">
+        <span class="icon__fallback-text">{% include 'search-ico' %}</span>
+      </button>
+    </div>
+    {% if settings.show_key_trend == true %}
+      <div class="search_trend">
+        <strong>{{ 'general.search.search_trend' | t }}:</strong>
+        <ul>
+          <li><a href="{{ settings.link_1 }}">{{ settings.key_trend_1 }}</a></li>
+          <li><a href="{{ settings.link_2 }}">{{ settings.key_trend_2 }}</a></li>
+          <li><a href="{{ settings.link_3 }}">{{ settings.key_trend_3 }}</a></li>
+          <li><a href="{{ settings.link_4 }}">{{ settings.key_trend_4 }}</a></li>
+        </ul>
+      </div>
+    {% endif %}
+  </form>
+  <div class="bl_close"><i class="zmdi zmdi-close"></i></div>
+</div>

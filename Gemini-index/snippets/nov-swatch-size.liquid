@@ -1,0 +1,57 @@
+{% comment %}
+  Set the extension of your color files below. Use 'png', 'jpeg', 'jpg' or 'gif'.
+{% endcomment %}
+
+{% assign file_extension = 'png' %}
+{% capture variantsswatch %} {% endcapture %}
+{% capture variantsswatch %}{{ nov-swatch-size }}{% endcapture %}
+{% if nov-swatch-size == blank %}
+    <div class="swatch error">
+        <p>You must include the snippet nov-swatch-size.liquid with the name of a product option.</p> 
+        <p>Use: <code>{% raw %}{% include 'nov-swatch-size' with 'name of your product option here' %}{% endraw %}</code></p>
+        <p>Example: <code>{% raw %}{% include 'nov-swatch-size' with 'Color' %}{% endraw %}</code></p>
+    </div>
+{% else %}
+    {% assign found_option = false %}
+    {% assign option_index = 0 %}
+    {% assign indexChild = 0 %}
+
+    {% for option in product.options %}
+        {% if option == nov-swatch-size %}
+            {% assign found_option = true %}
+            {% assign option_index = forloop.index0 %}
+            {% assign indexChild = forloop.index %}
+            <style rel="stylesheet" type="text/css" >
+                .selectorVariants .selector-wrapper:nth-child({{ indexChild }}){display: none;}
+            </style>
+        {% endif %}
+    {% endfor %}
+    {% unless found_option %}
+    {% else %}
+    <div class="bl_swatch_size">
+        <div class="bl_title mb-10">{{ 'products.product.available_instock' | t }}</div>
+        {%- assign current_variant = product.selected_or_first_available_variant -%}
+        <div class="swatch justify-content-center" data-option-index="{{ option_index }}">
+            <div class="swatch_filter d-flex">
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                    {% assign value = variant.options[option_index] %}
+                    {% unless values contains value %}
+                        {% assign values = values | join: ',' %}
+                        {% assign values = values | append: ',' | append: value %} 
+                        {% assign values = values | split: ',' %}
+                        <div data-value="{{ value | escape }}" class="swatch-element {{ value | handle }} {% if variant.available %}varant_available{% else %}varant_soldout{% endif %}">
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}">{{ value }}</label>
+                        </div>
+                    {% endunless %}
+                    {% if variant.available %}
+                        <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                        </script>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endunless %}
+{% endif %}

@@ -1,0 +1,573 @@
+<div class="distance{% if section.settings.has_fullwidth == true %} full_width{% endif %}{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" data-section-id="{{ section.id }}" data-section-type="nov-owl">
+  {% if section.settings.has_fullwidth == false %}
+  <div class="container">
+  {% endif %}
+    {% if section.settings.title != blank %}
+    <div class="{{ section.settings.title_alignment }}">
+      <div class="title_block">
+        <span>{{ section.settings.title | escape }}</span>
+        {% if section.settings.subheading != blank %}
+          <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    {% case section.blocks.size %}
+      {% when 1 %}
+        {%- assign column_size = 'col-12' -%}
+      {% when 2 %}
+        {%- assign column_size = 'col-md-6' -%}
+      {% when 3 %}
+        {%- assign column_size = 'col-md-4' -%}
+      {% when 4 %}
+        {%- assign column_size = 'col-lg-3 col-md-4' -%}
+      {% when 5 %}
+        {%- assign column_size = 'col-lg-cus-5 col-md-cus-5 col-12' -%}
+      {% else %}
+        {%- assign column_size = 'col-lg-2 col-md-4 col-6' -%}
+    {% endcase %}
+    {% if section.blocks.size > 0 %}
+      {% if section.settings.view_type == 'type_grid' %}
+      <div class="nov-lookbook default">
+        <div class="row spacing-{{ section.settings.spacing }}{% if section.settings.has_fullwidth == true %} m-0{% endif %}">
+          {% for block in section.blocks %}
+            <div class="item {{ column_size }} text-center{% if forloop.last == false %} mb-30{% endif %}{% if block.settings.class != blank %} {{ block.settings.class }}{% endif %}">
+              <div class="nov-content-lookbook">
+                <img class="w-100" src="{{ block.settings.lookbook_image | img_url: '1920x' }}" alt="{{ block.settings.lookbook_title }}"/>
+                {% assign _product_1 = all_products[block.settings.pin_product_1] %}
+                {% assign _product_2 = all_products[block.settings.pin_product_2] %}
+                {% assign _product_3 = all_products[block.settings.pin_product_3] %}
+                {% assign _product_4 = all_products[block.settings.pin_product_4] %}
+                {% if _product_1 != blank %}
+                <div class="item-lookbook" style="{{ block.settings.pin_position_1 }}">
+                  <span class="number-lookbook"><span>+</span></span>
+                  <div class="content-lookbook {{ block.settings.pin_content_position_1 }}">
+                    <div class="d-xl-block d-flex">
+                      <div class="item-thumb mb-15 mb-lg-0">
+                        {% assign featured_image = _product_1.selected_or_first_available_variant.featured_image | default: _product_1.featured_image %}
+                        <a href="{{ _product_1.url | within: collection }}" alt="{{ _product_1.title }}" >
+                          <img class="img-responsive" src="{{ featured_image | img_url: '200x' }}" alt="{{ featured_image.alt | escape }}" />
+                        </a>
+                      </div>
+                      <div class="content-lookbook-bottom">
+                        <div class="item-title">
+                          <a href="{{ _product_1.url | within: collection }}" alt="{{ _product_1.title }}">{{ _product_1.title }}</a>
+                        </div>
+                        <div class="price">
+                          {{ _product_1.selected_or_first_available_variant.price | money }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if _product_2 != blank %}
+                <div class="item-lookbook" style="{{ block.settings.pin_position_2 }}">
+                  <span class="number-lookbook"><span>+</span></span>
+                  <div class="content-lookbook {{ block.settings.pin_content_position_2 }}">
+                    <div class="d-xl-block d-flex">
+                      <div class="item-thumb mb-15 mb-lg-0">
+                        {% assign featured_image = _product_2.selected_or_first_available_variant.featured_image | default: _product_2.featured_image %}
+                        <a href="{{ _product_2.url | within: collection }}" alt="{{ _product_2.title }}" >
+                          <img class="img-responsive" src="{{ featured_image | img_url: '200x' }}" alt="{{ featured_image.alt | escape }}" />
+                        </a>
+                      </div>
+                      <div class="content-lookbook-bottom">
+                        <div class="item-title">
+                          <a href="{{ _product_2.url | within: collection }}" alt="{{ _product_2.title }}">{{ _product_2.title }}</a>
+                        </div>
+                        <div class="price">
+                          {{ _product_2.selected_or_first_available_variant.price | money }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if _product_3 != blank %}
+                <div class="item-lookbook" style="{{ block.settings.pin_position_3 }}">
+                  <span class="number-lookbook"><span>+</span></span>
+                  <div class="content-lookbook {{ block.settings.pin_content_position_3 }}">
+                    <div class="d-xl-block d-flex">
+                      <div class="item-thumb mb-15 mb-lg-0">
+                        {% assign featured_image = _product_3.selected_or_first_available_variant.featured_image | default: _product_3.featured_image %}
+                        <a href="{{ _product_3.url | within: collection }}" alt="{{ _product_3.title }}" >
+                          <img class="img-responsive" src="{{ featured_image | img_url: '200x' }}" alt="{{ featured_image.alt | escape }}" />
+                        </a>
+                      </div>
+                      <div class="content-lookbook-bottom">
+                        <div class="item-title">
+                          <a href="{{ _product_3.url | within: collection }}" alt="{{ _product_3.title }}">{{ _product_3.title }}</a>
+                        </div>
+                        <div class="price">
+                          {{ _product_3.selected_or_first_available_variant.price | money }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if _product_4 != blank %}
+                <div class="item-lookbook" style="{{ block.settings.pin_position_4 }}">
+                  <span class="number-lookbook"><span>+</span></span>
+                  <div class="content-lookbook {{ block.settings.pin_content_position_4 }}">
+                    <div class="d-xl-block d-flex">
+                      <div class="item-thumb mb-15 mb-lg-0">
+                        {% assign featured_image = _product_4.selected_or_first_available_variant.featured_image | default: _product_4.featured_image %}
+                        <a href="{{ _product_4.url | within: collection }}" alt="{{ _product_4.title }}" >
+                          <img class="img-responsive" src="{{ featured_image | img_url: '200x' }}" alt="{{ featured_image.alt | escape }}" />
+                        </a>
+                      </div>
+                      <div class="content-lookbook-bottom">
+                        <div class="item-title">
+                          <a href="{{ _product_4.url | within: collection }}" alt="{{ _product_4.title }}">{{ _product_4.title }}</a>
+                        </div>
+                        <div class="price">
+                          {{ _product_4.selected_or_first_available_variant.price | money }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% else %}
+      <div class="nov-lookbook nov-owl-carousel owl-carousel owl-theme slider" 
+      data-autoplay="{{ section.settings.autoplay }}"
+      data-autoplayTimeout="4000"
+      data-loop="true"
+      data-margin="{{ section.settings.spacing }}"
+      data-dots="{{ section.settings.show_dots }}"
+      data-nav="{{ section.settings.show_nav }}"
+      data-items="{{ section.settings.items_lg }}"
+      data-items_tablet="{{ section.settings.items_md }}"
+      data-items_mobile="{{ section.settings.items_sm }}"
+      data-center="false"
+      data-start="0">
+      {% for block in section.blocks %}
+        <div class="item">
+          <div class="nov-content-lookbook">
+            <img class="w-100" src="{{ block.settings.lookbook_image | img_url: '1920x' }}" alt="{{ block.settings.lookbook_title }}"/>
+            {% assign _product_1 = all_products[block.settings.pin_product_1] %}
+            {% assign _product_2 = all_products[block.settings.pin_product_2] %}
+            {% assign _product_3 = all_products[block.settings.pin_product_3] %}
+            {% assign _product_4 = all_products[block.settings.pin_product_4] %}
+            {% if _product_1 != blank %}
+            <div class="item-lookbook" style="{{ block.settings.pin_position_1 }}">
+              <span class="number-lookbook"><span>+</span></span>
+              <div class="content-lookbook {{ block.settings.pin_content_position_1 }}">
+                <div class="d-xl-block d-flex">
+                  <div class="item-thumb mb-15 mb-lg-0">
+                    {% assign featured_image = _product_1.selected_or_first_available_variant.featured_image | default: _product_1.featured_image %}
+                    <a href="{{ _product_1.url | within: collection }}" alt="{{ _product_1.title }}" >
+                      <img class="img-responsive" src="{{ featured_image | img_url: '200x' }}" alt="{{ featured_image.alt | escape }}" />
+                    </a>
+                  </div>
+                  <div class="content-lookbook-bottom">
+                    <div class="item-title">
+                      <a href="{{ _product_1.url | within: collection }}" alt="{{ _product_1.title }}">{{ _product_1.title }}</a>
+                    </div>
+                    <div class="price">
+                      {{ _product_1.selected_or_first_available_variant.price | money }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="info-lookbooks">
+                {% if block.settings.lookbook_title_1 != blank %}
+                <h2 class="title-lookbook">{{ block.settings.lookbook_title_1 }}</h2>
+                {% endif %}
+                {% if block.settings.lookbook_desc_1 != blank %}
+                <div class="description-lookbook">{{ block.settings.lookbook_desc_1 }}</div>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+            {% if _product_2 != blank %}
+            <div class="item-lookbook" style="{{ block.settings.pin_position_2 }}">
+              <span class="number-lookbook"><span>+</span></span>
+              <div class="content-lookbook {{ block.settings.pin_content_position_2 }}">
+                <div class="d-xl-block d-flex">
+                  <div class="item-thumb mb-15 mb-lg-0">
+                    {% assign featured_image = _product_2.selected_or_first_available_variant.featured_image | default: _product_2.featured_image %}
+                    <a href="{{ _product_2.url | within: collection }}" alt="{{ _product_2.title }}" >
+                      <img class="img-responsive" src="{{ featured_image | img_url: '200x' }}" alt="{{ featured_image.alt | escape }}" />
+                    </a>
+                  </div>
+                  <div class="content-lookbook-bottom">
+                    <div class="item-title">
+                      <a href="{{ _product_2.url | within: collection }}" alt="{{ _product_2.title }}">{{ _product_2.title }}</a>
+                    </div>
+                    <div class="price">
+                      {{ _product_2.selected_or_first_available_variant.price | money }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% if _product_3 != blank %}
+            <div class="item-lookbook" style="{{ block.settings.pin_position_3 }}">
+              <span class="number-lookbook"><span>+</span></span>
+              <div class="content-lookbook {{ block.settings.pin_content_position_3 }}">
+                <div class="d-xl-block d-flex">
+                  <div class="item-thumb mb-15 mb-lg-0">
+                    {% assign featured_image = _product_3.selected_or_first_available_variant.featured_image | default: _product_3.featured_image %}
+                    <a href="{{ _product_3.url | within: collection }}" alt="{{ _product_3.title }}" >
+                      <img class="img-responsive" src="{{ featured_image | img_url: '200x' }}" alt="{{ featured_image.alt | escape }}" />
+                    </a>
+                  </div>
+                  <div class="content-lookbook-bottom">
+                    <div class="item-title">
+                      <a href="{{ _product_3.url | within: collection }}" alt="{{ _product_3.title }}">{{ _product_3.title }}</a>
+                    </div>
+                    <div class="price">
+                      {{ _product_3.selected_or_first_available_variant.price | money }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% if _product_4 != blank %}
+            <div class="item-lookbook" style="{{ block.settings.pin_position_4 }}">
+              <span class="number-lookbook"><span>+</span></span>
+              <div class="content-lookbook {{ block.settings.pin_content_position_4 }}">
+                <div class="d-xl-block d-flex">
+                  <div class="item-thumb mb-15 mb-lg-0">
+                    {% assign featured_image = _product_4.selected_or_first_available_variant.featured_image | default: _product_4.featured_image %}
+                    <a href="{{ _product_4.url | within: collection }}" alt="{{ _product_4.title }}" >
+                      <img class="img-responsive" src="{{ featured_image | img_url: '200x' }}" alt="{{ featured_image.alt | escape }}" />
+                    </a>
+                  </div>
+                  <div class="content-lookbook-bottom">
+                    <div class="item-title">
+                      <a href="{{ _product_4.url | within: collection }}" alt="{{ _product_4.title }}">{{ _product_4.title }}</a>
+                    </div>
+                    <div class="price">
+                      {{ _product_4.selected_or_first_available_variant.price | money }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+      {% endif %}
+    {% endif %}
+
+    {% if section.blocks.size == 0 %}
+    {% include 'no-blocks' %}
+    {% endif %}
+  {% if section.settings.has_fullwidth == false %}
+  </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Vinova LookBook",
+    "class": "index-section section-lookbook wow fadeInUp animated",
+    "max_blocks": 9,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "SHOP THE LOOKBOOK"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "Our Lookbook 2017 . hand-picked arrivals from the best designer"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Title alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "view_type",
+        "label": "Choosen View Type",
+        "options": [
+         {"value": "type_grid", "label": "Type Grid"},
+         {"value": "type_slider", "label": "Type Slider"}
+        ],
+        "default": "type_grid",
+        "info": "Select lookbooks view type"
+      },
+      {
+        "type": "range",
+        "id": "spacing",
+        "min": 5,
+        "max": 50,
+        "step": 5,
+        "unit": "px",
+        "label": "Spacing item",
+        "default": 30
+      },
+      {
+        "type":  "header",
+        "content": "Lookbook item per row slider"
+      },
+      {
+        "type": "range",
+        "id": "items_lg",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Items desktop",
+        "default": 3,
+        "info": "Select number items desktop 992px ↑"
+      },
+      {
+        "type": "range",
+        "id": "items_md",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Items tablet",
+        "default": 3,
+        "info": "Select number items tablet 991px ↓"
+      },
+      {
+        "type": "range",
+        "id": "items_sm",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Items mobile",
+        "default": 2,
+        "info": "Select number items mobile 757px ↓"
+      },
+      {
+        "type":  "header",
+        "content": "Slider options"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_dots",
+        "label": "Show dots",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_nav",
+        "label": "Show navigation",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto play",
+        "default": false
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top spacing section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "lookbook",
+        "name": "Lookbook Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "lookbook_image",
+            "label": "Image"
+          },
+          {
+            "type":  "header",
+            "content": "Pin list"
+          },
+          {
+            "type":  "header",
+            "content": "Pin 1"
+          },
+          {
+            "type": "text",
+            "id": "pin_position_1",
+            "label": "Pin position 1",
+            "info": "Example: Top: 50%; Left: 20%",
+            "default": "Top: 50%; Left: 20%"
+          },
+          {
+            "type": "select",
+            "id": "pin_content_position_1",
+            "label": "Content position",
+            "options": [
+             {"value": "topleft", "label": "Top Left"},
+             {"value": "topright", "label": "Top Right"},
+             {"value": "bottomleft", "label": "Bottom Left"},
+             {"value": "bottomright", "label": "Bottom Right"}
+            ],
+            "default": "bottomleft"
+          },
+          {
+            "type": "product",
+            "id": "pin_product_1",
+            "label": "Select pin product 1"
+          },
+          {
+            "type":  "header",
+            "content": "Pin 2"
+          },
+          {
+            "type": "text",
+            "id": "pin_position_2",
+            "label": "Pin position 2",
+            "info": "Example: Top: 50%; Left: 20%",
+            "default": "Top: 50%; Left: 20%"
+          },
+          {
+            "type": "select",
+            "id": "pin_content_position_2",
+            "label": "Content position",
+            "options": [
+             {"value": "topleft", "label": "Top Left"},
+             {"value": "topright", "label": "Top Right"},
+             {"value": "bottomleft", "label": "Bottom Left"},
+             {"value": "bottomright", "label": "Bottom Right"}
+            ],
+            "default": "bottomleft"
+          },
+          {
+            "type": "product",
+            "id": "pin_product_2",
+            "label": "Select pin product 2"
+          },
+          {
+            "type":  "header",
+            "content": "Pin 3"
+          },
+          {
+            "type": "text",
+            "id": "pin_position_3",
+            "label": "Pin position 3",
+            "info": "Example: Top: 50%; Left: 20%",
+            "default": "Top: 50%; Left: 20%"
+          },
+          {
+            "type": "select",
+            "id": "pin_content_position_3",
+            "label": "Content position",
+            "options": [
+             {"value": "topleft", "label": "Top Left"},
+             {"value": "topright", "label": "Top Right"},
+             {"value": "bottomleft", "label": "Bottom Left"},
+             {"value": "bottomright", "label": "Bottom Right"}
+            ],
+            "default": "bottomleft"
+          },
+          {
+            "type": "product",
+            "id": "pin_product_3",
+            "label": "Select pin product 3"
+          },
+          {
+            "type":  "header",
+            "content": "Pin 4"
+          },
+          {
+            "type": "text",
+            "id": "pin_position_4",
+            "label": "Pin position 4",
+            "info": "Example: Top: 50%; Left: 20%",
+            "default": "Top: 50%; Left: 20%"
+          },
+          {
+            "type": "select",
+            "id": "pin_content_position_4",
+            "label": "Content position",
+            "options": [
+             {"value": "topleft", "label": "Top Left"},
+             {"value": "topright", "label": "Top Right"},
+             {"value": "bottomleft", "label": "Bottom Left"},
+             {"value": "bottomright", "label": "Bottom Right"}
+            ],
+            "default": "bottomleft"
+          },
+          {
+            "type": "product",
+            "id": "pin_product_4",
+            "label": "Select pin product 4"
+          },
+          {
+            "type": "text",
+            "id": "class",
+            "label": "Class"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Lookbook",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "lookbook"
+          },
+          {
+            "type": "lookbook"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .distance {
+      padding-top: {{ section.settings.distance_top }};
+      padding-bottom: {{ section.settings.distance_bottom }};
+    }
+  }
+</style>

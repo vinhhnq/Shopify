@@ -1,0 +1,340 @@
+{% if section.blocks.size > 0 %}
+{% case section.settings.grid %}
+  {% when 1 %}
+    {%- assign grid_width_lg = 'col-lg-12' -%}
+  {% when 2 %}
+    {%- assign grid_width_lg = 'col-lg-6' -%}
+  {% when 3 %}
+    {%- assign grid_width_lg = 'col-lg-4' -%}
+  {% when 4 %}
+    {%- assign grid_width_lg = 'col-lg-3' -%}
+  {% when 5 %}
+    {%- assign grid_width_lg = 'col-lg-cus-5' -%}
+  {% when 6 %}
+    {%- assign grid_width_lg = 'col-lg-2' -%}
+{% endcase %}
+{% case section.settings.grid_md %}
+  {% when 1 %}
+    {%- assign grid_width_ms = 'col-md-12' -%}
+  {% when 2 %}
+    {%- assign grid_width_ms = 'col-md-6' -%}
+  {% when 3 %}
+    {%- assign grid_width_ms = 'col-md-4' -%}
+  {% when 4 %}
+    {%- assign grid_width_ms = 'col-md-3' -%}
+  {% when 5 %}
+    {%- assign grid_width_ms = 'col-md-cus-5' -%}
+  {% when 6 %}
+    {%- assign grid_width_ms = 'col-md-2' -%}
+{% endcase %}
+{% case section.settings.grid_sm %}
+  {% when 1 %}
+    {%- assign grid_width_sm = 'col-sm-12' -%}
+  {% when 2 %}
+    {%- assign grid_width_sm = 'col-sm-6' -%}
+  {% when 3 %}
+    {%- assign grid_width_sm = 'col-sm-4' -%}
+  {% when 4 %}
+    {%- assign grid_width_sm = 'col-sm-3' -%}
+  {% when 5 %}
+    {%- assign grid_width_sm = 'col-sm-cus-5' -%}
+  {% when 6 %}
+    {%- assign grid_width_sm = 'col-sm-2' -%}
+{% endcase %}
+{% case section.settings.grid_xs %}
+  {% when 1 %}
+    {%- assign grid_width_xs = 'col-12' -%}
+  {% when 2 %}
+    {%- assign grid_width_xs = 'col-6' -%}
+  {% when 3 %}
+    {%- assign grid_width_xs = 'col-4' -%}
+  {% when 4 %}
+    {%- assign grid_width_xs = 'col-3' -%}
+  {% when 5 %}
+    {%- assign grid_width_xs = 'col-xs-cus-5' -%}
+  {% when 6 %}
+    {%- assign grid_width_xs = 'col-2' -%}
+{% endcase %}
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}{% if section.settings.has_fullwidth == true %} pl-15 pr-15{% endif %}" data-section-id="{{ section.id }}" data-section-type="nov-slick">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% endif %}
+    <div class="row">
+      {% for block in section.blocks %}
+        <div class="{{ grid_width_lg }} {{ grid_width_ms }} {{ grid_width_sm }} {{ grid_width_xs }} mb-30">
+          <div class="block">
+            <div class="title_block title_1">
+              <span>{{ block.settings.title | nofilter  }}</span>
+              <span class="sub_title">{{ block.settings.subheading | escape }}</span>
+            </div>
+            <div class="block-content">
+              {%- assign category = block.settings.collection_handle -%}
+              <div class="grid list--view-items nov-slick-carousel row"
+              data-autoplay="false" 
+              data-autoplayTimeout="6000" 
+              data-loop="false"
+              data-dots="{{ section.settings.show_dot }}" 
+              data-nav="{{ section.settings.show_nav }}" 
+              data-row="{{ section.settings.number_row }}" 
+              data-row_mobile="{{ section.settings.row_mobile }}"
+              data-items="{{ section.settings.grid_number }}" 
+              data-items_lg="{{ section.settings.grid_number_lg }}" 
+              data-items_md="{{ section.settings.grid_number_md }}" 
+              data-items_sm="{{ section.settings.grid_number_sm }}"
+              data-items_xs="{{ section.settings.grid_number_xs }}"
+              >
+                {% for product in collections[category].products limit:section.settings.limit %}
+                  <div class="col">
+                    {% include 'product-card-list' %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  {% if section.settings.has_fullwidth == false %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Group List Product",
+  "class": "index-section section-group-list-product wow fadeInUp animated",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "limit",
+      "label": "Product limit",
+      "default": "6"
+    },
+    {
+      "type": "text",
+      "id": "class",
+      "label": "Class"
+    },
+    {
+      "type": "header",
+      "content": "Choose group product on row"
+    },
+    {
+      "type": "range",
+      "id": "grid",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Group products per row desktop",
+      "default": 3,
+      "info": "Breakpoint 992px ↑"
+    },
+    {
+      "type": "range",
+      "id": "grid_md",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Group products per row tablet",
+      "default": 3,
+      "info": "Breakpoint 991px ↓"
+    },
+    {
+      "type": "range",
+      "id": "grid_sm",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Group products per row mobile",
+      "default": 3,
+      "info": "Breakpoint 768px ↓"
+    },
+    {
+      "type": "range",
+      "id": "grid_xs",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Group products per row small mobile",
+      "default": 3,
+      "info": "Breakpoint 575px ↓"
+    },
+    {
+      "type": "header",
+      "content": "Choose number product on row"
+    },
+    {
+      "type": "range",
+      "id": "grid_number",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Products per row large desktop",
+      "default": 3,
+      "info": "Breakpoint 1200px ↑"
+    },
+    {
+      "type": "range",
+      "id": "grid_number_lg",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Products per row desktop",
+      "default": 3,
+      "info": "Breakpoint 1199px ↓"
+    },
+    {
+      "type": "range",
+      "id": "grid_number_md",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Products per row tablet",
+      "default": 3,
+      "info": "Breakpoint 991px ↓"
+    },
+    {
+      "type": "range",
+      "id": "grid_number_sm",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Products per row mobile",
+      "default": 2,
+      "info": "Breakpoint 767px ↓"
+    },
+    {
+      "type": "range",
+      "id": "grid_number_xs",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Products per row small mobile",
+      "default": 1,
+      "info": "Breakpoint 575px ↓"
+    },
+    {
+      "type": "select",
+      "id": "number_row",
+      "label": "Number row",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "row_mobile",
+      "label": "Number row mobile",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "has_fullwidth",
+      "label": "Full Width",
+      "default":   false
+    },
+    {
+      "type": "text",
+      "id": "distance_top",
+      "label": "Top spacing section",
+      "default": "30px"
+    },
+    {
+      "type": "text",
+      "id": "distance_bottom",
+      "label": "Bottom spacing section",
+      "default": "30px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "list_product",
+      "name": "Vinova Group List Product",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product list title"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Product list"
+        },
+        {
+          "type": "collection",
+          "id": "collection_handle",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Group List Product",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type":"list_product",
+          "settings":{
+            "title": "Product List 1",
+            "subheading": "Group products",
+            "collection_handle": "frontpage"
+          }
+        },
+        {
+          "type":"list_product",
+          "settings":{
+            "title": "Product List 2",
+            "subheading": "Group products",
+            "collection_handle": "frontpage"
+          }
+        },
+        {
+          "type":"list_product",
+          "settings":{
+            "title": "Product List 3",
+            "subheading": "Group products",
+            "collection_handle": "frontpage"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+  }
+</style>

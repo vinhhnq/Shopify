@@ -1,0 +1,395 @@
+{% if section.settings.title != blank %}
+<div class="block-about-us">
+  <div class="title_block">
+    <span>{{ section.settings.title | escape }}</span>
+  </div>
+  {% if section.settings.subheading != blank %}
+  <span class="sub_title">{{ section.settings.subheading | escape }}</span>
+  {% endif %}
+</div>
+{% endif %}
+<div class="PageAboutUs">
+  {% for block in section.blocks %}
+    {% if block.type == 'image' %}
+      <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.img.aspect_ratio | times: 100}}%;">
+        {% assign img_url = block.settings.img | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+        <img class="article__list-image lazyload"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'%3E%3C/svg%3E"
+        data-src="{{ img_url }}"
+        data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+        data-aspectratio="{{ block.settings.img.aspect_ratio }}"
+        data-sizes="auto"
+        alt="">
+      </div>
+    {% endif %}
+    {% if block.type == 'text' %}
+      <div class="block_text{% if block.settings.class != blank %} {{ block.settings.class }}{% endif %}">
+        {% if block.settings.title != blank %}
+        <div class="title">{{ block.settings.title }}</div>
+        {% endif %}
+        {% if block.settings.text_content != blank %}
+        <div class="block_content">{{ block.settings.text_content | nofilter }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if block.type == 'quote' %}
+      <div class="block_quote d-flex {% if block.settings.class != blank %} {{ block.settings.class }}{% endif %}"><i class="fa fa-quote-left" aria-hidden="true"></i>{{ block.settings.text_content }}</div>
+    {% endif %}
+  {% endfor %}
+  <div class="block_our_team row">
+    {% for block in section.blocks %}
+      {% if block.type == 'our_team' %}
+        <div class="ourteam__item lazyload{% if block.settings.class != blank %} {{ block.settings.class }}{% endif %}">
+          {% if block.settings.avatar != blank %}
+          <div class="ourteam-author">
+            <img class="ourteam-avatar" src="{{ block.settings.avatar | img_url: '270x' }}" alt="{% if block.settings.author != blank %}{{ block.settings.author }}{% else %}Avatar image{% endif %}">
+          </div>
+          {% endif %}
+          <div class="content-info">
+            <div class="ourteam_you">
+              {% if block.settings.author != blank %}
+              <div class="ourteam-item__name">{{ block.settings.author }}</div>
+              {% endif %}
+              {% if block.settings.job != blank %}
+              <div class="ourteam-item__info">{{ block.settings.job }}</div>
+              {% endif %}
+            </div>
+            {% if block.settings.decs != blank %}
+            <div class="ourteam-item__text">{{ block.settings.decs }}</div>
+            {% endif %}
+          </div>
+          <div class="content-contact">
+            <div class="ourteam_hotline">
+              <i class="icon-phone"></i>
+              <span>{{ block.settings.hotline }}</span>
+            </div>
+            <div class="ourteam_email">
+              <i class="icon-email"></i>
+              <span>{{ block.settings.email }}</span>
+            </div>
+          </div>
+
+          <div class="block_social mt-30">
+            <ul class="list-inline mb-0">
+              {% if block.settings.social_facebook_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_facebook_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}">
+                  <i class="zmdi zmdi-facebook"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">Facebook</span>
+                {% endif %}
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_twitter_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_twitter_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}">
+                  <i class="zmdi zmdi-twitter"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">Twitter</span>
+                {% endif %}
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_pinterest_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_pinterest_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}">
+                  <i class="fa fa-pinterest" aria-hidden="true"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">Pinterest</span>
+                {% endif %}
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_vimeo_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_vimeo_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}">
+                  <i class="fa fa-vimeo" aria-hidden="true"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">Vimeo</span>
+                {% endif %}
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_instagram_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_instagram_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}">
+                  <i class="fa fa-instagram" aria-hidden="true"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">Instagram</span>
+                {% endif %}
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_youtube_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_youtube_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}">
+                  <i class="icon-youtube-play"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">YouTube</span>
+                {% endif %}
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_dribbble_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_dribbble_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Dribbble' }}">
+                  <i class="zmdi zmdi-dribbble"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">Dribbble</span>
+                {% endif %}
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_tumblr_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_tumblr_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}">
+                  <i class="zmdi zmdi-tumblr"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">Tumblr</span>
+                {% endif %}
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_linkedin_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_linkedin_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Linkedin' }}">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                  {% if block.settings.show_label == true %}
+                  <span class="icon__fallback-text">Linkedin</span>
+                  {% endif %}
+                </a>
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_google_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_google_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Google' }}">
+                  <i class="icon-google" aria-hidden="true"></i>
+                  {% if block.settings.show_label == true %}
+                  <span class="icon__fallback-text">Google</span>
+                  {% endif %}
+                </a>
+              </li>
+              {% endif %}
+
+              {% if block.settings.social_snapchat_link != blank %}
+              <li class="d-inline-block">
+                <a href="{{ block.settings.social_snapchat_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Snapchat' }}">
+                  <i class="zmdi zmdi-snapchat"></i>
+                </a>
+                {% if block.settings.show_label == true %}
+                <span class="icon__fallback-text">Snapchat</span>
+                {% endif %}
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Page About Us",
+  "class": "index-section page-about-us",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "About Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Item image"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "About Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text_content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "class",
+          "label": "Class"
+        }
+      ]
+    },
+    {
+      "type": "quote",
+      "name": "About Quote",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text_content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "class",
+          "label": "Class"
+        }
+      ]
+    },
+    {
+      "type": "our_team",
+      "name": "Our Team",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Author's name"
+        },
+        {
+          "type": "text",
+          "id": "job",
+          "label": "Info Job",
+          "default": "Developer"
+        },
+        {
+          "type": "richtext",
+          "id": "decs",
+          "label": "Text",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac pretium metus. Curabi tur velit sem, egestas sit amet dolor nec, tris tique vulputate enim.</p>"
+        },
+        {
+          "type": "text",
+          "id": "hotline",
+          "label": "hotline",
+          "default": "(+612) 2531 5600"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "email",
+          "default": "sonata@domain.com"
+        },
+        {
+          "type": "header",
+          "content": "Social"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_label",
+          "label": "Show label",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "social_twitter_link",
+          "label": "Twitter",
+          "default": "#",
+          "info": "https:\/\/twitter.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_facebook_link",
+          "label": "Facebook",
+          "default": "#",
+          "info": "https:\/\/facebook.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_pinterest_link",
+          "label": "Pinterest",
+          "default": "#",
+          "info": "https:\/\/pinterest.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_instagram_link",
+          "label": "Instagram",
+          "default": "#",
+          "info": "http:\/\/instagram.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_dribbble_link",
+          "label": "Dribbble",
+          "info": "http:\/\/dribbble.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_google_link",
+          "label": "Google",
+          "info": "http:\/\/google.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_linkedin_link",
+          "label": "Linkedin",
+          "info": "http:\/\/linkedin.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_tumblr_link",
+          "label": "Tumblr",
+          "info": "http:\/\/shopify.tumblr.com"
+        },
+        {
+          "type": "text",
+          "id": "social_snapchat_link",
+          "label": "Snapchat",
+          "info": "https:\/\/www.snapchat.com\/add\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_youtube_link",
+          "label": "YouTube",
+          "info": "https:\/\/www.youtube.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_vimeo_link",
+          "label": "Vimeo",
+          "info": "https:\/\/vimeo.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "class",
+          "label": "Class"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
