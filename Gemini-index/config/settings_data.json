@@ -820,7 +820,7 @@
           "stickymenu": true,
           "novmenu_enable": true,
           "show_icons": true,
-          "main_linklist": "main-menu"
+          "main_linklist": "main-menu-1"
         }
       },
       "nov-footer": {
@@ -1535,11 +1535,138 @@
           "distance_top": "",
           "distance_bottom": "30px"
         }
+      },
+      "ecf5b78b-b755-42bc-9f1b-a6d060e3c8a6": {
+        "type": "nov-products-slider",
+        "settings": {
+          "title": "T-Shirt",
+          "subheading": "",
+          "title_alignment": "text-center",
+          "collection": "frontpage",
+          "limit": 30,
+          "show_view_all": false,
+          "has_fullwidth": false,
+          "background_color": "",
+          "class": "",
+          "distance_top": "30px",
+          "distance_bottom": "30px"
+        }
+      },
+      "cb529dcd-4608-4247-9afb-18e835d9ed23": {
+        "type": "nov-gallery-image",
+        "blocks": {
+          "cb529dcd-4608-4247-9afb-18e835d9ed23-1670337239e64a9b24-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/banner1.jpg",
+              "link": "",
+              "class": ""
+            }
+          },
+          "cb529dcd-4608-4247-9afb-18e835d9ed23-1670337239e64a9b24-1": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/banner2.jpg",
+              "link": "",
+              "class": ""
+            }
+          }
+        },
+        "block_order": [
+          "cb529dcd-4608-4247-9afb-18e835d9ed23-1670337239e64a9b24-0",
+          "cb529dcd-4608-4247-9afb-18e835d9ed23-1670337239e64a9b24-1"
+        ],
+        "settings": {
+          "title_alignment": "text-left",
+          "bd_radius": 0,
+          "spacing": "10",
+          "style_img_1": true,
+          "style_img_2": true,
+          "background_color": "",
+          "has_fullwidth": false,
+          "class_section": "",
+          "distance_top": "30px",
+          "distance_bottom": "30px"
+        }
+      },
+      "c3c2bf55-4a31-40c9-989c-ea28c9e3e07a": {
+        "type": "nov-products-slider",
+        "settings": {
+          "title": "Croptop",
+          "subheading": "",
+          "title_alignment": "text-center",
+          "collection": "frontpage",
+          "limit": 30,
+          "show_view_all": false,
+          "has_fullwidth": false,
+          "background_color": "",
+          "class": "",
+          "distance_top": "30px",
+          "distance_bottom": "30px"
+        }
+      },
+      "a6bac072-37c1-41be-a746-a3eb4a1f25ac": {
+        "type": "nov-gallery-image",
+        "blocks": {
+          "a6bac072-37c1-41be-a746-a3eb4a1f25ac-1671162547a219dda7-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/banner-3-1.jpg",
+              "link": "",
+              "class": ""
+            }
+          },
+          "a6bac072-37c1-41be-a746-a3eb4a1f25ac-1671162547a219dda7-1": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/banner-3-2.jpg",
+              "link": "",
+              "class": ""
+            }
+          }
+        },
+        "block_order": [
+          "a6bac072-37c1-41be-a746-a3eb4a1f25ac-1671162547a219dda7-0",
+          "a6bac072-37c1-41be-a746-a3eb4a1f25ac-1671162547a219dda7-1"
+        ],
+        "settings": {
+          "title_alignment": "text-left",
+          "bd_radius": 0,
+          "spacing": "10",
+          "style_img_1": true,
+          "style_img_2": true,
+          "background_color": "",
+          "has_fullwidth": false,
+          "class_section": "",
+          "distance_top": "30px",
+          "distance_bottom": "30px"
+        }
+      },
+      "62e9b512-2b0f-4a87-87bb-a3a8b82a2fb9": {
+        "type": "nov-products-slider",
+        "settings": {
+          "title": "Hoodies",
+          "subheading": "",
+          "title_alignment": "text-center",
+          "collection": "frontpage",
+          "limit": 30,
+          "show_view_all": false,
+          "has_fullwidth": false,
+          "background_color": "",
+          "class": "",
+          "distance_top": "30px",
+          "distance_bottom": "30px"
+        }
       }
     },
     "content_for_index": [
       "030636fe-0e9f-422c-92c5-d07d976bbcfe",
-      "058ece56-e09f-405b-b674-c7e7cd82a806"
+      "058ece56-e09f-405b-b674-c7e7cd82a806",
+      "ecf5b78b-b755-42bc-9f1b-a6d060e3c8a6",
+      "cb529dcd-4608-4247-9afb-18e835d9ed23",
+      "c3c2bf55-4a31-40c9-989c-ea28c9e3e07a",
+      "a6bac072-37c1-41be-a746-a3eb4a1f25ac",
+      "62e9b512-2b0f-4a87-87bb-a3a8b82a2fb9"
     ]
   },
   "presets": {

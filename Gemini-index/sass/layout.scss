@@ -735,7 +735,7 @@
     .site-header__logo img {
       max-height: 52px;
     }
-    .contentstickynew_search, .contentstickynew_cart {
+    .contentstickynew_search, .contentstickynew_account {
       @include rtl-margin-right(35px);
     }
   }
@@ -876,8 +876,7 @@
       padding-left: 15px;
       padding-right: 15px;
       font-size: 12px;
-      .site-footer__linklist-item a {
-      }
+      
     }
     @media(max-width: 991px) {
       text-align: center;

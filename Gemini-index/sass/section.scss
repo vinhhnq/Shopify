@@ -170,7 +170,7 @@
 	.product__review {
 		display: none;
 	}
-	.product__thumbnail-second {
+	.-second {
 		width: 100%;
 	}
 	@media(max-width: 767px) {
@@ -184,7 +184,7 @@
 // Product Slider ===================================================================================================
 .section-product-slider {
     .block_section {
-        @include rtl-padding-left(100px);
+        // @include rtl-padding-left(100px);
         @media(max-width: 1199px) {
             @include rtl-padding-left(15px);
         }
@@ -193,11 +193,7 @@
         overflow: hidden;
     }
     .item {
-        width: 22.5%;
-        min-width: 22.5%;
-        &:not(:last-child) {
-            @include rtl-margin-right(30px);
-        }
+        
     }
     .show_all {
         @include rtl-text-align-right();
@@ -225,25 +221,25 @@
             @include rtl-text-align-left();
         }
     }
-    @media(max-width: 1199px) {
-        .item {
-            width: 35%;
-            min-width: 35%;
-        }
-    }
-    @media(max-width: 767px) {
-        .item {
-            width: 45%;
-            min-width: 45%;
-            @include rtl-margin-right(20px);
-        }
-    }
-    @media(max-width: 575px) {
-        .item {
-            width: 70%;
-            min-width: 70%;
-        }
-    }
+    // @media(max-width: 1199px) {
+    //     .item {
+    //         width: 35%;
+    //         min-width: 35%;
+    //     }
+    // }
+    // @media(max-width: 767px) {
+    //     .item {
+    //         width: 45%;
+    //         min-width: 45%;
+    //         @include rtl-margin-right(20px);
+    //     }
+    // }
+    // @media(max-width: 575px) {
+    //     .item {
+    //         width: 70%;
+    //         min-width: 70%;
+    //     }
+    // }
 }
 
 // Section Group List Product
@@ -318,6 +314,7 @@
 /* Policy  ========================================================================================================== */
 .section-policy {
     overflow: hidden;
+    /* Setting the padding-left and padding-right to 100px. */
     .distance {
         padding-left: 100px;
         padding-right: 100px;

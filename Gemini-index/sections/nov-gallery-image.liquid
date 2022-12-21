@@ -40,7 +40,7 @@
                 {% if block.settings.image != blank %}
                   <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
                     {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-                    <img class="article__list-image lazyload"
+                    <img class="article__list-image lazyload img-fluid"
                       src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
                       data-src="{{ img_url }}"
                       data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
@@ -53,7 +53,6 @@
                 {% endif %}
                 {% if block.settings.link != blank %}
                 </a>
-
               {% endif %}
             </div>
             
@@ -246,11 +245,13 @@
   }
   @media(max-width: 767px) {
     #shopify-section-{{ section.id }} [mobile_scroll] .gallery-image_column:not(:last-child) {
-      margin-right: {{ section.settings.spacing }}px;
+      margin-bottom: {{ section.settings.spacing }}px;
     }
+
     .lang-rtl #shopify-section-{{ section.id }} [mobile_scroll] .gallery-image_column:not(:last-child) {
       margin-left: {{ section.settings.spacing }}px;
       margin-right: initial;
     }
   }
+  section
 </style>

@@ -11,11 +11,11 @@
 			padding: 0 17px;
 		}
 		.site-nav__link--main {
-			font-family: var(--font-family-primary);
+				font-family: Roboto,HelveticaNeue,Helvetica Neue,sans-serif;
 		    color: var(--color-menu);
 		    line-height: 18px;
 		    font-size: 1.4rem;
-		    font-weight: 500;
+		    font-weight: 700;
 		    text-transform: uppercase;
 		    @include transition(all 0.35s ease);
 		    position: relative;
@@ -36,6 +36,7 @@
 		&.site-nav--active, &:hover {
 			.site-nav__link--main {
 				font-weight: 700;
+				
 			}
 		}
 		.icon_nav {
@@ -46,6 +47,7 @@
 			display: initial;
 		}
 	}
+
 }
 
 /*================ Site Nav Links ================*/

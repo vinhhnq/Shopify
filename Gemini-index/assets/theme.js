@@ -542,7 +542,7 @@ theme.MobileNav = (function() {
     var classes = {
         mobileNavOpenIcon: 'mobile-nav--open',
         mobileNavCloseIcon: 'mobile-nav--close',
-        navLinkWrapper: 'mobile-nav__item',
+        navLinkWrapper: 'mobile-nav__item', 
         navLink: 'mobile-nav__link',
         subNavLink: 'mobile-nav__sublist-link',
         return: 'mobile-nav__return-btn',
@@ -627,6 +627,7 @@ theme.MobileNav = (function() {
         });
         cache.$mobileNavToggle.addClass(classes.mobileNavOpenIcon).removeClass(classes.mobileNavCloseIcon);
         $(window).off('keyup.mobileNav');
+        
     }
 
     function toggleSubNav(evt) {
@@ -1606,37 +1607,37 @@ theme.Nov_Slickcarousel = (function() {
                 {
                     breakpoint: 1441,
                     settings: {
-                        slidesToShow: items,
-                        slidesToScroll: items
+                        slidesToShow: 4,
+                        slidesToScroll: 4
                     }
                 },
                 {
                     breakpoint: 1200,
                     settings: {
-                        slidesToShow: items_lg,
-                        slidesToScroll: items_lg
+                        slidesToShow: 4,
+                        slidesToScroll: 4
                     }
                 },
                 {
                     breakpoint: 992,
                     settings: {
-                        slidesToShow: items_md,
-                        slidesToScroll: items_md
+                        slidesToShow: 3,
+                        slidesToScroll: 3
                     }
                 },
                 {
                     breakpoint: 768,
                     settings: {
-                        slidesToShow: items_sm,
-                        slidesToScroll: items_sm,
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
                         rows: row_mobile
                     }
                 },
                 {
                     breakpoint: 576,
                     settings: {
-                        slidesToShow: items_xs,
-                        slidesToScroll: items_xs,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
                         rows: row_mobile
                     }
                 }

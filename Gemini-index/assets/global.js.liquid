@@ -129,7 +129,7 @@ novtheme.init = function() {
 
 //Tooltip, activated by hover event
 novtheme.tooltip = function() {
-    $("body").tooltip({   
+    $("body").tooltip({
         selector: "[data-toggle='tooltip']",
         container: "body"
     });
@@ -273,7 +273,7 @@ novtheme.doAddOrRemoveWishlist = function() {
     var iconWishLists = '.item-product [data-icon-wishlist]';
     var textadd = '{{ 'products.product.wishlist' | t }}';
     var textremove = '{{ 'products.product.removewishlist' | t }}';
-        
+
     $(document).off('click.addOrRemoveWishlist', iconWishLists).on('click.addOrRemoveWishlist', iconWishLists, function(e) {
         e.preventDefault();
 
@@ -362,7 +362,7 @@ novtheme.doAddOrRemoveWishlistProduct = function() {
             self.removeClass('whislist-added');
             self.find('.wishlist-text').text('{{ 'wishlist.wishlist.add_to_wish_list' | t }}');
 
-            
+
             if ($('[data-wishlist-added="wishlist-'+productId+'"]').length) {
                 $('[data-wishlist-added="wishlist-'+productId+'"]').remove();
             }
@@ -397,15 +397,15 @@ novtheme.createNovWishListTplItem = function(ProductHandle) {
 
     if (product.available) {
         if (product.variants.length == 1) {
-            productHTML += '<button class="btn btnAddToCart" type="submit" data-form-id="#-'+product.id+'" ><span>{{ 'products.product.add_to_cart' | t }}</span><span>{{ 'products.product.add_to_cart' | t }}</span></button><input type="hidden" name="id" value="'+ product.variants[0].id +'" />'; 
-        } 
+            productHTML += '<button class="btn btnAddToCart" type="submit" data-form-id="#-'+product.id+'" ><span>{{ 'products.product.add_to_cart' | t }}</span><span>{{ 'products.product.add_to_cart' | t }}</span></button><input type="hidden" name="id" value="'+ product.variants[0].id +'" />';
+        }
         if (product.variants.length > 1){
             productHTML += '<a class="btn btnAddToCart" title="'+product.title+'" href="'+product.url +'"><i class="zmdi zmdi-check"></i><span>{{ 'products.product.select_options' | t }}</span></a>';
         }
     }
     else {
         productHTML += '<button class="btn btnAddToCart" type="button" disabled="disabled">{{ 'products.product.unavailable' | t }}</button>';
-    } 
+    }
 
     productHTML += '</form></div>';
 
@@ -588,7 +588,7 @@ novtheme.VerticalThumbnailProductDetail= function() {
                        $('.proFeaturedImage .item[data-position="'+ npd +'"]').addClass('act');
                        $('.thumbItem[data-position="'+ p +'"]').removeClass('active');
                        $('.thumbItem[data-position="'+ npd +'"]').addClass('active');
-                    } 
+                    }
                 } else {
                     if (p > 1) {
                         var npu = p - 1;
@@ -756,7 +756,7 @@ novtheme.ThumbnailProductDetail = function() {
         event.preventDefault();
         var position = $(this).data('position');
         $FeaturedImage.slick('slickGoTo', position);
-    });    
+    });
 };
 novtheme.RelatedBlog = function() {
     if ($('html').hasClass('lang-rtl'))
@@ -993,7 +993,7 @@ novtheme.cacheSelectors = function() {
         $productImage: $('#ProductPhotoImg'),
         $thumbImages: $('.product-template__container:not(.thumb_grid) #productThumbs').find('a.product-single__thumbnail'),
         $thumbItem: $('.thumb_grid').find('.thumbItem'),
-        
+
         $recoverPasswordLink: $('#RecoverPassword'),
         $hideRecoverPasswordLink: $('#HideRecoverPasswordLink'),
         $recoverPasswordForm: $('#RecoverPasswordForm'),
@@ -1056,7 +1056,6 @@ novtheme.NovToggleSearch = function() {
         $('.site-header__search').toggleClass('open');
         $('.search-bar__form .search-bar__input').focus();
         $('.sidebar-overlay').addClass('act');
-
     });
     $('.bl_close').click(function () {
         $('.site-header__search').removeClass('open');
@@ -1177,12 +1176,12 @@ novtheme.variantName = function() {
     if ($('.template-product .thumb_grid').length > 0) {
         var val = $('.swatch[data-option-index="0"] .swatch-element input:checked').parent().data('value');
         $('.thumbItem[data-variant="'+val+'"]').addClass('show');
-        
+
         $('.swatch[data-option-index="0"] .swatch-element label').on('click', function() {
             var value = $(this).parent().data('value');
             $('.thumbItem').removeClass('show');
             $('.thumbItem[data-variant="'+value+'"]').addClass('show');
-        }); 
+        });
     }
 };
 novtheme.MenuSidebar = function() {
@@ -1194,18 +1193,18 @@ novtheme.MenuSidebar = function() {
 };
 //NOV-IFRAME_VIDEO
 novtheme.Nov_iframe_video = function() {
-    var $videoSrc; 
+    var $videoSrc;
     $('.icon_play').click(function() {
         $videoSrc = $(this).data( "src" );
     });
     $('#ModalVideo').on('shown.bs.modal', function (e) {
-        
+
     // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
-    $('#video').attr('src',$videoSrc ); 
+    $('#video').attr('src',$videoSrc );
     })
     $('#ModalVideo').on('hide.bs.modal', function (e) {
         // a poor man's stop video
-        $('#video').attr('src',$videoSrc); 
+        $('#video').attr('src',$videoSrc);
     })
 };
 novtheme.MegaMenuSlider = function() {
@@ -1287,7 +1286,7 @@ novtheme.InstagramImage = function() {
     $('.section-gallery-ins .btnAddToCart').click(function () {
         $('.section-gallery-ins .modal').modal('hide')
     });
-    
+
     $(".InstagramSlider").each(function (index) {
         if ($('html').hasClass('lang-rtl'))
             rtl = true;
@@ -1330,7 +1329,7 @@ $(document).ready(function() {
             mobile = false;
         }
     });
-    
+
     // Change image product item
     $(".product-swatch-color a").click(function(e){
         e.preventDefault();
@@ -1398,7 +1397,7 @@ $(document).ready(function() {
     novtheme.HideShowPassword = function() {
         $('.hide_show_password').show();
         $('.hide_show_password span').addClass('show')
-          
+
         $('.hide_show_password span').click(function(){
             if( $(this).hasClass('show')) {
                 $(this).html('<i class="zmdi zmdi-eye"></i>');
@@ -1410,7 +1409,7 @@ $(document).ready(function() {
                 $(this).addClass('show');
             }
         });
-            
+
         $('form button[type="submit"]').on('click', function(){
             $('.hide_show_password span').text('Show').addClass('show');
             $('.hide_show_password').parent().find('input[name="customer[password]"]').attr('type','password');
@@ -1450,7 +1449,7 @@ $(document).ready(function() {
     }
     //Sticky page product detail
     if ($(window).width() > 991 && $('.template-product').length > 0) {
-        
+
         $(".product-thumb_vertical .thumbsticky").stick_in_parent({
             offset_top: 50,
         });
@@ -1492,7 +1491,7 @@ $(document).ready(function() {
         $('.loading i').addClass("fa-spinner");
         setTimeout(RemoveClass, 500);
     });
-    
+
     $('.no-view').click(function () {
         if($('.contact-form').hasClass('add')) {
             $('.contact-form').removeClass('add')
@@ -1506,7 +1505,7 @@ $(document).ready(function() {
         $('.loading').removeClass("d-block");
         $('.loading i').removeClass("zmdi-hc-spin");
     }
-    
+
     // Accordion footer mobile
     $(".f_btn_sl").click(function(e) {
         if ($(this).hasClass("active")) {

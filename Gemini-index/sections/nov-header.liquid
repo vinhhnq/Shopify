@@ -6,7 +6,7 @@
           {% if section.settings.logo_mb %}
             <a href="/" itemprop="url" class="site-header__logo-image">
               {%- assign image_size = section.settings.logo_width | append: 'x' -%}
-              <img srcset="{{ section.settings.logo_mb | img_url: image_size }} 1x, {{ section.settings.logo_mb | img_url: image_size, scale: 2 }} 2x"
+              <img class="img-fluid" srcset="{{ section.settings.logo_mb | img_url: image_size }} 1x, {{ section.settings.logo_mb | img_url: image_size, scale: 2 }} 2x"
                 src="{{ section.settings.logo_mb | img_url: image_size }}"
                 loading="lazy"
                 class="header__heading-logo logo_mb"
@@ -104,16 +104,16 @@
 
   {% if section.settings.stickymenu == true %}
     <div id="header-sticky" class="d-none d-md-block"{% if section.settings.background_color != blank %} style="background-color: {{ section.settings.background_color_sticky }};"{% endif %}>
-      <div class="bl_c h-100">
+      <div class="container h-100">
         <div class="row align-items-center h-100">
-          <div class="col-md-9 d-flex align-items-center position-static">
+          <div class="col-md-6 d-flex align-items-center position-static">
           <div class="contentstickynew_logo"></div>
-          <div class="contentstickynew_menu"></div>
           </div>
-          <div class="col-md-3 d-flex align-items-center justify-content-end">
-            <div class="contentstickynew_cart"></div>
-            <div class="contentstickynew_search"></div>
+
+          <div class="col-md-6 d-flex align-items-center justify-content-end">
+            <div class="contentstickynew_search"> </div>
             <div class="contentstickynew_account"></div>
+            <div class="contentstickynew_cart"></div>
           </div>
         </div>
       </div>

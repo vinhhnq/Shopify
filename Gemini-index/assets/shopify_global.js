@@ -54,6 +54,7 @@ function trapFocus(container, elementToFocus = container) {
   elementToFocus.focus();
 }
 
+
 function pauseAllMedia() {
   document.querySelectorAll('.js-youtube').forEach((video) => {
     video.contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');

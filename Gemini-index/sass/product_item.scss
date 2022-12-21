@@ -98,20 +98,21 @@
 	.product__info {
 		position: relative;
 		.product__title {
+			font-family: Roboto,HelveticaNeue,Helvetica Neue,sans-serif;
 			margin: 25px 0 10px;
 			font-weight: 600;
-			font-size: 1.6rem;
+			font-size: 1.3rem;
 			line-height: 20px;
 			a {
 				color: var(--color-product-name);
 				&:hover {
-					color: rgba(var(--color-product-name-rgb), 0.6) !important;
+					color: #ff6000 !important;
 				}
 			}
 		}
 		.product__price {
-			color: var(--color-price);
-			font-weight: 700;
+			color: #000;
+			font-weight: 800;
 			font-family: var(--font-family-primary);
 			font-size: 14px;
 			line-height: 20px;

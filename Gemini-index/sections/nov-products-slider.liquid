@@ -5,7 +5,7 @@
     <div class="block_section">
       {% comment %} product slider {% endcomment %}
       {%- assign collection = collections[section.settings.collection] -%}
-      <div class="bl_t row spacing-0 align-items-center justify-content-between mb-50">
+      <div class="spacing-0 align-items-center justify-content-between mb-30">
         {% if section.settings.title != blank %}
           <div class="{{ section.settings.title_alignment }} {% if section.settings.show_view_all == false %}col-12{% else %}col-sm-8 col-12{% endif %}">
             <div class="title_block mb-0">
@@ -38,10 +38,19 @@
       {% endcase %}
 
       {%- assign product_limit = section.settings.limit -%}
-      <div class="block_scroll grid--view-items position-relative">
-        <div class="main-carousel" data-flickity='{"freeScroll": "true", "groupCells": 4, "pageDots": false, "prevNextButtons": false, "cellAlign": "left", "contain": true}'>
+      <div class="block_scroll row grid--view-items position-relative nov-slick-carousel"
+          data-autoplay="{{ section.settings.auto }}" 
+          data-autoplaytimeout="{{ section.settings.time }}000" 
+          data-loop="false" 
+          data-dots="{{ section.settings.s_dot }}" 
+          data-nav="{{ section.settings.s_nav }}" 
+          data-items="4" 
+          data-items_md="{{ section.settings.number_md }}" 
+          data-items_sm="{{ section.settings.number_sm }}" 
+          data-items_xs="{{ section.settings.number_xs }}">
+      
         {% for product in collection.products limit: product_limit %}
-          <div class="item">
+          <div class="item col">
             <div class="item-product">
               {% assign variantCount = product.variants | size %}
               <div class="thumbnail-container{% if product.images.size > 1 %} has-multiimage{% endif %}{% if section.settings.show_variant_color and variantCount > 1 %} has_variants{% endif %}">
@@ -80,7 +89,7 @@
                 
                 <div class="badge_sale">
                   {% assign date_created = product.created_at | date:'%s' %}
-                  {% assign     date_now = 'now' | date:'%s' %}
+                  {% assign date_now = 'now' | date:'%s' %}
                   {% assign   difference = date_now | minus: date_created %}
                   {% assign     date_end = settings.time_newproduct | times: 86400 %}
                   {% if difference < date_end %}
@@ -115,12 +124,11 @@
                   {% endif %}
                 {% endif %}
               </div>
-              {% include 'group_buttons' %}
+              {%- comment -%} {% include 'group_buttons' %} {%- endcomment -%}
             </div>
           </div>
         {% endfor %}
         </div>
-      </div>
       {% comment %} end product slider {% endcomment %}
     </div>
   {% if section.settings.has_fullwidth == false %}
